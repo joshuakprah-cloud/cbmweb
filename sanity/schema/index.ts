@@ -1,4 +1,5 @@
 import { defineType, Rule } from 'sanity'
+import { homepageType } from '../schemaTypes/homepageType'
 
 export const hero = defineType({
   name: 'hero',
@@ -449,4 +450,4 @@ export const contact = defineType({
   ],
 })
 
-export const schemaTypes = [hero, pastor, service, event, testimony, post, sermon, prayerRequest, visitorRegistration, contact]
+export const schemaTypes = [homepageType, hero, pastor, service, event, testimony, post, sermon, prayerRequest, visitorRegistration, contact]

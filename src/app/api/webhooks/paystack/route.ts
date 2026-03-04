@@ -33,13 +33,20 @@ export async function POST(request: NextRequest) {
     if (event.event === 'charge.success') {
       const reference = event.data.reference
 
-      // Update transaction status
-      await client
-        .patch({ transactionRef: reference })
-        .set({ status: 'Successful' })
-        .commit()
+      // Fetch the document by transactionRef
+      const doc = await client.fetch(`*[_type == 'givingTransaction' && transactionRef == $ref][0]`, { ref: reference })
 
-      console.log('Paystack payment successful for reference:', reference)
+      if (doc) {
+        // Update transaction status
+        await client
+          .patch(doc._id)
+          .set({ status: 'Successful' })
+          .commit()
+
+        console.log('Paystack payment successful for reference:', reference)
+      } else {
+        console.error('Transaction not found for reference:', reference)
+      }
     }
 
     return NextResponse.json({ received: true })

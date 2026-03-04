@@ -65,6 +65,10 @@ export async function POST(request: NextRequest) {
       // Fetch giving type for name
       const givingType = await client.getDocument(givingTypeId)
 
+      if (!givingType) {
+        return NextResponse.json({ error: 'Giving type not found' }, { status: 400 })
+      }
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [

@@ -12,9 +12,7 @@ const client = createClient({
   token: process.env.SANITY_AUTH_TOKEN!,
 })
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-})
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(request: NextRequest) {
   try {

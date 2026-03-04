@@ -6,6 +6,12 @@ import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import ReCAPTCHA from 'react-google-recaptcha'
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 interface PrayerForm {
   name: string
   email: string

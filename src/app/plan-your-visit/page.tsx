@@ -8,6 +8,12 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { createClient } from 'next-sanity';
 import { servicesQuery } from '../../../sanity/lib/queries';
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 interface VisitorForm {
   name: string;
   phone: string;

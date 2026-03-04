@@ -76,11 +76,14 @@ export default async function PreacherDetail({ params }: { params: { slug: strin
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {sermons.map((sermon) => (
                   <div key={sermon._id} className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    {sermon.videoUrl && extractYouTubeId(sermon.videoUrl) && (
-                      <div className="mb-4 aspect-video">
-                        <LazyYouTube videoId={extractYouTubeId(sermon.videoUrl)!} title={sermon.title} />
-                      </div>
-                    )}
+                    {(() => {
+                      const videoId = extractYouTubeId(sermon.videoUrl || '');
+                      return videoId ? (
+                        <div className="mb-4 aspect-video">
+                          <LazyYouTube videoId={videoId} title={sermon.title} />
+                        </div>
+                      ) : null;
+                    })()}
                     <h3 className="text-xl font-bold mb-2">{sermon.title}</h3>
                     <p className="text-gray-600 mb-2">By {sermon.preacher.name}</p>
                     <p className="text-sm text-gray-500 mb-2">{new Date(sermon.date).toLocaleDateString()}</p>

@@ -58,11 +58,14 @@ export default async function Series() {
                 <div key={seriesName} className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                   <h3 className="text-xl font-bold mb-2">{seriesName}</h3>
                   <p className="text-gray-600 mb-4">{sermonsInSeries.length} sermons</p>
-                  {sermonsInSeries[0]?.videoUrl && (
-                    <div className="mb-4 aspect-video">
-                      <LazyYouTube videoId={extractYouTubeId(sermonsInSeries[0].videoUrl)} title={sermonsInSeries[0].title} />
-                    </div>
-                  )}
+                  {(() => {
+                    const videoId = extractYouTubeId(sermonsInSeries[0]?.videoUrl || '');
+                    return videoId ? (
+                      <div className="mb-4 aspect-video">
+                        <LazyYouTube videoId={videoId} title={sermonsInSeries[0].title} />
+                      </div>
+                    ) : null;
+                  })()}
                   <a
                     href={`/sermons/series/${encodeURIComponent(seriesName)}`}
                     className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block"

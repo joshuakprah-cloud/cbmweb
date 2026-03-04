@@ -1,0 +1,55 @@
+Create a full modern church website using Next.js 14 (App Router), TypeScript, and Tailwind CSS.
+
+Requirements:
+
+1. **Design & Style**
+- Color palette: Primary deep navy (#0B1F3A), accent gold (#C6A75E), neutral background #F8F9FB
+- Font: Inter (clean, modern sans-serif)
+- Mobile-first and fully responsive design
+- Smooth scroll for anchors
+- Rounded cards, subtle drop shadows, hover effects
+- Sticky transparent navbar that turns solid on scroll
+- Clean spacing, consistent typography, modern look
+
+2. **Pages & Sections**
+- **Navbar/Header:** Transparent, logo on left, menu items: Home, About, Ministries, Sermons, Events, Give, Contact. Mobile hamburger menu, "Plan a Visit" & "Watch Online" CTAs.
+- **Home Page Sections:** Hero (full-screen image/video overlay, tagline, 2 CTAs), Service Times (cards with time/location/description), About preview, Ministries preview (cards with image + join button), Latest Sermon preview (grid/carousel with video), Upcoming Events (cards with RSVP), Giving CTA, Prayer Request CTA, Testimonials/Stories preview.
+- **About Page:** Vision, Mission, brief history, leadership team section with profiles and photos, "Learn More" links.
+- **Ministries Page:** Grid of ministry cards with name, description, image/icon, join button, hover effect.
+- **Sermons Page:** Filterable/searchable list of sermons, each with title, preacher, date, YouTube video embed, audio download option, responsive layout.
+- **Events Page:** Event list/grid, each with name, date, location, description, RSVP/register button, countdown timer optional.
+- **Giving Page:** Donation form embedded (Paystack / Flutterwave), suggested amounts, one-time and recurring options, "Give Now" button, secure design.
+- **Prayer Request Page:** Form with Name, Email (optional), Prayer Request, Anonymous toggle, submit confirmation, clean responsive layout.
+- **Contact Page:** Contact form (Name, Email, Message), church contact info (phone, email, address), Google Maps embed, social media links, responsive design.
+- **Footer:** Logo, quick links, social icons, contact info, copyright text, dark background with gold accent links.
+
+3. **Components**
+- Reusable components: Navbar, Footer, Hero, Card (for services, ministries, events, sermons), Button, Form.
+- Modular, clean code with proper TypeScript types.
+- Mobile-first styling and Tailwind CSS utilities.
+
+4. **SEO & Performance**
+- Each page has unique meta title & description
+- Proper HTML structure (header tags)
+- Fast-loading images, responsive images
+- Include favicon & Open Graph tags
+- Sitemap.xml and robots.txt
+
+5. **Additional Features**
+- Smooth hover animations for cards/buttons
+- Accessible forms and buttons (aria labels)
+- Sticky call-to-action buttons
+- Optional dark mode toggle
+
+6. **Routing & File Structure**
+- App Router layout with proper nested routes
+- Pages: /, /about, /ministries, /sermons, /events, /give, /prayer, /contact
+- Components in /components
+- Public assets in /public (images, videos, favicon)
+- CSS config and Tailwind setup included
+- Sample content for placeholder text/images
+
+Output:
+- Complete Next.js 14 project structure with TypeScript and Tailwind
+- Each section/page as a React component
+- All code ready to deploy on Vercel

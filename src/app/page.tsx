@@ -19,8 +19,13 @@ export default async function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <Hero 
+        heroHeadline={data?.heroHeadline} 
+        heroSubtext={data?.heroSubtext} 
         heroBackgroundImage={data?.heroBackgroundImage} 
         heroBackgroundImageAlt={data?.heroBackgroundImageAlt} 
+        heroPrimaryButton={data?.heroPrimaryButton} 
+        heroSecondaryButton={data?.heroSecondaryButton} 
+        heroSmallLine={data?.heroSmallLine} 
       />
       <YouBelongHere />
       <UpcomingEvent />

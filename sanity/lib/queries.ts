@@ -1,6 +1,6 @@
-import { groq } from 'next-sanity'
-
-export const homepageQuery = groq`
+export const heroQuery = groq`
+  *[_type == "hero"][0]
+`
   *[_type == "homepage"][0] {
     heroHeadline,
     heroSubtext,

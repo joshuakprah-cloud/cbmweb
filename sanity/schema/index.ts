@@ -10,29 +10,6 @@ import contactPage from './contactPage'
 import givePage from './givePage'
 import eventsPage from './eventsPage'
 
-export const hero = defineType({
-  name: 'hero',
-  title: 'Hero',
-  type: 'document',
-  fields: [
-    {
-      name: 'heading',
-      title: 'Heading',
-      type: 'string',
-    },
-    {
-      name: 'subheading',
-      title: 'Subheading',
-      type: 'text',
-    },
-    {
-      name: 'backgroundImage',
-      title: 'Background Image',
-      type: 'image',
-    },
-  ],
-})
-
 export const pastor = defineType({
   name: 'pastor',
   title: 'Pastor',

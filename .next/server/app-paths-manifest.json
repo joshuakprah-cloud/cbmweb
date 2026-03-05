@@ -18,7 +18,6 @@
   "/api/push/subscribe/route": "app/api/push/subscribe/route.js",
   "/api/revalidate/route": "app/api/revalidate/route.js",
   "/api/search/route": "app/api/search/route.js",
-  "/api/seed/route": "app/api/seed/route.js",
   "/api/sermons/route": "app/api/sermons/route.js",
   "/api/visit/route": "app/api/visit/route.js",
   "/api/visitor-registration/route": "app/api/visitor-registration/route.js",

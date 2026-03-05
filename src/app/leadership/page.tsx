@@ -1,6 +1,8 @@
 import { client } from '../../../sanity/lib/client'
 import { urlFor } from '../../../sanity/lib/image'
 import { PortableText } from '@portabletext/react'
+import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/Footer'
 
 export const metadata = {
   title: 'Church Leadership | ThaGospel Church',
@@ -14,6 +16,7 @@ export const metadata = {
 
 export default async function Leadership() {
   const leaders = await client.fetch(`*[_type == "author"] | order(name asc)`)
+  const leadershipData = await client.fetch('*[_type == "leadership"][0]', {}, { next: { revalidate: 60 } })
 
   // Assuming senior pastors are those with names containing "Prophet" or specific names
   const seniorPastors = leaders.filter((leader: any) =>
@@ -24,24 +27,25 @@ export default async function Leadership() {
   const otherLeaders = leaders.filter((leader: any) => !seniorPastors.includes(leader))
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section */}
-      <div className="relative h-96 bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-        <div className="text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Church Leadership</h1>
-          <p className="text-xl">Meet the dedicated team serving God and our community</p>
+    <div>
+      <Navbar />
+      <div className="min-h-screen bg-background text-foreground">
+        {/* Hero Section */}
+        <div className="relative h-96 bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-5xl font-bold mb-4">{leadershipData?.heroHeadline || "Church Leadership"}</h1>
+            <p className="text-xl">{leadershipData?.heroSubtext || "Meet the dedicated team serving God and our community"}</p>
+          </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        {/* Introduction */}
-        <section className="mb-16 text-center">
-          <h2 className="text-3xl font-bold mb-8">Our Leadership Team</h2>
-          <p className="text-lg max-w-3xl mx-auto">
-            Our leadership team is committed to serving God and guiding our congregation with wisdom, compassion, and dedication.
-            Each member brings unique gifts and experiences to help fulfill our mission of spreading God's word and building His kingdom.
-          </p>
-        </section>
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          {/* Introduction */}
+          <section className="mb-16 text-center">
+            <h2 className="text-3xl font-bold mb-8">Our Leadership Team</h2>
+            <p className="text-lg max-w-3xl mx-auto">
+              {leadershipData?.intro || "Our leadership team is committed to serving God and guiding our congregation with wisdom, compassion, and dedication. Each member brings unique gifts and experiences to help fulfill our mission of spreading God's word and building His kingdom."}
+            </p>
+          </section>
 
         {/* Senior Pastor Spotlight */}
         {seniorPastors.length > 0 && (
@@ -105,30 +109,31 @@ export default async function Leadership() {
         <section className="mb-16 bg-gray-50 p-8 rounded-lg">
           <h2 className="text-3xl font-bold mb-8 text-center">Our Leadership Philosophy</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Servant Leadership</h3>
-              <p className="text-lg">
-                Following Jesus' example, our leaders serve with humility and love, putting the needs of others first.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Spiritual Growth</h3>
-              <p className="text-lg">
-                We are committed to ongoing spiritual development, ensuring our leadership remains grounded in God's Word.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Community Focus</h3>
-              <p className="text-lg">
-                Our leadership works to build and maintain a strong, supportive community where everyone can thrive.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Visionary Direction</h3>
-              <p className="text-lg">
-                Guided by God's vision, we lead with purpose and direction to fulfill His plans for our church.
-              </p>
-            </div>
+            {leadershipData?.philosophy?.map((item: any, index: number) => (
+              <div key={index}>
+                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
+                <p className="text-lg">{item.content}</p>
+              </div>
+            )) || (
+              <>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4">Servant Leadership</h3>
+                  <p className="text-lg">Following Jesus' example, our leaders serve with humility and love, putting the needs of others first.</p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4">Spiritual Growth</h3>
+                  <p className="text-lg">We are committed to ongoing spiritual development, ensuring our leadership remains grounded in God's Word.</p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4">Community Focus</h3>
+                  <p className="text-lg">Our leadership works to build and maintain a strong, supportive community where everyone can thrive.</p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4">Visionary Direction</h3>
+                  <p className="text-lg">Guided by God's vision, we lead with purpose and direction to fulfill His plans for our church.</p>
+                </div>
+              </>
+            )}
           </div>
         </section>
 
@@ -149,6 +154,8 @@ export default async function Leadership() {
           </div>
         </section>
       </div>
+      </div>
+      <Footer />
     </div>
   )
 }

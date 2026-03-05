@@ -1,14 +1,17 @@
-import Navbar from '../../components/navbar/Navbar';
-import Footer from '../../components/Footer';
-import Card from '../../components/Card';
-import Button from '../../components/Button';
+import { client } from '../../../sanity/lib/client'
+import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/Footer'
+import Button from '../../components/Button'
+import { PortableText } from '@portabletext/react'
 
 export const metadata = {
   title: 'About Us - Church Website',
   description: 'Learn about our church vision, mission, history, and leadership team.',
-};
+}
 
-export default function About() {
+export default async function About() {
+  const about = await client.fetch('*[_type == "about"][0]', {}, { next: { revalidate: 60 } })
+
   return (
     <div>
       <Navbar />
@@ -16,10 +19,32 @@ export default function About() {
         {/* Hero Section */}
         <section className="bg-navy text-white py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-inter">About Our Church</h1>
-            <p className="text-xl font-inter">Discover our vision, mission, and the heart of our community.</p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-inter">{about?.heroHeadline || "About Our Church"}</h1>
+            <p className="text-xl font-inter">{about?.heroSubtext || "Discover our vision, mission, and the heart of our community."}</p>
           </div>
         </section>
+
+        {/* Content Section */}
+        {about?.content && (
+          <section className="py-16 bg-white">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="prose prose-lg mx-auto">
+                <PortableText value={about.content} />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Pastor Message */}
+        {about?.pastorMessage && (
+          <section className="py-16 bg-neutral">
+            <div className="max-w-7xl mx-auto px-4 text-center">
+              <blockquote className="text-xl italic text-gray-700 max-w-3xl mx-auto">
+                "{about.pastorMessage}"
+              </blockquote>
+            </div>
+          </section>
+        )}
 
         {/* Overview Link */}
         <section className="py-16 bg-white">
@@ -39,7 +64,7 @@ export default function About() {
             <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Explore the core beliefs and doctrines that form the foundation of our faith community.
             </p>
-            <Button variant="primary" href="/about/beliefs">Read Our Beliefs</Button>
+            <Button variant="primary" href="/beliefs">Read Our Beliefs</Button>
           </div>
         </section>
 
@@ -50,7 +75,7 @@ export default function About() {
             <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Meet the dedicated pastors and leaders who guide our congregation with wisdom and compassion.
             </p>
-            <Button variant="primary" href="/about/leadership">Meet Our Team</Button>
+            <Button variant="primary" href="/leadership">Meet Our Team</Button>
           </div>
         </section>
 
@@ -61,7 +86,7 @@ export default function About() {
             <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Discover this year's church theme and anchor scripture that inspires our worship and teaching.
             </p>
-            <Button variant="primary" href="/about/theme">Explore This Year's Theme</Button>
+            <Button variant="primary" href="/theme">Explore This Year's Theme</Button>
           </div>
         </section>
 
@@ -76,5 +101,5 @@ export default function About() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }

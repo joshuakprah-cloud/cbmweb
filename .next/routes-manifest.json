@@ -1,0 +1,379 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/admin/[[...tool]]",
+      "regex": "^/admin(?:/(.+?))?(?:/)?$",
+      "routeKeys": {
+        "nxtPtool": "nxtPtool"
+      },
+      "namedRegex": "^/admin(?:/(?<nxtPtool>.+?))?(?:/)?$"
+    },
+    {
+      "page": "/blog/[slug]",
+      "regex": "^/blog/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/blog/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/ministries/[slug]",
+      "regex": "^/ministries/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/ministries/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/sermons/preachers/[slug]",
+      "regex": "^/sermons/preachers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/sermons/preachers/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/sermons/series/[series]",
+      "regex": "^/sermons/series/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPseries": "nxtPseries"
+      },
+      "namedRegex": "^/sermons/series/(?<nxtPseries>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/about/beliefs",
+      "regex": "^/about/beliefs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about/beliefs(?:/)?$"
+    },
+    {
+      "page": "/about/leadership",
+      "regex": "^/about/leadership(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about/leadership(?:/)?$"
+    },
+    {
+      "page": "/about/overview",
+      "regex": "^/about/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about/overview(?:/)?$"
+    },
+    {
+      "page": "/about/story",
+      "regex": "^/about/story(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about/story(?:/)?$"
+    },
+    {
+      "page": "/about/theme",
+      "regex": "^/about/theme(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about/theme(?:/)?$"
+    },
+    {
+      "page": "/admin/giving",
+      "regex": "^/admin/giving(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/giving(?:/)?$"
+    },
+    {
+      "page": "/api/contact",
+      "regex": "^/api/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/contact(?:/)?$"
+    },
+    {
+      "page": "/api/give",
+      "regex": "^/api/give(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/give(?:/)?$"
+    },
+    {
+      "page": "/api/giving/transactions",
+      "regex": "^/api/giving/transactions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/giving/transactions(?:/)?$"
+    },
+    {
+      "page": "/api/giving-types",
+      "regex": "^/api/giving\\-types(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/giving\\-types(?:/)?$"
+    },
+    {
+      "page": "/api/prayer",
+      "regex": "^/api/prayer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/prayer(?:/)?$"
+    },
+    {
+      "page": "/api/prayer-request",
+      "regex": "^/api/prayer\\-request(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/prayer\\-request(?:/)?$"
+    },
+    {
+      "page": "/api/push/subscribe",
+      "regex": "^/api/push/subscribe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/push/subscribe(?:/)?$"
+    },
+    {
+      "page": "/api/revalidate",
+      "regex": "^/api/revalidate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/revalidate(?:/)?$"
+    },
+    {
+      "page": "/api/search",
+      "regex": "^/api/search(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/search(?:/)?$"
+    },
+    {
+      "page": "/api/seed",
+      "regex": "^/api/seed(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/seed(?:/)?$"
+    },
+    {
+      "page": "/api/sermons",
+      "regex": "^/api/sermons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/sermons(?:/)?$"
+    },
+    {
+      "page": "/api/visit",
+      "regex": "^/api/visit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/visit(?:/)?$"
+    },
+    {
+      "page": "/api/visitor-registration",
+      "regex": "^/api/visitor\\-registration(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/visitor\\-registration(?:/)?$"
+    },
+    {
+      "page": "/api/webhooks/paystack",
+      "regex": "^/api/webhooks/paystack(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/webhooks/paystack(?:/)?$"
+    },
+    {
+      "page": "/api/webhooks/stripe",
+      "regex": "^/api/webhooks/stripe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/webhooks/stripe(?:/)?$"
+    },
+    {
+      "page": "/beliefs",
+      "regex": "^/beliefs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/beliefs(?:/)?$"
+    },
+    {
+      "page": "/blog",
+      "regex": "^/blog(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog(?:/)?$"
+    },
+    {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/contact/form",
+      "regex": "^/contact/form(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact/form(?:/)?$"
+    },
+    {
+      "page": "/contact/prayer",
+      "regex": "^/contact/prayer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact/prayer(?:/)?$"
+    },
+    {
+      "page": "/contact/visit",
+      "regex": "^/contact/visit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact/visit(?:/)?$"
+    },
+    {
+      "page": "/donate",
+      "regex": "^/donate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/donate(?:/)?$"
+    },
+    {
+      "page": "/events",
+      "regex": "^/events(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/events(?:/)?$"
+    },
+    {
+      "page": "/give",
+      "regex": "^/give(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/give(?:/)?$"
+    },
+    {
+      "page": "/leadership",
+      "regex": "^/leadership(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/leadership(?:/)?$"
+    },
+    {
+      "page": "/ministries",
+      "regex": "^/ministries(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ministries(?:/)?$"
+    },
+    {
+      "page": "/ministries/children",
+      "regex": "^/ministries/children(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ministries/children(?:/)?$"
+    },
+    {
+      "page": "/ministries/men",
+      "regex": "^/ministries/men(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ministries/men(?:/)?$"
+    },
+    {
+      "page": "/ministries/women",
+      "regex": "^/ministries/women(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ministries/women(?:/)?$"
+    },
+    {
+      "page": "/ministries/youth",
+      "regex": "^/ministries/youth(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ministries/youth(?:/)?$"
+    },
+    {
+      "page": "/new-here",
+      "regex": "^/new\\-here(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/new\\-here(?:/)?$"
+    },
+    {
+      "page": "/overview",
+      "regex": "^/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/overview(?:/)?$"
+    },
+    {
+      "page": "/plan-your-visit",
+      "regex": "^/plan\\-your\\-visit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/plan\\-your\\-visit(?:/)?$"
+    },
+    {
+      "page": "/prayer",
+      "regex": "^/prayer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/prayer(?:/)?$"
+    },
+    {
+      "page": "/sermons",
+      "regex": "^/sermons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sermons(?:/)?$"
+    },
+    {
+      "page": "/sermons/archive",
+      "regex": "^/sermons/archive(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sermons/archive(?:/)?$"
+    },
+    {
+      "page": "/sermons/preachers",
+      "regex": "^/sermons/preachers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sermons/preachers(?:/)?$"
+    },
+    {
+      "page": "/sermons/series",
+      "regex": "^/sermons/series(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sermons/series(?:/)?$"
+    },
+    {
+      "page": "/theme",
+      "regex": "^/theme(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/theme(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

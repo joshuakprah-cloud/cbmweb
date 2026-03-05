@@ -436,4 +436,4 @@ export const contact = defineType({
   ],
 })
 
-export const schemaTypes = [homepageType, aboutType, beliefsType, leadershipType, themeType, visitPage, prayerPage, contactPage, givePage, eventsPage, hero, pastor, service, event, testimony, post, sermon, prayerRequest, visitorRegistration, contact]
+export const schemaTypes = [homepageType, aboutType, beliefsType, leadershipType, themeType, visitPage, prayerPage, contactPage, givePage, eventsPage, pastor, service, event, testimony, post, sermon, prayerRequest, visitorRegistration, contact]

@@ -1,5 +1,5 @@
 const YouBelongHere = () => {
-  const items = [];
+  const items: { title: string; description: string }[] = [];
 
   return (
     <section className="py-16 bg-background">

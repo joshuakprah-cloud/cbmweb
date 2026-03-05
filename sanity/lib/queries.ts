@@ -57,6 +57,17 @@ export const pastorQuery = groq`
   }
 `
 
+export const preacherQuery = groq`
+  *[_type == "pastor" && slug.current == $slug][0] {
+    _id,
+    name,
+    bio,
+    photo,
+    slug,
+    branch
+  }
+`
+
 export const servicesQuery = groq`
   *[_type == "service" && branch == "ghana"] {
     title,

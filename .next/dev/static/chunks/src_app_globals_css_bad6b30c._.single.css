@@ -334,6 +334,10 @@ img, video {
   top: -.25rem;
 }
 
+.bottom-0 {
+  bottom: 0;
+}
+
 .left-0 {
   left: 0;
 }
@@ -348,10 +352,6 @@ img, video {
 
 .top-full {
   top: 100%;
-}
-
-.bottom-0 {
-  bottom: 0;
 }
 
 .-z-10 {
@@ -507,6 +507,10 @@ img, video {
   aspect-ratio: 16 / 9;
 }
 
+.h-0\.5 {
+  height: .125rem;
+}
+
 .h-10 {
   height: 2.5rem;
 }
@@ -569,10 +573,6 @@ img, video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-0\.5 {
-  height: .125rem;
 }
 
 .max-h-0 {

@@ -10,9 +10,10 @@ import { client } from '../../sanity/lib/client';
 import { homepageQuery } from '../../sanity/lib/queries';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home() {
-  const homepage = await client.fetch(homepageQuery) || {}
+  const homepage = await client.fetch(homepageQuery, {}, { next: { revalidate: 60 } }) || {}
 
   // Fallbacks for polished homepage content
   const polishedHomepage = {

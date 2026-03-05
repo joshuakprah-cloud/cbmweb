@@ -1,4 +1,5 @@
 import { client } from '../../../../../sanity/lib/client'
+import { preacherQuery } from '../../../../../sanity/lib/queries'
 import Navbar from '../../../../components/navbar/Navbar'
 import Footer from '../../../../components/Footer'
 import LazyYouTube from '../../../../components/LazyYouTube'
@@ -37,9 +38,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
+export const revalidate = 60
+
 export default async function PreacherDetail({ params }: { params: { slug: string } }) {
-  const preacher = await client.fetch(`*[_type == "preacher" && slug.current == $slug][0]`, { slug: params.slug }) as Preacher
-  const sermons = await client.fetch(`*[_type == "sermon" && preacher._ref == $id] | order(date desc)`, { id: preacher._id }) as Sermon[]
+  const preacher = await client.fetch(preacherQuery, { slug: params.slug }, { next: { revalidate: 60 } }) as Preacher
+  const sermons = await client.fetch(`*[_type == "sermon" && preacher._ref == $id] | order(date desc)`, { id: preacher._id }, { next: { revalidate: 60 } }) as Sermon[]
 
   const extractYouTubeId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/embed\/|youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)

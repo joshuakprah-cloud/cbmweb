@@ -28,9 +28,11 @@ export async function generateMetadata({ params }: { params: { series: string } 
   }
 }
 
+export const revalidate = 60
+
 export default async function SeriesDetail({ params }: { params: { series: string } }) {
   const series = decodeURIComponent(params.series)
-  const sermons = await client.fetch(`*[_type == "sermon" && series == $series] | order(date desc)`, { series }) as Sermon[]
+  const sermons = await client.fetch(`*[_type == "sermon" && series == $series] | order(date desc)`, { series }, { next: { revalidate: 60 } }) as Sermon[]
 
   const extractYouTubeId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/embed\/|youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)

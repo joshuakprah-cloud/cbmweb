@@ -25,8 +25,11 @@ export const metadata = {
   },
 }
 
+export const revalidate = 60
+
 export default async function Series() {
-  const sermons = await client.fetch(`*[_type == "sermon"] | order(date desc)`) as Sermon[]
+  const sermonsQuery = `*[_type == "sermon"] | order(date desc)`
+  const sermons = await client.fetch(sermonsQuery, {}, { next: { revalidate: 60 } }) as Sermon[]
 
   const seriesGroups = sermons.reduce((acc, sermon) => {
     const series = sermon.series || 'General'

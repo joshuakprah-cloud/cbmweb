@@ -1,19 +1,5 @@
-[00:00:02.703] Server  LOG     ✓ Ready in 1835ms
-[00:00:05.030] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:05.894] Browser ERROR   uncaughtError: ChunkLoadError: Failed to load chunk /_next/static/chunks/node_modules_%40sanity_1921ff80._.js from module [project]/node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development.js [app-client] (ecmascript)
-[00:01:01.322] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
-[00:01:02.393] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:03.329] Browser LOG     SW registered
-[00:01:09.192] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
-[00:01:09.923] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:10.473] Browser LOG     SW registered
-[00:02:31.425] Server  LOG     ✓ Compiled in 81.4s
-[00:02:32.122] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
-[00:02:32.631] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:33.330] Browser LOG     SW registered
-[00:42:09.825] Server  LOG     ✓ Compiled in 2377s
-[01:30:02.647] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
-[01:30:03.282] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:30:03.954] Browser LOG     SW registered
-[01:42:58.808] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
-[01:43:06.485] Server  ERROR   ⨯ "The requested resource isn't a valid image for" "/fallback-hero.jpg" "received" null
+[00:01:00.698] Server  LOG     ✓ Ready in 40.1s
+[00:01:06.264] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:06.577] Browser ERROR   uncaughtError: ChunkLoadError: Failed to load chunk /_next/static/chunks/node_modules_%40sanity_1921ff80._.js from module [project]/node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development.js [app-client] (ecmascript)
+[00:01:14.421] Server  LOG     ○ Compiling /_not-found/page ...
+[02:20:26.668] Server  LOG       Reload env: .env.local

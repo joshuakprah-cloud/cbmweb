@@ -1,5 +1,5 @@
 import { defineType, Rule } from 'sanity'
-import { homepageType } from '../schemaTypes/homepageType'
+import { homepageType } from './homepageType'
 
 export const hero = defineType({
   name: 'hero',

@@ -1,10 +1,7 @@
-'use client'
-
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/Footer';
 import LazyYouTube from '../../components/LazyYouTube'
 
-export const revalidate = 60;
 import { useState, useEffect, useMemo } from 'react';
 
 interface Sermon {

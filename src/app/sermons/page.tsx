@@ -4,6 +4,8 @@ import LazyYouTube from '../../components/LazyYouTube'
 
 import { useState, useEffect, useMemo } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 interface Sermon {
   _id: string;
   title: string;

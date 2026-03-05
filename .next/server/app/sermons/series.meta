@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/sermons/layout,_N_T_/sermons/series/layout,_N_T_/sermons/series/page,_N_T_/sermons/series"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/sermons/series/__PAGE__",
+    "/sermons/series",
+    "/sermons",
+    "/_index",
+    "/_head"
+  ]
+}

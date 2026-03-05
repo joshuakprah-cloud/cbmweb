@@ -2,6 +2,7 @@
 
 import { useTheme } from './theme-provider';
 import Link from 'next/link';
+import GlobalPresenceStrip from './GlobalPresenceStrip';
 
 const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: any, bottomText?: string }) => {
   const { theme } = useTheme();
@@ -73,6 +74,7 @@ const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: a
             </div>
           ))}
         </div>
+        <GlobalPresenceStrip />
         {contact?.serviceTimes && (
           <div className="mt-8 pt-8 border-t border-border">
             <div className="text-center">

@@ -25,7 +25,6 @@ export default async function Home() {
       <YouBelongHere />
       <UpcomingEvent />
       <MeetPastor />
-      <GlobalPresenceStrip />
       <Footer />
     </div>
   );

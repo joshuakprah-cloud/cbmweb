@@ -1,18 +1,18 @@
 const UpcomingEvent = () => {
   // Placeholder event - in production, fetch from Sanity
   const event = {
-    title: 'Annual Church Picnic',
-    date: 'June 15, 2024',
-    description: 'Join us for a day of fun, food, and fellowship at our annual church picnic. Bring your family and friends for games, BBQ, and community spirit!',
-    image: '/placeholder-event.jpg', // Placeholder image
-    buttonText: 'Learn More',
+    title: '',
+    date: '',
+    description: '',
+    image: '',
+    buttonText: '',
   };
 
   return (
     <section className="py-16 bg-muted">
       <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-inter text-foreground">
-          Upcoming Event
+          
         </h2>
         <div className="bg-background rounded-lg shadow-lg overflow-hidden">
           <div className="md:flex">

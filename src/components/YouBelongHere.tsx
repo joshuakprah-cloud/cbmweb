@@ -7,7 +7,7 @@ const YouBelongHere = ({ items }: { items: any }) => {
           <p className="text-lg text-muted-foreground">Discover how you can get involved and connect with our community</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {items.map((item, index) => (
+          {items.map((item: any, index: number) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-semibold font-inter text-foreground mb-2">{item.title}</h3>
               <p className="text-muted-foreground mb-4">{item.description}</p>

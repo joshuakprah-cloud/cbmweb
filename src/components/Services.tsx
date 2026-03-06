@@ -8,7 +8,7 @@ const Services = ({ homepage }: { homepage: any }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Service Times</h3>
-              {homepage?.serviceTimes?.map((time, index) => (
+              {homepage?.serviceTimes?.map((time: any, index: number) => (
                 <p key={index} className="text-gray-600">{time}</p>
               ))}
             </div>

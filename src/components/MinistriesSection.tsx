@@ -6,7 +6,7 @@ const MinistriesSection = ({ homepage }: { homepage: any }) => {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{homepage?.ministriesHeadline}</h2>
           <p className="text-lg text-gray-600 mb-8">{homepage?.ministriesIntro}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {homepage?.ministries?.map((ministry, index) => (
+            {homepage?.ministries?.map((ministry: any, index: number) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{ministry.name}</h3>
                 <p className="text-gray-600 mb-4">{ministry.description}</p>

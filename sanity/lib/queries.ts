@@ -44,7 +44,25 @@ export const homepageQuery = groq`
     ctaSecondaryButton,
     footerColumns,
     footerContact,
-    footerBottomText
+    footerBottomText,
+    prophetName,
+    prophetTitle,
+    prophetImage,
+    firstLadyName,
+    firstLadyTitle,
+    firstLadyImage,
+    leadersWelcomeMessage,
+    whatToExpectTitle,
+    whatToExpectItems[]{
+      title,
+      description,
+      icon
+    },
+    globalCountries[]{
+      name,
+      flagImage,
+      link
+    }
   }
 `
 

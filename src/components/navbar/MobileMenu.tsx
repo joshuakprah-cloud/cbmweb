@@ -67,7 +67,7 @@ const MobileMenu = React.memo<MobileMenuProps>(({ isOpen, onClose, items, isLive
               {isLive && (
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full animate-pulse"></span>
               )}
-              {isLive ? 'LIVE' : 'Watch Live'}
+              {isLive ? 'Live Now' : 'Watch Live'}
             </button>
 
             <nav className="space-y-2">

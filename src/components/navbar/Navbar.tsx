@@ -134,7 +134,7 @@ const Navbar = () => {
               {isLive && (
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full animate-pulse"></span>
               )}
-              {isLive ? 'LIVE' : 'Watch Live'}
+              {isLive ? 'Live Now' : 'Watch Live'}
             </button>
             <ThemeToggle />
           </div>

@@ -5,46 +5,43 @@ import Link from 'next/link';
 
 const Footer = ({ homepage }: { homepage?: any }) => {
   const { theme } = useTheme();
+  const contact = homepage?.footerContact;
   const defaultColumns = [
     {
-      title: 'About',
+      title: 'Church',
       links: [
-        { text: 'Overview', url: '/about' },
-        { text: 'Our Beliefs', url: '/beliefs' },
+        { text: 'About', url: '/about' },
         { text: 'Leadership', url: '/leadership' },
-        { text: 'Annual Theme', url: '/theme' },
+        { text: 'Ministries', url: '/ministries' },
+        { text: 'Sermons', url: '/sermons' },
       ],
     },
     {
-      title: 'Connect',
+      title: 'Get Connected',
       links: [
-        { text: 'Plan Your Visit', url: '/visit' },
-        { text: 'Prayer Request', url: '/prayer' },
-        { text: 'Contact Us', url: '/contact' },
-        { text: 'Join a Ministry', url: '/ministries' },
-      ],
-    },
-    {
-      title: 'Resources',
-      links: [
-        { text: 'Watch Sermons', url: '/sermons' },
-        { text: 'Sermon Series', url: '/series' },
-        { text: 'Give Online', url: '/give' },
+        { text: 'Plan Your Visit', url: '/plan-your-visit' },
         { text: 'Events', url: '/events' },
+        { text: 'Prayer Request', url: '/prayer' },
+        { text: 'Give', url: '/give' },
       ],
     },
     {
-      title: 'Branches',
+      title: 'Contact',
       links: [
-        { text: 'Ghana HQ: Accra, Ghana', url: '' },
-        { text: 'Zimbabwe: Harare, Zimbabwe', url: '' },
-        { text: 'UK: London, UK', url: '' },
-        { text: 'Germany: Berlin, Germany', url: '' },
+        { text: contact?.address || 'Address: 123 Church St, Accra, Ghana', url: '' },
+        { text: contact?.phone || 'Phone: +233 123 456 789', url: '' },
+        { text: contact?.email || 'Email: info@thagospel.org', url: '' },
+      ],
+    },
+    {
+      title: 'Service Times',
+      links: [
+        { text: 'Sunday Services: ' + (homepage?.serviceTimes?.join(', ') || '8:00 AM & 10:30 AM'), url: '' },
+        { text: 'Midweek Service: ' + (homepage?.midweekService || 'Wednesday 6:30 PM'), url: '' },
       ],
     },
   ];
   const columns = homepage?.footerColumns || defaultColumns;
-  const contact = homepage?.footerContact;
   const bottomText = homepage?.footerBottomText;
 
   const footerBottom = bottomText || '© 2026 ThaGospel Church. All Rights Reserved. Raising Believers. Impacting Nations.';
@@ -61,14 +58,18 @@ const Footer = ({ homepage }: { homepage?: any }) => {
               <ul className="space-y-2">
                 {column.links?.map((link: {text: string, url: string}, linkIndex: number) => (
                   <li key={linkIndex}>
-                    {isInternalLink(link.url) ? (
-                      <Link href={link.url} className={`hover:${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} transition-colors`}>
-                        {link.text}
-                      </Link>
+                    {link.url ? (
+                      isInternalLink(link.url) ? (
+                        <Link href={link.url} className={`hover:${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} transition-colors`}>
+                          {link.text}
+                        </Link>
+                      ) : (
+                        <a href={link.url} className={`hover:${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} transition-colors`}>
+                          {link.text}
+                        </a>
+                      )
                     ) : (
-                      <a href={link.url} className={`hover:${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} transition-colors`}>
-                        {link.text}
-                      </a>
+                      <p className="text-sm">{link.text}</p>
                     )}
                   </li>
                 ))}
@@ -76,16 +77,6 @@ const Footer = ({ homepage }: { homepage?: any }) => {
             </div>
           ))}
         </div>
-        {contact?.serviceTimes && (
-          <div className="mt-8 pt-8 border-t border-border">
-            <div className="text-center">
-              <p className="font-semibold">Service Times:</p>
-              {contact.serviceTimes.map((time: string, index: number) => (
-                <p key={index}>{time}</p>
-              ))}
-            </div>
-          </div>
-        )}
         <div className="mt-8 pt-8 border-t border-border text-center">
           <p>{footerBottom}</p>
         </div>

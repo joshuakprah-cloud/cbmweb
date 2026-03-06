@@ -1,11 +1,13 @@
 import Navbar from '../components/navbar/Navbar';
 import Hero from '../components/Hero';
 import YouBelongHere from '../components/YouBelongHere';
+import WhatToExpect from '../components/WhatToExpect';
+import Leadership from '../components/Leadership';
 import About from '../components/About';
-import UpcomingEvent from '../components/UpcomingEvent';
-import MeetPastor from '../components/MeetPastor';
 import Services from '../components/Services';
+import UpcomingEvent from '../components/UpcomingEvent';
 import SermonSection from '../components/SermonSection';
+import Testimonials from '../components/Testimonials';
 import MinistriesSection from '../components/MinistriesSection';
 import GlobalPresenceStrip from '../components/GlobalPresenceStrip';
 import Footer from '../components/Footer';
@@ -33,12 +35,22 @@ export default async function Home() {
         heroSecondaryButton={data?.heroSecondaryButton} 
         heroSmallLine={data?.heroSmallLine} 
       />
-      <YouBelongHere items={data?.quickActions} />
+      <YouBelongHere />
+      <WhatToExpect title={data?.whatToExpectTitle} items={data?.whatToExpectItems} />
+      <Leadership 
+        prophetName={data?.prophetName}
+        prophetTitle={data?.prophetTitle}
+        prophetImage={data?.prophetImage}
+        firstLadyName={data?.firstLadyName}
+        firstLadyTitle={data?.firstLadyTitle}
+        firstLadyImage={data?.firstLadyImage}
+        leadersWelcomeMessage={data?.leadersWelcomeMessage}
+      />
       <About homepage={data} />
-      <MeetPastor pastorMessage={data?.pastorMessage} />
       <Services homepage={data} />
       <UpcomingEvent />
       <SermonSection homepage={data} />
+      <Testimonials testimonials={data?.testimonials} headline={data?.testimonialsHeadline} button={data?.testimonialsButton} />
       <MinistriesSection homepage={data} />
       <GlobalPresenceStrip homepage={data} />
       <Footer homepage={data} />

@@ -253,5 +253,79 @@ export const homepageType = defineType({
       title: 'Footer Bottom Text',
       type: 'string',
     }),
+    defineField({
+      name: 'prophetName',
+      title: 'Prophet Name',
+      type: 'string',
+    }),
+    defineField({
+      name: 'prophetTitle',
+      title: 'Prophet Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'prophetImage',
+      title: 'Prophet Image',
+      type: 'image',
+    }),
+    defineField({
+      name: 'firstLadyName',
+      title: 'First Lady Name',
+      type: 'string',
+    }),
+    defineField({
+      name: 'firstLadyTitle',
+      title: 'First Lady Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'firstLadyImage',
+      title: 'First Lady Image',
+      type: 'image',
+    }),
+    defineField({
+      name: 'leadersWelcomeMessage',
+      title: 'Leaders Welcome Message',
+      type: 'text',
+    }),
+    defineField({
+      name: 'whatToExpectTitle',
+      title: 'What To Expect Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'whatToExpectItems',
+      title: 'What To Expect Items',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'item',
+          title: 'Item',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string' }),
+            defineField({ name: 'description', title: 'Description', type: 'text' }),
+            defineField({ name: 'icon', title: 'Icon', type: 'string' }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'globalCountries',
+      title: 'Global Countries',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'country',
+          title: 'Country',
+          type: 'object',
+          fields: [
+            defineField({ name: 'name', title: 'Name', type: 'string' }),
+            defineField({ name: 'flagImage', title: 'Flag Image', type: 'image' }),
+            defineField({ name: 'link', title: 'Link', type: 'string' }),
+          ],
+        }),
+      ],
+    }),
   ],
 })

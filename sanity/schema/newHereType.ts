@@ -30,16 +30,14 @@ export const newHereType = defineType({
       title: 'What to Expect Items',
       type: 'array',
       of: [
-        defineField({
-          name: 'item',
-          title: 'Item',
+        {
           type: 'object',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'description', title: 'Description', type: 'text' }),
             defineField({ name: 'icon', title: 'Icon', type: 'string' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
@@ -52,15 +50,13 @@ export const newHereType = defineType({
       title: 'Sunday Experience Timeline',
       type: 'array',
       of: [
-        defineField({
-          name: 'step',
-          title: 'Step',
+        {
           type: 'object',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'description', title: 'Description', type: 'text' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
@@ -73,16 +69,14 @@ export const newHereType = defineType({
       title: 'Photo Gallery',
       type: 'array',
       of: [
-        defineField({
-          name: 'image',
-          title: 'Image',
+        {
           type: 'object',
           fields: [
             defineField({ name: 'image', title: 'Image', type: 'image' }),
             defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
             defineField({ name: 'caption', title: 'Caption', type: 'string' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
@@ -147,15 +141,13 @@ export const newHereType = defineType({
       title: 'Frequently Asked Questions',
       type: 'array',
       of: [
-        defineField({
-          name: 'question',
-          title: 'Question',
+        {
           type: 'object',
           fields: [
             defineField({ name: 'question', title: 'Question', type: 'string' }),
             defineField({ name: 'answer', title: 'Answer', type: 'text' }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
@@ -173,16 +165,14 @@ export const newHereType = defineType({
       title: 'CTA Buttons',
       type: 'array',
       of: [
-        defineField({
-          name: 'button',
-          title: 'Button',
+        {
           type: 'object',
           fields: [
             defineField({ name: 'text', title: 'Button Text', type: 'string' }),
             defineField({ name: 'url', title: 'Button URL', type: 'string' }),
             defineField({ name: 'color', title: 'Button Color', type: 'string', options: { list: ['white', 'blue', 'purple'] } }),
           ],
-        }),
+        },
       ],
     }),
   ],

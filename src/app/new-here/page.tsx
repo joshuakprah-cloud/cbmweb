@@ -4,12 +4,16 @@ import { urlFor } from '../../../sanity/lib/image'
 import Image from 'next/image'
 
 export default async function NewHere() {
-  const newHereData = await client.fetch(newHereQuery)
+  let newHereData = null
 
-  if (!newHereData) {
-    return <div>Loading...</div>
+  try {
+    newHereData = await client.fetch(newHereQuery)
+  } catch (error) {
+    console.error('Error fetching New Here data:', error)
+    // Return null so fallback content is shown
   }
 
+  // Always render with fallback content if no data
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Enhanced Hero Section */}

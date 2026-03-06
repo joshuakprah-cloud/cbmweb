@@ -42,7 +42,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

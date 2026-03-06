@@ -3,9 +3,47 @@
 import { useTheme } from './theme-provider';
 import Link from 'next/link';
 
-const Footer = ({ homepage }) => {
+const Footer = ({ homepage }: { homepage?: any }) => {
   const { theme } = useTheme();
-  const columns = homepage?.footerColumns;
+  const defaultColumns = [
+    {
+      title: 'About',
+      links: [
+        { text: 'Overview', url: '/about' },
+        { text: 'Our Beliefs', url: '/beliefs' },
+        { text: 'Leadership', url: '/leadership' },
+        { text: 'Annual Theme', url: '/theme' },
+      ],
+    },
+    {
+      title: 'Connect',
+      links: [
+        { text: 'Plan Your Visit', url: '/visit' },
+        { text: 'Prayer Request', url: '/prayer' },
+        { text: 'Contact Us', url: '/contact' },
+        { text: 'Join a Ministry', url: '/ministries' },
+      ],
+    },
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Watch Sermons', url: '/sermons' },
+        { text: 'Sermon Series', url: '/series' },
+        { text: 'Give Online', url: '/give' },
+        { text: 'Events', url: '/events' },
+      ],
+    },
+    {
+      title: 'Branches',
+      links: [
+        { text: 'Ghana HQ: Accra, Ghana', url: '' },
+        { text: 'Zimbabwe: Harare, Zimbabwe', url: '' },
+        { text: 'UK: London, UK', url: '' },
+        { text: 'Germany: Berlin, Germany', url: '' },
+      ],
+    },
+  ];
+  const columns = homepage?.footerColumns || defaultColumns;
   const contact = homepage?.footerContact;
   const bottomText = homepage?.footerBottomText;
 

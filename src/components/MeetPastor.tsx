@@ -1,9 +1,9 @@
-const MeetPastor = () => {
+const MeetPastor = ({ pastorMessage }) => {
   return (
     <section className="py-16 bg-background">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-inter text-foreground">
-          
+          Meet Our Pastor
         </h2>
         <div className="md:flex items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
@@ -15,13 +15,7 @@ const MeetPastor = () => {
           </div>
           <div className="md:w-1/2 md:pl-12">
             <p className="text-lg text-foreground leading-relaxed mb-4">
-              
-            </p>
-            <p className="text-lg text-foreground leading-relaxed mb-4">
-              
-            </p>
-            <p className="text-lg text-foreground leading-relaxed">
-              
+              {pastorMessage}
             </p>
           </div>
         </div>

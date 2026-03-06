@@ -2,17 +2,11 @@ import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const secret = process.env.SANITY_REVALIDATE_SECRET
-
-  if (!secret) {
-    return NextResponse.json({ error: 'Revalidation secret not configured' }, { status: 500 })
-  }
-
   try {
     const body = await request.json()
-    const { secret: bodySecret } = body
+    const { secret } = body
 
-    if (bodySecret !== secret) {
+    if (secret !== process.env.SANITY_REVALIDATE_SECRET) {
       return NextResponse.json({ error: 'Invalid revalidation secret' }, { status: 401 })
     }
 
@@ -20,6 +14,7 @@ export async function POST(request: NextRequest) {
     revalidatePath('/sermons')
     revalidatePath('/events')
     revalidatePath('/blog')
+    revalidatePath('/ministries')
 
     return NextResponse.json({ revalidated: true })
   } catch (error) {

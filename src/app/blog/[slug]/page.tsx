@@ -2,8 +2,10 @@ import { client } from '../../../sanity/lib/client'
 import { PortableText } from '@portabletext/react'
 import { urlFor } from '../../../sanity/lib/image'
 
+export const revalidate = 60
+
 export default async function Post({ params }: { params: { slug: string } }) {
-  const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]`, { slug: params.slug })
+  const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]`, { slug: params.slug }, { next: { revalidate: 60 } })
 
   if (!post) {
     return (

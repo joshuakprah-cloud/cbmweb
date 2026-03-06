@@ -3,8 +3,10 @@ import { postsQuery } from '../../../sanity/lib/queries'
 import { urlFor } from '../../../sanity/lib/image'
 import Link from 'next/link'
 
+export const revalidate = 60
+
 export default async function Blog() {
-  const posts = await client.fetch(postsQuery) || []
+  const posts = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } }) || []
 
   return (
     <div className="min-h-screen bg-background text-foreground">

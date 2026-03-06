@@ -24,8 +24,10 @@ export const metadata = {
   },
 }
 
+export const revalidate = 60
+
 export default async function Ministries() {
-  const ministries = await client.fetch(`*[_type == "ministry" && branch == $branch] | order(title asc)`, { branch: CURRENT_BRANCH }) as Ministry[]
+  const ministries = await client.fetch(`*[_type == "ministry" && branch == $branch] | order(title asc)`, { branch: CURRENT_BRANCH }, { next: { revalidate: 60 } }) as Ministry[]
 
   return (
     <div>

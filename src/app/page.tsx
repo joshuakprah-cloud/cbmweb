@@ -15,6 +15,8 @@ export const revalidate = 60;
 export default async function Home() {
   const data = await client.fetch(homepageQuery, {}, { next: { revalidate: 60 } })
 
+  console.log('Homepage data:', data)
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

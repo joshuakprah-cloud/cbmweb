@@ -19,25 +19,25 @@ export default async function NewHere() {
       {/* Enhanced Hero Section */}
       <div
         className="relative h-96 bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 flex items-center justify-center overflow-hidden"
-        style={newHereData.heroBackgroundImage ? {
+        style={newHereData?.heroBackgroundImage ? {
           backgroundImage: `url(${urlFor(newHereData.heroBackgroundImage).url()})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         } : undefined}
       >
-        {!newHereData.heroBackgroundImage && <div className="absolute inset-0 bg-black/20"></div>}
+        {!newHereData?.heroBackgroundImage && <div className="absolute inset-0 bg-black/20"></div>}
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">{newHereData.heroTitle || 'Welcome to ThaGospel Church'}</h1>
-          <p className="text-xl md:text-2xl drop-shadow-md max-w-2xl mx-auto">{newHereData.heroSubtitle || "We're glad you're here! Discover what to expect and how to get connected."}</p>
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">{newHereData?.heroTitle || 'Welcome to ThaGospel Church'}</h1>
+          <p className="text-xl md:text-2xl drop-shadow-md max-w-2xl mx-auto">{newHereData?.heroSubtitle || "We're glad you're here! Discover what to expect and how to get connected."}</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         {/* What to Expect */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.whatToExpectTitle || 'What to Expect'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.whatToExpectTitle || 'What to Expect'}</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {newHereData.whatToExpect?.map((item: any, index: number) => (
+            {newHereData?.whatToExpect?.map((item: any, index: number) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">{item.icon || '🙏'}</span>
@@ -75,11 +75,11 @@ export default async function NewHere() {
 
         {/* Sunday Experience Timeline */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.sundayExperienceTitle || 'Your First Sunday'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.sundayExperienceTitle || 'Your First Sunday'}</h2>
           <div className="relative">
             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-300 hidden md:block"></div>
             <div className="space-y-8">
-              {newHereData.sundayExperience?.map((step: any, index: number) => (
+              {newHereData?.sundayExperience?.map((step: any, index: number) => (
                 <div key={index} className="flex items-start">
                   <div className={`flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg mr-6 ${
                     index === 0 ? 'bg-blue-500' :
@@ -140,9 +140,9 @@ export default async function NewHere() {
 
         {/* Photo Gallery */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.photoGalleryTitle || 'See What Sunday Feels Like'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.photoGalleryTitle || 'See What Sunday Feels Like'}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {newHereData.photoGallery?.map((photo: any, index: number) => (
+            {newHereData?.photoGallery?.map((photo: any, index: number) => (
               <div key={index} className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
                 {photo.image ? (
                   <Image
@@ -196,21 +196,21 @@ export default async function NewHere() {
 
         {/* How to Get Connected */}
         <section className="mb-16 bg-gray-50 dark:bg-gray-800 p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.connectTitle || 'How to Get Connected'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.connectTitle || 'How to Get Connected'}</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-2xl font-semibold mb-4">Visit Us</h3>
               <div className="space-y-2">
-                <p><strong>Sunday Services:</strong> {newHereData.visitInfo?.services || '7:30 AM & 10:30 AM'}</p>
-                <p><strong>Location:</strong> {newHereData.visitInfo?.location || '[Church Address]'}</p>
-                <p><strong>Parking:</strong> {newHereData.visitInfo?.parking || 'Available on-site'}</p>
-                <p><strong>Greeters:</strong> {newHereData.visitInfo?.greeters || 'Friendly team to help you find your way'}</p>
+                <p><strong>Sunday Services:</strong> {newHereData?.visitInfo?.services || '7:30 AM & 10:30 AM'}</p>
+                <p><strong>Location:</strong> {newHereData?.visitInfo?.location || '[Church Address]'}</p>
+                <p><strong>Parking:</strong> {newHereData?.visitInfo?.parking || 'Available on-site'}</p>
+                <p><strong>Greeters:</strong> {newHereData?.visitInfo?.greeters || 'Friendly team to help you find your way'}</p>
               </div>
             </div>
             <div>
               <h3 className="text-2xl font-semibold mb-4">Connect with Us</h3>
               <ul className="space-y-2">
-                {newHereData.connectItems?.map((item: string, index: number) => (
+                {newHereData?.connectItems?.map((item: string, index: number) => (
                   <li key={index}>• {item}</li>
                 )) || (
                   <>
@@ -227,10 +227,10 @@ export default async function NewHere() {
 
         {/* Meet Our Spiritual Leaders */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.leadersTitle || 'Meet Our Spiritual Leaders'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.leadersTitle || 'Meet Our Spiritual Leaders'}</h2>
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div className="text-center">
-              {newHereData.prophet?.image ? (
+              {newHereData?.prophet?.image ? (
                 <Image
                   src={urlFor(newHereData.prophet.image).url()}
                   alt={newHereData.prophet.name || 'Prophet'}
@@ -243,11 +243,11 @@ export default async function NewHere() {
                   <span className="text-4xl">👨‍🏫</span>
                 </div>
               )}
-              <h3 className="text-xl font-semibold">{newHereData.prophet?.name || 'Prophet Name'}</h3>
-              <p className="text-blue-600 dark:text-blue-400">{newHereData.prophet?.title || 'Lead Prophet'}</p>
+              <h3 className="text-xl font-semibold">{newHereData?.prophet?.name || 'Prophet Name'}</h3>
+              <p className="text-blue-600 dark:text-blue-400">{newHereData?.prophet?.title || 'Lead Prophet'}</p>
             </div>
             <div className="text-center">
-              {newHereData.firstLady?.image ? (
+              {newHereData?.firstLady?.image ? (
                 <Image
                   src={urlFor(newHereData.firstLady.image).url()}
                   alt={newHereData.firstLady.name || 'First Lady'}
@@ -260,22 +260,22 @@ export default async function NewHere() {
                   <span className="text-4xl">👩‍🏫</span>
                 </div>
               )}
-              <h3 className="text-xl font-semibold">{newHereData.firstLady?.name || 'First Lady Name'}</h3>
-              <p className="text-blue-600 dark:text-blue-400">{newHereData.firstLady?.title || 'First Lady'}</p>
+              <h3 className="text-xl font-semibold">{newHereData?.firstLady?.name || 'First Lady Name'}</h3>
+              <p className="text-blue-600 dark:text-blue-400">{newHereData?.firstLady?.title || 'First Lady'}</p>
             </div>
           </div>
           <div className="text-center max-w-3xl mx-auto">
             <p className="text-lg text-gray-700 dark:text-gray-300 italic">
-              {newHereData.leadersMessage || "Welcome to ThaGospel Church! We are excited to have you join our community of faith. Our doors are open to everyone seeking spiritual growth, fellowship, and a deeper relationship with God."}
+              {newHereData?.leadersMessage || "Welcome to ThaGospel Church! We are excited to have you join our community of faith. Our doors are open to everyone seeking spiritual growth, fellowship, and a deeper relationship with God."}
             </p>
           </div>
         </section>
 
         {/* Frequently Asked Questions */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData.faqTitle || 'Frequently Asked Questions'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.faqTitle || 'Frequently Asked Questions'}</h2>
           <div className="space-y-6">
-            {newHereData.faq?.map((item: any, index: number) => (
+            {newHereData?.faq?.map((item: any, index: number) => (
               <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-6">
                 <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
                 <p className="text-gray-700 dark:text-gray-300">{item.answer}</p>
@@ -305,12 +305,12 @@ export default async function NewHere() {
 
         {/* Call to Action */}
         <section className="text-center bg-green-600 text-white p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-4">{newHereData.ctaTitle || 'Ready to Visit ThaGospel Church?'}</h2>
+          <h2 className="text-3xl font-bold mb-4">{newHereData?.ctaTitle || 'Ready to Visit ThaGospel Church?'}</h2>
           <p className="text-lg mb-6 max-w-2xl mx-auto">
-            {newHereData.ctaSubtitle || "We can't wait to meet you and welcome you into our church family."}
+            {newHereData?.ctaSubtitle || "We can't wait to meet you and welcome you into our church family."}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {newHereData.ctaButtons?.map((button: any, index: number) => (
+            {newHereData?.ctaButtons?.map((button: any, index: number) => (
               <a
                 key={index}
                 href={button.url}

@@ -3,9 +3,11 @@
 import { useTheme } from './theme-provider';
 import Link from 'next/link';
 
-const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: any, bottomText?: string }) => {
+const Footer = ({ homepage }) => {
   const { theme } = useTheme();
-  const footerColumns = columns || [
+  const columns = homepage?.footerColumns;
+  const contact = homepage?.footerContact;
+  const bottomText = homepage?.footerBottomText;
     {
       title: 'About',
       links: [

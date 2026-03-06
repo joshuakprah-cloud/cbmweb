@@ -19,7 +19,7 @@ const NavItem = React.memo<NavItemProps>(({ item, isActive }) => {
       <Link
         href={item.href}
         className={`relative text-foreground hover:text-red-500 transition-colors duration-200 ${
-          isActive ? 'text-red-500' : ''
+          isActive ? 'text-red-500 hover:text-red-600' : ''
         }`}
         aria-label={item.title}
       >

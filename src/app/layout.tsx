@@ -44,23 +44,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'GA_MEASUREMENT_ID');
-          `}
-        </Script>
-        <Script id="sw-register" strategy="afterInteractive">
-          {`
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('/sw.js')
-                .then(registration => console.log('SW registered'))
-                .catch(error => console.log('SW registration failed'));
-            }
-          `}
-        </Script>
+        <Script src="/scripts/analytics.js" strategy="afterInteractive" />
+        <Script src="/scripts/sw-register.js" strategy="afterInteractive" />
         <ThemeProvider defaultTheme="light">
           {children}
         </ThemeProvider>

@@ -1,8 +1,12 @@
 import Navbar from '../components/navbar/Navbar';
 import Hero from '../components/Hero';
 import YouBelongHere from '../components/YouBelongHere';
+import About from '../components/About';
 import UpcomingEvent from '../components/UpcomingEvent';
 import MeetPastor from '../components/MeetPastor';
+import Services from '../components/Services';
+import SermonSection from '../components/SermonSection';
+import MinistriesSection from '../components/MinistriesSection';
 import GlobalPresenceStrip from '../components/GlobalPresenceStrip';
 import Footer from '../components/Footer';
 

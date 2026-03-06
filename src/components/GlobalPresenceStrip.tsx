@@ -1,4 +1,4 @@
-const GlobalPresenceStrip = ({ homepage }) => {
+const GlobalPresenceStrip = ({ homepage }: { homepage: any }) => {
   const locations = [
     { country: 'Ghana (HQ)', flag: '🇬🇭' },
     { country: 'UK', flag: '🇬🇧' },

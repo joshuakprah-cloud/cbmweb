@@ -1,4 +1,4 @@
-const MeetPastor = ({ pastorMessage }) => {
+const MeetPastor = ({ pastorMessage }: { pastorMessage: any }) => {
   return (
     <section className="py-16 bg-background">
       <div className="max-w-7xl mx-auto px-4">

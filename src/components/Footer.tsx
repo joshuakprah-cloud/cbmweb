@@ -55,7 +55,7 @@ const Footer = ({ homepage }: { homepage?: any }) => {
     <footer className="bg-primary text-primary-foreground py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
-          {columns?.map((column, index) => (
+          {columns?.map((column: any, index: number) => (
             <div key={index}>
               <h3 className={`${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} mb-4 font-inter`}>{column.title}</h3>
               <ul className="space-y-2">

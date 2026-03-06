@@ -2,7 +2,6 @@
 
 import { useTheme } from './theme-provider';
 import Link from 'next/link';
-import GlobalPresenceStrip from './GlobalPresenceStrip';
 
 const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: any, bottomText?: string }) => {
   const { theme } = useTheme();
@@ -35,39 +34,12 @@ const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: a
       ],
     },
     {
-      title: 'Headquarters (Ghana)',
+      title: 'Branches',
       links: [
-        { text: contact?.churchName || 'ThaGospel Church', url: '' },
-        { text: contact?.address || 'Accra, Ghana', url: '' },
-        { text: contact?.phone ? `Phone: ${contact.phone}` : 'Phone: (Insert)', url: '' },
-        { text: contact?.email ? `Email: ${contact.email}` : 'Email: (Insert)', url: '' },
-      ],
-    },
-    {
-      title: 'Zimbabwe',
-      links: [
-        { text: 'ThaGospel Church Zimbabwe', url: '' },
-        { text: 'Harare, Zimbabwe', url: '' },
-        { text: 'Phone: (Insert)', url: '' },
-        { text: 'Email: (Insert)', url: '' },
-      ],
-    },
-    {
-      title: 'UK',
-      links: [
-        { text: 'ThaGospel Church UK', url: '' },
-        { text: 'London, UK', url: '' },
-        { text: 'Phone: (Insert)', url: '' },
-        { text: 'Email: (Insert)', url: '' },
-      ],
-    },
-    {
-      title: 'Germany',
-      links: [
-        { text: 'ThaGospel Church Germany', url: '' },
-        { text: 'Berlin, Germany', url: '' },
-        { text: 'Phone: (Insert)', url: '' },
-        { text: 'Email: (Insert)', url: '' },
+        { text: 'Ghana HQ: Accra, Ghana', url: '' },
+        { text: 'Zimbabwe: Harare, Zimbabwe', url: '' },
+        { text: 'UK: London, UK', url: '' },
+        { text: 'Germany: Berlin, Germany', url: '' },
       ],
     },
   ];
@@ -79,7 +51,7 @@ const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: a
   return (
     <footer className="bg-primary text-primary-foreground py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8">
           {footerColumns.map((column, index) => (
             <div key={index}>
               <h3 className={`${theme === 'light' ? 'text-purple-400' : 'text-purple-300'} mb-4 font-inter`}>{column.title}</h3>
@@ -101,7 +73,6 @@ const Footer = ({ columns, contact, bottomText }: { columns?: any[], contact?: a
             </div>
           ))}
         </div>
-        <GlobalPresenceStrip />
         {contact?.serviceTimes && (
           <div className="mt-8 pt-8 border-t border-border">
             <div className="text-center">

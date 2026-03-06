@@ -29,10 +29,15 @@ export default async function Home() {
         heroSecondaryButton={data?.heroSecondaryButton} 
         heroSmallLine={data?.heroSmallLine} 
       />
-      <YouBelongHere />
+      <YouBelongHere items={data?.quickActions} />
+      <About homepage={data} />
+      <MeetPastor pastorMessage={data?.pastorMessage} />
+      <Services homepage={data} />
       <UpcomingEvent />
-      <MeetPastor />
-      <Footer />
+      <SermonSection homepage={data} />
+      <MinistriesSection homepage={data} />
+      <GlobalPresenceStrip homepage={data} />
+      <Footer homepage={data} />
     </div>
   );
 }

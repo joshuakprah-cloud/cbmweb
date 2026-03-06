@@ -1,5 +1,0 @@
-[00:01:00.698] Server  LOG     ✓ Ready in 40.1s
-[00:01:06.264] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:06.577] Browser ERROR   uncaughtError: ChunkLoadError: Failed to load chunk /_next/static/chunks/node_modules_%40sanity_1921ff80._.js from module [project]/node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development.js [app-client] (ecmascript)
-[00:01:14.421] Server  LOG     ○ Compiling /_not-found/page ...
-[02:20:26.668] Server  LOG       Reload env: .env.local

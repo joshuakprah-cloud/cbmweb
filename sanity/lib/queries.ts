@@ -143,3 +143,47 @@ export const sermonsQuery = groq`
     branch
   }
 `
+
+export const newHereQuery = groq`
+  *[_type == "newHere"][0] {
+    heroTitle,
+    heroSubtitle,
+    heroBackgroundImage,
+    whatToExpectTitle,
+    whatToExpect[] {
+      title,
+      description,
+      icon
+    },
+    sundayExperienceTitle,
+    sundayExperience[] {
+      title,
+      description
+    },
+    photoGalleryTitle,
+    photoGallery[] {
+      image,
+      alt,
+      caption
+    },
+    connectTitle,
+    visitInfo,
+    connectItems,
+    leadersTitle,
+    prophet,
+    firstLady,
+    leadersMessage,
+    faqTitle,
+    faq[] {
+      question,
+      answer
+    },
+    ctaTitle,
+    ctaSubtitle,
+    ctaButtons[] {
+      text,
+      url,
+      color
+    }
+  }
+`

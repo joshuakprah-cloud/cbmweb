@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 52, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/quame/Desktop/CWS/src/app/api/giving-types/route.ts"],"sourcesContent":["import { NextResponse } from 'next/server'\nimport { createClient } from 'next-sanity'\n\nconst client = createClient({\n  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,\n  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,\n  apiVersion: '2023-01-01',\n  useCdn: false,\n  token: process.env.SANITY_AUTH_TOKEN!,\n})\n\nexport async function GET() {\n  try {\n    const givingTypes = await client.fetch(`\n      *[_type == \"givingType\" && isActive == true]{\n        _id,\n        title,\n        description,\n        suggestedAmounts\n      }\n    `)\n    return NextResponse.json(givingTypes)\n  } catch (error) {\n    console.error(error)\n    return NextResponse.json({ error: 'Failed to fetch giving types' }, { status: 500 })\n  }\n}\n"],"names":[],"mappings":";;;;AAAA;AACA;;;AAEA,MAAM,SAAS,IAAA,gMAAY,EAAC;IAC1B,SAAS;IACT,OAAO;IACP,YAAY;IACZ,QAAQ;IACR,OAAO,QAAQ,GAAG,CAAC,iBAAiB;AACtC;AAEO,eAAe;IACpB,IAAI;QACF,MAAM,cAAc,MAAM,OAAO,KAAK,CAAC,CAAC;;;;;;;IAOxC,CAAC;QACD,OAAO,gJAAY,CAAC,IAAI,CAAC;IAC3B,EAAE,OAAO,OAAO;QACd,QAAQ,KAAK,CAAC;QACd,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,OAAO;QAA+B,GAAG;YAAE,QAAQ;QAAI;IACpF;AACF"}}]
-}

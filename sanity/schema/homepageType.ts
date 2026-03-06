@@ -171,29 +171,6 @@ export const homepageType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'testimonialsHeadline',
-      title: 'Testimonials Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'testimonials',
-      title: 'Testimonials',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'testimonial',
-          title: 'Testimonial',
-          type: 'reference',
-          to: [{ type: 'testimony' }],
-        }),
-      ],
-    }),
-    defineField({
-      name: 'testimonialsButton',
-      title: 'Testimonials Button Text',
-      type: 'string',
-    }),
-    defineField({
       name: 'globalHeadline',
       title: 'Global Headline',
       type: 'string',

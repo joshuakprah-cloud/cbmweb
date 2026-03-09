@@ -5,44 +5,152 @@ export const homepageType = defineType({
   title: 'Homepage',
   type: 'document',
   fields: [
+    // NEW: Hero Gallery Section
+    defineField({
+      name: 'heroSlides',
+      title: 'Hero Gallery Slides',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'slide',
+          title: 'Slide',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string' }),
+            defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
+            defineField({ name: 'cta', title: 'CTA Button Text', type: 'string' }),
+            defineField({ name: 'image', title: 'Background Image', type: 'image' }),
+            defineField({ name: 'order', title: 'Order', type: 'number' }),
+          ],
+        }),
+      ],
+    }),
+    
+    // NEW: Welcome Section
+    defineField({
+      name: 'welcomeTitle',
+      title: 'Welcome Section Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'welcomeMessage',
+      title: 'Welcome Message',
+      type: 'text',
+    }),
+    defineField({
+      name: 'welcomeImage',
+      title: 'Welcome Section Image',
+      type: 'image',
+    }),
+    
+    // NEW: Quick Access Ministry Links
+    defineField({
+      name: 'ministryLinks',
+      title: 'Quick Access Ministry Links',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'link',
+          title: 'Ministry Link',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string' }),
+            defineField({ name: 'href', title: 'Link URL', type: 'string' }),
+            defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
+            defineField({ name: 'order', title: 'Order', type: 'number' }),
+          ],
+        }),
+      ],
+    }),
+    
+    // NEW: Latest Sermon
+    defineField({
+      name: 'latestSermon',
+      title: 'Latest Sermon',
+      type: 'object',
+      fields: [
+        defineField({ name: 'title', title: 'Sermon Title', type: 'string' }),
+        defineField({ name: 'speaker', title: 'Speaker Name', type: 'string' }),
+        defineField({ name: 'date', title: 'Sermon Date', type: 'date' }),
+        defineField({ name: 'duration', title: 'Duration (e.g., 45:23)', type: 'string' }),
+        defineField({ name: 'audioUrl', title: 'Audio URL', type: 'url' }),
+        defineField({ name: 'coverImage', title: 'Sermon Cover Image', type: 'image' }),
+      ],
+    }),
+    
+    // NEW: Upcoming Events
+    defineField({
+      name: 'upcomingEvents',
+      title: 'Upcoming Events',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'event',
+          title: 'Event',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Event Title', type: 'string' }),
+            defineField({ name: 'date', title: 'Event Date', type: 'string' }),
+            defineField({ name: 'time', title: 'Event Time', type: 'string' }),
+            defineField({ name: 'venue', title: 'Event Venue', type: 'string' }),
+            defineField({ name: 'flyerImage', title: 'Event Flyer Image', type: 'image' }),
+            defineField({ name: 'description', title: 'Event Description', type: 'text' }),
+          ],
+        }),
+      ],
+    }),
+    
+    // NEW: Prayer Section
+    defineField({
+      name: 'prayerSection',
+      title: 'Prayer Request Section',
+      type: 'object',
+      fields: [
+        defineField({ name: 'backgroundImage', title: 'Background Image', type: 'image' }),
+        defineField({ name: 'title', title: 'Section Title', type: 'string' }),
+        defineField({ name: 'submitButtonText', title: 'Submit Button Text', type: 'string' }),
+      ],
+    }),
+    
+    // Legacy fields for backward compatibility
     defineField({
       name: 'heroHeadline',
-      title: 'Hero Headline',
+      title: 'Hero Headline (Legacy)',
       type: 'string',
     }),
     defineField({
       name: 'heroSubtext',
-      title: 'Hero Subtext',
+      title: 'Hero Subtext (Legacy)',
       type: 'text',
     }),
     defineField({
       name: 'heroBackgroundImage',
-      title: 'Hero Background Image',
+      title: 'Hero Background Image (Legacy)',
       type: 'image',
     }),
     defineField({
       name: 'heroBackgroundImageAlt',
-      title: 'Hero Background Image Alt',
+      title: 'Hero Background Image Alt (Legacy)',
       type: 'string',
     }),
     defineField({
       name: 'heroPrimaryButton',
-      title: 'Hero Primary Button Text',
+      title: 'Hero Primary Button Text (Legacy)',
       type: 'string',
     }),
     defineField({
       name: 'heroSecondaryButton',
-      title: 'Hero Secondary Button Text',
+      title: 'Hero Secondary Button Text (Legacy)',
       type: 'string',
     }),
     defineField({
       name: 'heroSmallLine',
-      title: 'Hero Small Line',
+      title: 'Hero Small Line (Legacy)',
       type: 'string',
     }),
     defineField({
       name: 'quickActions',
-      title: 'Quick Actions',
+      title: 'Quick Actions (Legacy)',
       type: 'array',
       of: [
         defineField({
@@ -56,202 +164,6 @@ export const homepageType = defineType({
           ],
         }),
       ],
-    }),
-    defineField({
-      name: 'aboutHeadline',
-      title: 'About Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'aboutContent',
-      title: 'About Content',
-      type: 'text',
-    }),
-    defineField({
-      name: 'pastorMessage',
-      title: 'Pastor Message',
-      type: 'text',
-    }),
-    defineField({
-      name: 'aboutButton',
-      title: 'About Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'servicesHeadline',
-      title: 'Services Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-    }),
-    defineField({
-      name: 'locationLat',
-      title: 'Location Latitude',
-      type: 'number',
-    }),
-    defineField({
-      name: 'locationLng',
-      title: 'Location Longitude',
-      type: 'number',
-    }),
-    defineField({
-      name: 'serviceTimes',
-      title: 'Service Times',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({
-      name: 'midweekService',
-      title: 'Midweek Service',
-      type: 'string',
-    }),
-    defineField({
-      name: 'servicesButton',
-      title: 'Services Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'servicesSmallLine',
-      title: 'Services Small Line',
-      type: 'string',
-    }),
-    defineField({
-      name: 'sermonHeadline',
-      title: 'Sermon Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'sermonIntro',
-      title: 'Sermon Intro',
-      type: 'text',
-    }),
-    defineField({
-      name: 'sermonButton',
-      title: 'Sermon Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'sermonSecondaryButton',
-      title: 'Sermon Secondary Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'ministriesHeadline',
-      title: 'Ministries Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'ministriesIntro',
-      title: 'Ministries Intro',
-      type: 'text',
-    }),
-    defineField({
-      name: 'ministries',
-      title: 'Ministries',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'ministry',
-          title: 'Ministry',
-          type: 'object',
-          fields: [
-            defineField({ name: 'name', title: 'Name', type: 'string' }),
-            defineField({ name: 'description', title: 'Description', type: 'text' }),
-            defineField({ name: 'image', title: 'Image', type: 'image' }),
-          ],
-        }),
-      ],
-    }),
-    defineField({
-      name: 'ministriesButton',
-      title: 'Ministries Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'globalHeadline',
-      title: 'Global Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'globalContent',
-      title: 'Global Content',
-      type: 'text',
-    }),
-    defineField({
-      name: 'globalButton',
-      title: 'Global Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'socialMedia',
-      title: 'Social Media',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'platform',
-          title: 'Platform',
-          type: 'object',
-          fields: [
-            defineField({ name: 'name', title: 'Name', type: 'string' }),
-            defineField({ name: 'url', title: 'URL', type: 'url' }),
-            defineField({ name: 'icon', title: 'Icon', type: 'string' }),
-          ],
-        }),
-      ],
-    }),
-    defineField({
-      name: 'ctaHeadline',
-      title: 'CTA Headline',
-      type: 'string',
-    }),
-    defineField({
-      name: 'ctaText',
-      title: 'CTA Text',
-      type: 'text',
-    }),
-    defineField({
-      name: 'ctaPrimaryButton',
-      title: 'CTA Primary Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'ctaSecondaryButton',
-      title: 'CTA Secondary Button Text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'footerColumns',
-      title: 'Footer Columns',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'column',
-          title: 'Column',
-          type: 'object',
-          fields: [
-            defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'links', title: 'Links', type: 'array', of: [{ type: 'string' }] }),
-          ],
-        }),
-      ],
-    }),
-    defineField({
-      name: 'footerContact',
-      title: 'Footer Contact',
-      type: 'object',
-      fields: [
-        defineField({ name: 'phone', title: 'Phone', type: 'string' }),
-        defineField({ name: 'email', title: 'Email', type: 'string' }),
-        defineField({ name: 'address', title: 'Address', type: 'text' }),
-      ],
-    }),
-    defineField({
-      name: 'footerBottomText',
-      title: 'Footer Bottom Text',
-      type: 'string',
     }),
     defineField({
       name: 'prophetName',
@@ -289,43 +201,35 @@ export const homepageType = defineType({
       type: 'text',
     }),
     defineField({
-      name: 'whatToExpectTitle',
-      title: 'What To Expect Title',
-      type: 'string',
-    }),
-    defineField({
-      name: 'whatToExpectItems',
-      title: 'What To Expect Items',
+      name: 'footerColumns',
+      title: 'Footer Columns',
       type: 'array',
       of: [
         defineField({
-          name: 'item',
-          title: 'Item',
+          name: 'column',
+          title: 'Column',
           type: 'object',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'description', title: 'Description', type: 'text' }),
-            defineField({ name: 'icon', title: 'Icon', type: 'string' }),
+            defineField({ name: 'links', title: 'Links', type: 'array', of: [{ type: 'string' }] }),
           ],
         }),
       ],
     }),
     defineField({
-      name: 'globalCountries',
-      title: 'Global Countries',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'country',
-          title: 'Country',
-          type: 'object',
-          fields: [
-            defineField({ name: 'name', title: 'Name', type: 'string' }),
-            defineField({ name: 'flagImage', title: 'Flag Image', type: 'image' }),
-            defineField({ name: 'link', title: 'Link', type: 'string' }),
-          ],
-        }),
+      name: 'footerContact',
+      title: 'Footer Contact',
+      type: 'object',
+      fields: [
+        defineField({ name: 'phone', title: 'Phone', type: 'string' }),
+        defineField({ name: 'email', title: 'Email', type: 'string' }),
+        defineField({ name: 'address', title: 'Address', type: 'text' }),
       ],
+    }),
+    defineField({
+      name: 'footerBottomText',
+      title: 'Footer Bottom Text',
+      type: 'string',
     }),
   ],
 })

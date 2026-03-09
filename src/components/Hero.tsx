@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Hero = ({ heroHeadline, heroSubtext, heroBackgroundImage, heroBackgroundImageAlt, heroPrimaryButton, heroSecondaryButton, heroSmallLine }: { heroHeadline?: string, heroSubtext?: string, heroBackgroundImage?: any, heroBackgroundImageAlt?: string, heroPrimaryButton?: string, heroSecondaryButton?: string, heroSmallLine?: string }) => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
       {(heroBackgroundImage || true) && ( // Always show, with fallback if needed
         <Image
           src={heroBackgroundImage ? urlFor(heroBackgroundImage).url() : '/fallback-hero.jpg'} // Add fallback image

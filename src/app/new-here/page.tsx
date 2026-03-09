@@ -2,12 +2,15 @@ import { client } from '../../../sanity/lib/client'
 import { newHereQuery } from '../../../sanity/lib/queries'
 import { urlFor } from '../../../sanity/lib/image'
 import Image from 'next/image'
+import TestimonialCarousel from '../../components/TestimonialCarousel'
+import PlanYourVisit from '../../components/PlanYourVisit'
 
 export default async function NewHere() {
   let newHereData = null
 
   try {
     newHereData = await client.fetch(newHereQuery)
+    console.log('NewHere data fetched:', newHereData)
   } catch (error) {
     console.error('Error fetching New Here data:', error)
     // Return null so fallback content is shown
@@ -25,10 +28,27 @@ export default async function NewHere() {
           backgroundPosition: 'center'
         } : undefined}
       >
+        {newHereData?.heroBackgroundImage && <div className="absolute inset-0 bg-black/50"></div>}
         {!newHereData?.heroBackgroundImage && <div className="absolute inset-0 bg-black/20"></div>}
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">{newHereData?.heroTitle || 'Welcome to ThaGospel Church'}</h1>
-          <p className="text-xl md:text-2xl drop-shadow-md max-w-2xl mx-auto">{newHereData?.heroSubtitle || "We're glad you're here! Discover what to expect and how to get connected."}</p>
+          <p className="text-xl md:text-2xl drop-shadow-md max-w-2xl mx-auto mb-6">{newHereData?.heroSubtitle || "We're glad you're here! Discover what to expect and how to get connected."}</p>
+
+          {/* Feature Indicators */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm md:text-base">
+            <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+              <span className="mr-2">👨‍👩‍👧‍👦</span>
+              <span className="font-medium">Family Friendly</span>
+            </div>
+            <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+              <span className="mr-2">🙏</span>
+              <span className="font-medium">Spirit-filled Worship</span>
+            </div>
+            <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+              <span className="mr-2">📖</span>
+              <span className="font-medium">Biblical Teaching</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -76,8 +96,7 @@ export default async function NewHere() {
         {/* Sunday Experience Timeline */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.sundayExperienceTitle || 'Your First Sunday'}</h2>
-          <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-300 hidden md:block"></div>
+          <div className="relative max-w-4xl mx-auto pl-4 md:pl-8">
             <div className="space-y-8">
               {newHereData?.sundayExperience?.map((step: any, index: number) => (
                 <div key={index} className="flex items-start">
@@ -140,20 +159,20 @@ export default async function NewHere() {
 
         {/* Photo Gallery */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.photoGalleryTitle || 'See What Sunday Feels Like'}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">See What Sunday Feels Like</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {newHereData?.photoGallery?.map((photo: any, index: number) => (
-              <div key={index} className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+              <div key={index} className="aspect-square bg-gray-200 rounded-lg overflow-hidden group cursor-pointer">
                 {photo.image ? (
                   <Image
                     src={urlFor(photo.image).url()}
                     alt={photo.alt || 'Church photo'}
                     width={400}
                     height={400}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                     <div className="text-center">
                       <span className="text-4xl mb-2 block">
                         {index === 0 ? '🎵' : index === 1 ? '👥' : index === 2 ? '👶' : '☕'}
@@ -165,26 +184,26 @@ export default async function NewHere() {
               </div>
             )) || (
               <>
-                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
+                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center group cursor-pointer overflow-hidden">
+                  <div className="text-center transition-transform duration-300 group-hover:scale-110">
                     <span className="text-4xl mb-2 block">🎵</span>
                     <p className="text-sm text-gray-600">Worship Moment</p>
                   </div>
                 </div>
-                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
+                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center group cursor-pointer overflow-hidden">
+                  <div className="text-center transition-transform duration-300 group-hover:scale-110">
                     <span className="text-4xl mb-2 block">👥</span>
                     <p className="text-sm text-gray-600">Church Congregation</p>
                   </div>
                 </div>
-                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
+                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center group cursor-pointer overflow-hidden">
+                  <div className="text-center transition-transform duration-300 group-hover:scale-110">
                     <span className="text-4xl mb-2 block">👶</span>
                     <p className="text-sm text-gray-600">Children Ministry</p>
                   </div>
                 </div>
-                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
+                <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center group cursor-pointer overflow-hidden">
+                  <div className="text-center transition-transform duration-300 group-hover:scale-110">
                     <span className="text-4xl mb-2 block">☕</span>
                     <p className="text-sm text-gray-600">Fellowship</p>
                   </div>
@@ -227,54 +246,64 @@ export default async function NewHere() {
 
         {/* Meet Our Spiritual Leaders */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.leadersTitle || 'Meet Our Spiritual Leaders'}</h2>
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Spiritual Leaders</h2>
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* Prophet/Lead Pastor */}
             <div className="text-center">
-              {newHereData?.prophet?.image ? (
-                <Image
-                  src={urlFor(newHereData.prophet.image).url()}
-                  alt={newHereData.prophet.name || 'Prophet'}
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-              ) : (
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-4xl">👨‍🏫</span>
-                </div>
-              )}
-              <h3 className="text-xl font-semibold">{newHereData?.prophet?.name || 'Prophet Name'}</h3>
-              <p className="text-blue-600 dark:text-blue-400">{newHereData?.prophet?.title || 'Lead Prophet'}</p>
+              <div className="relative w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden shadow-lg">
+                {newHereData?.prophetImage ? (
+                  <Image
+                    src={urlFor(newHereData.prophetImage).url()}
+                    alt={newHereData.prophetName || 'Lead Prophet'}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span className="text-4xl text-white">👨‍⚖️</span>
+                  </div>
+                )}
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{newHereData?.prophetName || 'Prophet John Doe'}</h3>
+              <p className="text-blue-600 dark:text-blue-400">{newHereData?.prophetTitle || 'Lead Prophet'}</p>
             </div>
+
+            {/* First Lady */}
             <div className="text-center">
-              {newHereData?.firstLady?.image ? (
-                <Image
-                  src={urlFor(newHereData.firstLady.image).url()}
-                  alt={newHereData.firstLady.name || 'First Lady'}
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-              ) : (
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-4xl">👩‍🏫</span>
-                </div>
-              )}
-              <h3 className="text-xl font-semibold">{newHereData?.firstLady?.name || 'First Lady Name'}</h3>
-              <p className="text-blue-600 dark:text-blue-400">{newHereData?.firstLady?.title || 'First Lady'}</p>
+              <div className="relative w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden shadow-lg">
+                {newHereData?.firstLadyImage ? (
+                  <Image
+                    src={urlFor(newHereData.firstLadyImage).url()}
+                    alt={newHereData.firstLadyName || 'First Lady'}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                    <span className="text-4xl text-white">👩‍⚖️</span>
+                  </div>
+                )}
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{newHereData?.firstLadyName || 'Lady Jane Doe'}</h3>
+              <p className="text-blue-600 dark:text-blue-400">{newHereData?.firstLadyTitle || 'First Lady'}</p>
             </div>
           </div>
-          <div className="text-center max-w-3xl mx-auto">
-            <p className="text-lg text-gray-700 dark:text-gray-300 italic">
-              {newHereData?.leadersMessage || "Welcome to ThaGospel Church! We are excited to have you join our community of faith. Our doors are open to everyone seeking spiritual growth, fellowship, and a deeper relationship with God."}
-            </p>
+
+          {/* Welcome Message */}
+          <div className="text-center max-w-4xl mx-auto">
+            <blockquote className="text-lg md:text-xl italic text-gray-700 dark:text-gray-300">
+              "Welcome to ThaGospel Church. Our heart is to raise believers rooted in truth and empowered for impact across nations."
+            </blockquote>
           </div>
         </section>
+
+        {/* Plan Your Visit */}
+        <PlanYourVisit />
 
         {/* Frequently Asked Questions */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">{newHereData?.faqTitle || 'Frequently Asked Questions'}</h2>
-          <div className="space-y-6">
+          <div className="max-w-4xl mx-auto pl-4 md:pl-8 space-y-6">
             {newHereData?.faq?.map((item: any, index: number) => (
               <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-6">
                 <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
@@ -303,40 +332,47 @@ export default async function NewHere() {
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="text-center bg-green-600 text-white p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-4">{newHereData?.ctaTitle || 'Ready to Visit ThaGospel Church?'}</h2>
-          <p className="text-lg mb-6 max-w-2xl mx-auto">
-            {newHereData?.ctaSubtitle || "We can't wait to meet you and welcome you into our church family."}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {newHereData?.ctaButtons?.map((button: any, index: number) => (
-              <a
-                key={index}
-                href={button.url}
-                className={`px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors ${
-                  button.color === 'white'
-                    ? 'bg-white text-green-600 hover:bg-gray-100'
-                    : button.color === 'blue'
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-purple-600 text-white hover:bg-purple-700'
-                }`}
-              >
-                {button.text}
-              </a>
-            )) || (
-              <>
-                <a href="/plan-your-visit" className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                  Plan Your Visit
+        {/* Lives Being Changed */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-12 text-center">Lives Being Changed</h2>
+          <TestimonialCarousel />
+        </section>
+
+        {/* Final Call to Action */}
+        <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 rounded-lg mx-4">
+          <div className="text-center max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Visit ThaGospel Church?</h2>
+            <p className="text-xl mb-8 opacity-90">We can't wait to meet you and welcome you into our church family.</p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              {newHereData?.ctaButtons?.map((button: any, index: number) => (
+                <a
+                  key={index}
+                  href={button.url || '#'}
+                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                    button.color === 'white'
+                      ? 'bg-white text-blue-600 hover:bg-gray-100'
+                      : button.color === 'blue'
+                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      : 'bg-purple-700 text-white hover:bg-purple-800'
+                  }`}
+                >
+                  {button.text}
                 </a>
-                <a href="/overview" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                  Learn More About Us
-                </a>
-                <a href="/contact" className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
-                  Contact Us
-                </a>
-              </>
-            )}
+              )) || (
+                <>
+                  <a href="/about" className="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Plan Your Visit
+                  </a>
+                  <a href="/about" className="px-8 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors">
+                    Learn More About Us
+                  </a>
+                  <a href="/contact" className="px-8 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-800 transition-colors">
+                    Contact Us
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </section>
       </div>

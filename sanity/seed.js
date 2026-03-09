@@ -263,6 +263,120 @@ const documents = [
     message: 'This church changed my life.',
     branch: 'ghana',
   },
+  // New Here Page
+  {
+    _type: 'newHere',
+    heroTitle: 'Welcome to ThaGospel Church',
+    heroSubtitle: 'We\'re glad you\'re here! Discover what to expect and how to get connected.',
+    heroBackgroundImage: null,
+    whatToExpectTitle: 'What to Expect',
+    whatToExpect: [
+      {
+        title: 'Worship Service',
+        description: 'Experience uplifting worship with contemporary music, powerful preaching, and a welcoming atmosphere.',
+        icon: '🙏'
+      },
+      {
+        title: 'Friendly Community',
+        description: 'Join a community of believers who care about each other and support one another in faith.',
+        icon: '🤝'
+      },
+      {
+        title: 'Bible Teaching',
+        description: 'Learn from the Word of God through relevant, life-changing messages and Bible studies.',
+        icon: '📚'
+      }
+    ],
+    sundayExperienceTitle: 'Your First Sunday',
+    sundayExperience: [
+      {
+        title: 'Arrival & Welcome',
+        description: 'Warm greetings and seating assistance as you enter our welcoming environment.'
+      },
+      {
+        title: 'Worship',
+        description: 'Spirit-filled music and praise that creates an atmosphere of worship and celebration.'
+      },
+      {
+        title: 'Message',
+        description: 'Biblical teaching that\'s relevant to everyday life and applicable to your journey.'
+      },
+      {
+        title: 'Fellowship',
+        description: 'Meet people and build connections over refreshments and conversation after service.'
+      }
+    ],
+    photoGalleryTitle: 'See What Sunday Feels Like',
+    photoGallery: [
+      { caption: 'Worship Moment', image: null },
+      { caption: 'Church Congregation', image: null },
+      { caption: 'Children Ministry', image: null },
+      { caption: 'Fellowship', image: null }
+    ],
+    connectTitle: 'How to Get Connected',
+    visitInfo: {
+      services: '7:30 AM & 10:30 AM',
+      location: 'ThaGospel Church, Accra, Ghana',
+      parking: 'Available on-site',
+      greeters: 'Friendly team to help you find your way'
+    },
+    connectItems: [
+      'Fill out visitor card during service',
+      'Join fellowship after service',
+      'Sign up for email newsletter',
+      'Follow us on social media'
+    ],
+    leadersTitle: 'Meet Our Spiritual Leaders',
+    prophet: {
+      name: 'Prophet Name',
+      title: 'Lead Prophet',
+      image: null
+    },
+    firstLady: {
+      name: 'First Lady Name',
+      title: 'First Lady',
+      image: null
+    },
+    leadersMessage: 'Welcome to ThaGospel Church! We are excited to have you join our community of faith. Our doors are open to everyone seeking spiritual growth, fellowship, and a deeper relationship with God.',
+    faqTitle: 'Frequently Asked Questions',
+    faq: [
+      {
+        question: 'What should I wear?',
+        answer: 'Casual attire is perfectly fine. Come as you are!'
+      },
+      {
+        question: 'Are children welcome?',
+        answer: 'Absolutely! We have programs for all ages and love having families worship together.'
+      },
+      {
+        question: 'How long is the service?',
+        answer: 'Our Sunday services typically last about 90 minutes.'
+      },
+      {
+        question: 'Can I participate if I\'m not a member?',
+        answer: 'Yes! Everyone is welcome to participate in our services and activities.'
+      }
+    ],
+    ctaTitle: 'Ready to Visit ThaGospel Church?',
+    ctaSubtitle: 'We can\'t wait to meet you and welcome you into our church family.',
+    ctaButtons: [
+      {
+        text: 'Plan Your Visit',
+        url: '/plan-your-visit',
+        color: 'white'
+      },
+      {
+        text: 'Learn More About Us',
+        url: '/overview',
+        color: 'blue'
+      },
+      {
+        text: 'Contact Us',
+        url: '/contact',
+        color: 'purple'
+      }
+    ]
+  }
 ];
 
 async function seed() {

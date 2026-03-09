@@ -11,25 +11,44 @@ export type NavItemType = {
 interface NavItemProps {
   item: NavItemType;
   isActive: boolean;
+  pathname: string;
 }
 
-const NavItem = React.memo<NavItemProps>(({ item, isActive }) => {
+const NavItem = React.memo<NavItemProps>(({ item, isActive, pathname }) => {
+  const isAboutPage = pathname.startsWith('/about');
+
   return (
     <div className="relative group">
-      <Link
-        href={item.href}
-        className={`relative text-foreground hover:text-red-500 transition-colors duration-200 ${
-          isActive ? 'text-red-500 hover:text-red-600' : ''
-        }`}
-        aria-label={item.title}
-      >
-        {item.title}
+      {isAboutPage ? (
         <span
-          className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
-            isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+          className={`relative text-foreground cursor-default ${
+            isActive ? 'text-red-500' : 'text-gray-400'
           }`}
-        ></span>
-      </Link>
+          aria-label={item.title}
+        >
+          {item.title}
+          <span
+            className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
+              isActive ? 'scale-x-100' : 'scale-x-0'
+            }`}
+          ></span>
+        </span>
+      ) : (
+        <Link
+          href={item.href}
+          className={`relative text-foreground hover:text-red-500 transition-colors duration-200 ${
+            isActive ? 'text-red-500 hover:text-red-600' : ''
+          }`}
+          aria-label={item.title}
+        >
+          {item.title}
+          <span
+            className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
+              isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`}
+          ></span>
+        </Link>
+      )}
       {item.dropdown && <Dropdown items={item.dropdown} />}
     </div>
   );

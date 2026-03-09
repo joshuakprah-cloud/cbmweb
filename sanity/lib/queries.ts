@@ -2,6 +2,65 @@ import { groq } from 'next-sanity'
 
 export const homepageQuery = groq`
   *[_type == "homepage"][0] {
+    // Hero Gallery Section
+    heroSlides[]{
+      title,
+      subtitle,
+      cta,
+      image,
+      order
+    },
+    
+    // Welcome Section
+    welcomeTitle,
+    welcomeMessage,
+    welcomeImage,
+    
+    // Spiritual Leaders
+    prophetName,
+    prophetTitle,
+    prophetImage,
+    firstLadyName,
+    firstLadyTitle,
+    firstLadyImage,
+    leadersWelcomeMessage,
+    
+    // Quick Access Ministry Links
+    ministryLinks[]{
+      title,
+      href,
+      icon,
+      order
+    },
+    
+    // Latest Sermon
+    latestSermon{
+      title,
+      speaker,
+      date,
+      duration,
+      audioUrl,
+      coverImage
+    },
+    
+    // Upcoming Events
+    upcomingEvents[]{
+      title,
+      date,
+      time,
+      venue,
+      flyerImage,
+      description
+    },
+    
+    // Prayer Section
+    prayerSection{
+      backgroundImage,
+      title,
+      submitButtonText
+    },
+    
+    // Legacy fields for backward compatibility
     heroHeadline,
     heroSubtext,
     backgroundImage,
@@ -45,13 +104,6 @@ export const homepageQuery = groq`
     footerColumns,
     footerContact,
     footerBottomText,
-    prophetName,
-    prophetTitle,
-    prophetImage,
-    firstLadyName,
-    firstLadyTitle,
-    firstLadyImage,
-    leadersWelcomeMessage,
     whatToExpectTitle,
     whatToExpectItems[]{
       title,

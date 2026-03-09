@@ -10,33 +10,29 @@ import MobileMenu from './MobileMenu';
 
 const NAV_ITEMS: NavItemType[] = [
   { title: 'Home', href: '/' },
-  { title: 'New Here?', href: '/new-here' },
   {
-    title: 'About',
+    title: 'About Us',
     href: '/about',
     dropdown: [
-      { title: 'Our Story', href: '/about/overview' },
-      { title: 'Beliefs', href: '/about/beliefs' },
+      { title: 'Overview', href: '/about' },
+      { title: 'New Here?', href: '/new-here' },
       { title: 'Leadership', href: '/about/leadership' },
-      { title: 'Church Theme', href: '/about/theme' }
+      { title: 'This Year\'s Theme', href: '/about/theme' }
     ]
   },
   {
-    title: 'Sermons',
-    href: '/sermons',
+    title: 'Media',
+    href: '/media',
     dropdown: [
-      { title: 'All Sermons', href: '/sermons' },
-      { title: 'Series', href: '/sermons/series' },
-      { title: 'Preachers', href: '/sermons/preachers' },
-      { title: 'Watch Live', href: '/watch-live' }
+      { title: 'Video Stream', href: '/watch-live' },
+      { title: 'Sermons', href: '/sermons' },
+      { title: 'Gallery', href: '/gallery' }
     ]
   },
-  { title: 'Events', href: '/events' },
   {
     title: 'Ministries',
     href: '/ministries',
     dropdown: [
-      { title: 'All Ministries', href: '/ministries' },
       { title: 'Youth', href: '/ministries/youth' },
       { title: 'Women', href: '/ministries/women' },
       { title: 'Men', href: '/ministries/men' },
@@ -45,16 +41,16 @@ const NAV_ITEMS: NavItemType[] = [
       { title: 'Outreach', href: '/ministries/outreach' }
     ]
   },
-  { title: 'Give', href: '/give' },
   {
-    title: 'Contact',
+    title: 'Contact Us',
     href: '/contact',
     dropdown: [
-      { title: 'Get in Touch', href: '/contact' },
-      { title: 'Prayer Request', href: '/contact/prayer' },
-      { title: 'Plan Your Visit', href: '/plan-your-visit' }
+      { title: 'Inquiry/Feedback', href: '/contact/feedback' },
+      { title: 'Get in Touch', href: '/contact' }
     ]
-  }
+  },
+  { title: 'Forms', href: '/forms' },
+  { title: 'Give', href: '/give' }
 ];
 
 const Navbar = () => {
@@ -114,7 +110,7 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex items-center space-x-8">
             {NAV_ITEMS.map((item) => (
-              <NavItem key={item.href} item={item} isActive={isActive(item.href)} />
+              <NavItem key={item.href} item={item} isActive={isActive(item.href)} pathname={pathname} />
             ))}
           </div>
           <div className="hidden md:flex items-center space-x-4">

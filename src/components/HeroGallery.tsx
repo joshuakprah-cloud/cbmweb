@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { urlFor } from '../../sanity/lib/image';
 
 interface HeroSlide {
   title: string;
   subtitle: string;
   cta: string;
-  image?: string;
+  image?: any;
   order: number;
 }
 
@@ -23,21 +25,18 @@ const HeroGallery = ({ slides = [] }: HeroGalleryProps) => {
       title: "Welcome to ThaGospel Church",
       subtitle: "Raising Believers. Impacting Nations.",
       cta: "Plan Your Visit",
-      image: "/hero-1.jpg",
       order: 1
     },
     {
       title: "Join Our Sunday Service",
       subtitle: "Experience Powerful Worship & Biblical Teaching",
       cta: "Watch Live",
-      image: "/hero-2.jpg",
       order: 2
     },
     {
       title: "Growing Together in Faith",
       subtitle: "Building a Strong Church Community",
       cta: "Learn More",
-      image: "/hero-3.jpg",
       order: 3
     }
   ];
@@ -67,9 +66,20 @@ const HeroGallery = ({ slides = [] }: HeroGalleryProps) => {
           >
             <div className="relative w-full h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-10"></div>
-              <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                <span className="text-6xl text-gray-600">🖼️</span>
-              </div>
+              {/* Background Image */}
+              {slide.image ? (
+                <Image
+                  src={urlFor(slide.image).url()}
+                  alt={slide.title || 'Hero slide'}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                  <span className="text-6xl text-gray-600">🖼️</span>
+                </div>
+              )}
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 {/* Text content removed */}
               </div>

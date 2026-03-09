@@ -15,6 +15,7 @@ interface MinistryLink {
   title: string;
   href: string;
   icon: string;
+  imageUrl?: string;
 }
 
 interface EventItem {
@@ -74,6 +75,7 @@ export default async function Home() {
                   alt="Welcome section image"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
@@ -90,20 +92,29 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {(data?.ministryLinks || [
-              { title: "Our Leadership", href: "/about/leadership", icon: "👨‍⚖️" },
-              { title: "Year's Theme", href: "/about/theme", icon: "📖" },
-              { title: "Give", href: "/give", icon: "💝" },
-              { title: "Testimonies", href: "/testimonies", icon: "🗣️" },
-              { title: "Sermons", href: "/sermons", icon: "🎧" },
-              { title: "Forms", href: "/forms", icon: "📝" }
+              { title: "Our Leadership", href: "/about/leadership", icon: "👨‍⚖️", imageUrl: "/images/leadership.jpg" },
+              { title: "Year's Theme", href: "/about/theme", icon: "📖", imageUrl: "/images/theme.jpg" },
+              { title: "Give", href: "/give", icon: "💝", imageUrl: "/images/give.jpg" },
+              { title: "Testimonies", href: "/testimonies", icon: "🗣️", imageUrl: "/images/testimonies.jpg" },
+              { title: "Sermons", href: "/sermons", icon: "🎧", imageUrl: "/images/sermons.jpg" },
+              { title: "Forms", href: "/forms", icon: "📝", imageUrl: "/images/forms.jpg" }
             ]).map((item: MinistryLink, index: number) => (
               <Link
                 key={index}
                 href={item.href}
                 className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow group"
               >
-                <div className="h-32 bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors">
-                  <span className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                <div className="h-32 bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors relative">
+                  {item.imageUrl ? (
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                  )}
                 </div>
                 <div className="p-4 text-center">
                   <h3 className="font-semibold text-gray-900 dark:text-white">{item.title}</h3>
@@ -122,13 +133,14 @@ export default async function Home() {
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
             <div className="flex flex-col md:flex-row gap-6 items-center">
               {/* Left Side - Cover Image */}
-              <div className="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 relative">
                 {data?.latestSermon?.coverImage ? (
                   <Image
                     src={urlFor(data.latestSermon.coverImage).url()}
                     alt="Sermon cover"
                     fill
                     className="object-cover rounded-lg"
+                    sizes="128px"
                   />
                 ) : (
                   <span className="text-4xl text-gray-400">🎧</span>
@@ -216,13 +228,14 @@ export default async function Home() {
             ]).map((event: EventItem, index: number) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                 {/* Event Flyer Image Placeholder */}
-                <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                <div className="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center relative">
                   {event.flyerImage ? (
                     <Image
                       src={urlFor(event.flyerImage).url()}
                       alt={event.title}
                       fill
-                      className="object-cover"
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   ) : (
                     <div className="text-center">
@@ -252,7 +265,9 @@ export default async function Home() {
       {/* 6. Prayer Request Section with Scroll Fade */}
       <section className="relative py-24 px-6 overflow-hidden">
         {/* Background Image with Overlay */}
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: data?.prayerSection?.backgroundImage ? `url(${urlFor(data.prayerSection.backgroundImage).url()})` : undefined }}>
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ 
+          backgroundImage: data?.prayerSection?.backgroundImage ? `url(${urlFor(data.prayerSection.backgroundImage).url()})` : undefined 
+        }}>
           {/* Fallback gradient background for when image doesn't load */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900"></div>
           {/* Prayer-themed overlay with icons */}

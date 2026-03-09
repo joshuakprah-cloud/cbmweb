@@ -89,6 +89,7 @@ export const homepageType = defineType({
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'href', title: 'Link URL', type: 'string' }),
             defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
+            defineField({ name: 'imageUrl', title: 'Image URL', type: 'string' }),
             defineField({ name: 'order', title: 'Order', type: 'number' }),
           ],
         }),

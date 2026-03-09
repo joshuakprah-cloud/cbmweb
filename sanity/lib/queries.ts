@@ -23,7 +23,6 @@ export const homepageQuery = groq`
     firstLadyName,
     firstLadyTitle,
     firstLadyImage,
-    leadersWelcomeMessage,
     
     // Quick Access Ministry Links
     ministryLinks[]{
@@ -60,61 +59,17 @@ export const homepageQuery = groq`
       submitButtonText
     },
     
-    // Legacy fields for backward compatibility
-    heroHeadline,
-    heroSubtext,
-    backgroundImage,
-    heroPrimaryButton,
-    heroSecondaryButton,
-    heroSmallLine,
-    heroBackgroundImage,
-    heroBackgroundImageAlt,
-    quickActions,
-    aboutHeadline,
-    aboutContent,
-    pastorMessage,
-    aboutButton,
-    servicesHeadline,
-    location,
-    locationLat,
-    locationLng,
-    serviceTimes,
-    midweekService,
-    servicesButton,
-    servicesSmallLine,
-    sermonHeadline,
-    sermonIntro,
-    sermonButton,
-    sermonSecondaryButton,
-    ministriesHeadline,
-    ministriesIntro,
-    ministries,
-    ministriesButton,
-    testimonialsHeadline,
-    testimonials,
-    testimonialsButton,
-    globalHeadline,
-    globalContent,
-    globalButton,
-    socialMedia,
-    ctaHeadline,
-    ctaText,
-    ctaPrimaryButton,
-    ctaSecondaryButton,
-    footerColumns,
-    footerContact,
-    footerBottomText,
-    whatToExpectTitle,
-    whatToExpectItems[]{
+    // Footer Information
+    footerColumns[]{
       title,
-      description,
-      icon
+      links
     },
-    globalCountries[]{
-      name,
-      flagImage,
-      link
-    }
+    footerContact{
+      phone,
+      email,
+      address
+    },
+    footerBottomText
   }
 `
 

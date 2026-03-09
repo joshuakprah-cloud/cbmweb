@@ -5,7 +5,7 @@ export const homepageType = defineType({
   title: 'Homepage',
   type: 'document',
   fields: [
-    // NEW: Hero Gallery Section
+    // Hero Gallery Section
     defineField({
       name: 'heroSlides',
       title: 'Hero Gallery Slides',
@@ -26,7 +26,7 @@ export const homepageType = defineType({
       ],
     }),
     
-    // NEW: Welcome Section
+    // Welcome Section
     defineField({
       name: 'welcomeTitle',
       title: 'Welcome Section Title',
@@ -43,128 +43,7 @@ export const homepageType = defineType({
       type: 'image',
     }),
     
-    // NEW: Quick Access Ministry Links
-    defineField({
-      name: 'ministryLinks',
-      title: 'Quick Access Ministry Links',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'link',
-          title: 'Ministry Link',
-          type: 'object',
-          fields: [
-            defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'href', title: 'Link URL', type: 'string' }),
-            defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
-            defineField({ name: 'order', title: 'Order', type: 'number' }),
-          ],
-        }),
-      ],
-    }),
-    
-    // NEW: Latest Sermon
-    defineField({
-      name: 'latestSermon',
-      title: 'Latest Sermon',
-      type: 'object',
-      fields: [
-        defineField({ name: 'title', title: 'Sermon Title', type: 'string' }),
-        defineField({ name: 'speaker', title: 'Speaker Name', type: 'string' }),
-        defineField({ name: 'date', title: 'Sermon Date', type: 'date' }),
-        defineField({ name: 'duration', title: 'Duration (e.g., 45:23)', type: 'string' }),
-        defineField({ name: 'audioUrl', title: 'Audio URL', type: 'url' }),
-        defineField({ name: 'coverImage', title: 'Sermon Cover Image', type: 'image' }),
-      ],
-    }),
-    
-    // NEW: Upcoming Events
-    defineField({
-      name: 'upcomingEvents',
-      title: 'Upcoming Events',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'event',
-          title: 'Event',
-          type: 'object',
-          fields: [
-            defineField({ name: 'title', title: 'Event Title', type: 'string' }),
-            defineField({ name: 'date', title: 'Event Date', type: 'string' }),
-            defineField({ name: 'time', title: 'Event Time', type: 'string' }),
-            defineField({ name: 'venue', title: 'Event Venue', type: 'string' }),
-            defineField({ name: 'flyerImage', title: 'Event Flyer Image', type: 'image' }),
-            defineField({ name: 'description', title: 'Event Description', type: 'text' }),
-          ],
-        }),
-      ],
-    }),
-    
-    // NEW: Prayer Section
-    defineField({
-      name: 'prayerSection',
-      title: 'Prayer Request Section',
-      type: 'object',
-      fields: [
-        defineField({ name: 'backgroundImage', title: 'Background Image', type: 'image' }),
-        defineField({ name: 'title', title: 'Section Title', type: 'string' }),
-        defineField({ name: 'submitButtonText', title: 'Submit Button Text', type: 'string' }),
-      ],
-    }),
-    
-    // Legacy fields for backward compatibility
-    defineField({
-      name: 'heroHeadline',
-      title: 'Hero Headline (Legacy)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'heroSubtext',
-      title: 'Hero Subtext (Legacy)',
-      type: 'text',
-    }),
-    defineField({
-      name: 'heroBackgroundImage',
-      title: 'Hero Background Image (Legacy)',
-      type: 'image',
-    }),
-    defineField({
-      name: 'heroBackgroundImageAlt',
-      title: 'Hero Background Image Alt (Legacy)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'heroPrimaryButton',
-      title: 'Hero Primary Button Text (Legacy)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'heroSecondaryButton',
-      title: 'Hero Secondary Button Text (Legacy)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'heroSmallLine',
-      title: 'Hero Small Line (Legacy)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'quickActions',
-      title: 'Quick Actions (Legacy)',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'action',
-          title: 'Action',
-          type: 'object',
-          fields: [
-            defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'description', title: 'Description', type: 'text' }),
-            defineField({ name: 'link', title: 'Link', type: 'string' }),
-          ],
-        }),
-      ],
-    }),
+    // Spiritual Leaders Information
     defineField({
       name: 'prophetName',
       title: 'Prophet Name',
@@ -195,11 +74,77 @@ export const homepageType = defineType({
       title: 'First Lady Image',
       type: 'image',
     }),
+    
+    // Quick Access Ministry Links
     defineField({
-      name: 'leadersWelcomeMessage',
-      title: 'Leaders Welcome Message',
-      type: 'text',
+      name: 'ministryLinks',
+      title: 'Quick Access Ministry Links',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'link',
+          title: 'Ministry Link',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string' }),
+            defineField({ name: 'href', title: 'Link URL', type: 'string' }),
+            defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
+            defineField({ name: 'order', title: 'Order', type: 'number' }),
+          ],
+        }),
+      ],
     }),
+    
+    // Latest Sermon
+    defineField({
+      name: 'latestSermon',
+      title: 'Latest Sermon',
+      type: 'object',
+      fields: [
+        defineField({ name: 'title', title: 'Sermon Title', type: 'string' }),
+        defineField({ name: 'speaker', title: 'Speaker Name', type: 'string' }),
+        defineField({ name: 'date', title: 'Sermon Date', type: 'date' }),
+        defineField({ name: 'duration', title: 'Duration (e.g., 45:23)', type: 'string' }),
+        defineField({ name: 'audioUrl', title: 'Audio URL', type: 'url' }),
+        defineField({ name: 'coverImage', title: 'Sermon Cover Image', type: 'image' }),
+      ],
+    }),
+    
+    // Upcoming Events
+    defineField({
+      name: 'upcomingEvents',
+      title: 'Upcoming Events',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'event',
+          title: 'Event',
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Event Title', type: 'string' }),
+            defineField({ name: 'date', title: 'Event Date', type: 'string' }),
+            defineField({ name: 'time', title: 'Event Time', type: 'string' }),
+            defineField({ name: 'venue', title: 'Event Venue', type: 'string' }),
+            defineField({ name: 'flyerImage', title: 'Event Flyer Image', type: 'image' }),
+            defineField({ name: 'description', title: 'Event Description', type: 'text' }),
+          ],
+        }),
+      ],
+    }),
+    
+    // Prayer Section
+    defineField({
+      name: 'prayerSection',
+      title: 'Prayer Request Section',
+      type: 'object',
+      fields: [
+        defineField({ name: 'backgroundImage', title: 'Background Image', type: 'image' }),
+        defineField({ name: 'title', title: 'Section Title', type: 'string' }),
+        defineField({ name: 'submitButtonText', title: 'Submit Button Text', type: 'string' }),
+      ],
+    }),
+    
+    // Footer Information
     defineField({
       name: 'footerColumns',
       title: 'Footer Columns',

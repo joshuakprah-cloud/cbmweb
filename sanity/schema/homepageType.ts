@@ -151,31 +151,36 @@ export const homepageType = defineType({
       title: 'Footer Columns',
       type: 'array',
       of: [
-        defineField({
-          name: 'column',
-          title: 'Column',
+        {
           type: 'object',
+          name: 'footerColumn',
+          title: 'Footer Column',
           fields: [
-            defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'links', title: 'Links', type: 'array', of: [{ type: 'string' }] }),
+            defineField({ name: 'title', title: 'Column Title', type: 'string' }),
+            defineField({ 
+              name: 'links', 
+              title: 'Links', 
+              type: 'array',
+              of: [{ type: 'string' }]
+            }),
           ],
-        }),
+        },
       ],
     }),
     defineField({
       name: 'footerContact',
-      title: 'Footer Contact',
+      title: 'Footer Contact Information',
       type: 'object',
       fields: [
-        defineField({ name: 'phone', title: 'Phone', type: 'string' }),
-        defineField({ name: 'email', title: 'Email', type: 'string' }),
-        defineField({ name: 'address', title: 'Address', type: 'text' }),
+        defineField({ name: 'phone', title: 'Phone Numbers', type: 'string' }),
+        defineField({ name: 'email', title: 'Email Address', type: 'string' }),
+        defineField({ name: 'address', title: 'Physical Address', type: 'string' }),
       ],
     }),
     defineField({
       name: 'footerBottomText',
       title: 'Footer Bottom Text',
-      type: 'string',
+      type: 'text',
     }),
   ],
 })

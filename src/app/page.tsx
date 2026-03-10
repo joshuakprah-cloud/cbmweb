@@ -68,7 +68,7 @@ export default async function Home() {
               </div>
             </div>
             
-            <div className="relative h-80 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative h-96 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
               {data?.welcomeImage ? (
                 <Image
                   src={urlFor(data.welcomeImage).url()}

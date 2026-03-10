@@ -35,6 +35,7 @@ export const homepageQuery = groq`
       title,
       href,
       icon,
+      image,
       order
     },
     

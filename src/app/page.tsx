@@ -15,7 +15,7 @@ export const revalidate = 60;
 interface MinistryLink {
   title: string;
   href: string;
-  imageUrl?: string;
+  image?: any; // Sanity image object
 }
 
 interface EventItem {
@@ -77,9 +77,9 @@ export default async function Home() {
                 className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow group"
               >
                 <div className="h-32 bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors relative">
-                  {item.imageUrl ? (
+                  {item.image ? (
                     <Image
-                      src={item.imageUrl}
+                      src={urlFor(item.image).url()}
                       alt={item.title}
                       fill
                       className="object-cover"

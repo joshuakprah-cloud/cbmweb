@@ -76,7 +76,7 @@ export default async function Home() {
                 href={item.href}
                 className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow group"
               >
-                <div className="h-32 bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors relative">
+                <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors relative">
                   {item.image ? (
                     <Image
                       src={urlFor(item.image).url()}

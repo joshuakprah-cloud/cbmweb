@@ -11,10 +11,10 @@ export const homepageType = defineType({
       title: 'Hero Gallery Slides',
       type: 'array',
       of: [
-        defineField({
-          name: 'slide',
-          title: 'Slide',
+        {
           type: 'object',
+          name: 'heroSlide',
+          title: 'Slide',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'subtitle', title: 'Subtitle', type: 'text' }),
@@ -22,7 +22,7 @@ export const homepageType = defineType({
             defineField({ name: 'image', title: 'Background Image', type: 'image' }),
             defineField({ name: 'order', title: 'Order', type: 'number' }),
           ],
-        }),
+        },
       ],
     }),
     
@@ -81,10 +81,10 @@ export const homepageType = defineType({
       title: 'Quick Access Ministry Links',
       type: 'array',
       of: [
-        defineField({
-          name: 'link',
-          title: 'Ministry Link',
+        {
           type: 'object',
+          name: 'ministryLink',
+          title: 'Ministry Link',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'href', title: 'Link URL', type: 'string' }),
@@ -92,7 +92,7 @@ export const homepageType = defineType({
             defineField({ name: 'imageUrl', title: 'Image URL', type: 'string' }),
             defineField({ name: 'order', title: 'Order', type: 'number' }),
           ],
-        }),
+        },
       ],
     }),
     
@@ -117,10 +117,10 @@ export const homepageType = defineType({
       title: 'Upcoming Events',
       type: 'array',
       of: [
-        defineField({
-          name: 'event',
-          title: 'Event',
+        {
           type: 'object',
+          name: 'upcomingEvent',
+          title: 'Event',
           fields: [
             defineField({ name: 'title', title: 'Event Title', type: 'string' }),
             defineField({ name: 'date', title: 'Event Date', type: 'string' }),
@@ -129,7 +129,7 @@ export const homepageType = defineType({
             defineField({ name: 'flyerImage', title: 'Event Flyer Image', type: 'image' }),
             defineField({ name: 'description', title: 'Event Description', type: 'text' }),
           ],
-        }),
+        },
       ],
     }),
     

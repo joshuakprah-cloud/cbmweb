@@ -48,26 +48,26 @@ export default async function Home() {
       {/* 2. Welcome Section */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
             {data?.welcomeTitle || 'WELCOME TO THAGOSPEL CHURCH'}
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center md:text-left">
-              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-                {data?.welcomeMessage || 'We are delighted to welcome you to ThaGospel Church. Our heart is to raise believers rooted in biblical truth and empowered to impact the world. Whether you\'re exploring faith or looking for a spiritual home, we invite you to join our family.'}
+          <div className="text-center mb-8">
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
+              {data?.welcomeMessage || 'We are delighted to welcome you to ThaGospel Church. Our heart is to raise believers rooted in biblical truth and empowered to impact the world. Whether you\'re exploring faith or looking for a spiritual home, we invite you to join our family.'}
+            </p>
+            <div className="mt-6">
+              <p className="font-semibold text-lg mb-1">
+                Prophet Powerman Bekoe & Prophetess Tracy Bekoe
               </p>
-              <div className="text-center md:text-left">
-                <p className="font-semibold text-lg mb-1">
-                  Prophet Powerman Bekoe & Prophetess Tracy Bekoe
-                </p>
-                <p className="text-blue-600 dark:text-blue-400">
-                  Lead Prophet & Prophetess
-                </p>
-              </div>
+              <p className="text-blue-600 dark:text-blue-400">
+                Lead Prophet & Prophetess
+              </p>
             </div>
-            
-            <div className="relative w-64 h-80 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg mx-auto">
+          </div>
+          
+          <div className="flex justify-center">
+            <div className="relative w-64 h-80 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
               {data?.welcomeImage ? (
                 <Image
                   src={urlFor(data.welcomeImage).url()}

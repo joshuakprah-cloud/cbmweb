@@ -242,9 +242,14 @@ export default async function Home() {
       {/* 6. Prayer Request Section with Scroll Fade */}
       <section className="relative py-24 px-6 overflow-hidden">
         {/* Background Image with Overlay */}
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ 
-          backgroundImage: data?.prayerSection?.backgroundImage ? `url(${urlFor(data.prayerSection.backgroundImage).url()})` : undefined 
-        }}>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+          style={{ 
+            backgroundImage: data?.prayerSection?.backgroundImage 
+              ? `url(${urlFor(data.prayerSection.backgroundImage).url()})` 
+              : 'linear-gradient(to-br, #3B82F6, #8B5CF6, #EC4899)' 
+          }}
+        >
           {/* Fallback gradient background for when image doesn't load */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900"></div>
           {/* Prayer-themed overlay with icons */}

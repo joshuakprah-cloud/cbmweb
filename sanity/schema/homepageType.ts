@@ -28,19 +28,46 @@ export const homepageType = defineType({
     
     // Welcome Section
     defineField({
-      name: 'welcomeTitle',
-      title: 'Welcome Section Title',
-      type: 'string',
-    }),
-    defineField({
       name: 'welcomeMessage',
       title: 'Welcome Message',
       type: 'text',
+      description: 'The main welcome message text displayed in the left column'
     }),
     defineField({
-      name: 'welcomeImage',
-      title: 'Welcome Section Image',
+      name: 'pastorName',
+      title: 'Pastor Name',
+      type: 'string',
+      description: 'Name of the pastor (e.g., "Prophet Christopher Yaw Annor")'
+    }),
+    defineField({
+      name: 'pastorImage1',
+      title: 'Pastor Image 1',
       type: 'image',
+      description: 'First pastor portrait image for the right column'
+    }),
+    defineField({
+      name: 'pastorImage2',
+      title: 'Pastor Image 2',
+      type: 'image',
+      description: 'Second pastor portrait image for the right column'
+    }),
+    defineField({
+      name: 'facebookUrl',
+      title: 'Facebook URL',
+      type: 'url',
+      description: 'URL for Facebook social media link'
+    }),
+    defineField({
+      name: 'twitterUrl',
+      title: 'Twitter URL',
+      type: 'url',
+      description: 'URL for Twitter/X social media link'
+    }),
+    defineField({
+      name: 'instagramUrl',
+      title: 'Instagram URL',
+      type: 'url',
+      description: 'URL for Instagram social media link'
     }),
     
     // Spiritual Leaders Information

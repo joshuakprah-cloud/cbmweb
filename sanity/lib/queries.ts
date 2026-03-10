@@ -12,9 +12,13 @@ export const homepageQuery = groq`
     },
     
     // Welcome Section
-    welcomeTitle,
     welcomeMessage,
-    welcomeImage,
+    pastorName,
+    pastorImage1,
+    pastorImage2,
+    facebookUrl,
+    twitterUrl,
+    instagramUrl,
     
     // Spiritual Leaders
     prophetName,

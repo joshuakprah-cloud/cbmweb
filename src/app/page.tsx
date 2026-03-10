@@ -2,6 +2,7 @@ import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/Footer';
 import HeroGallery from '../components/HeroGallery';
 import PrayerScrollEffect from '../components/PrayerScrollEffect';
+import WelcomeMessageSection from '../components/WelcomeSection';
 import { client } from '../../sanity/lib/client';
 import { homepageQuery } from '../../sanity/lib/queries';
 import Image from 'next/image';
@@ -46,45 +47,15 @@ export default async function Home() {
       <HeroGallery slides={data?.heroSlides || []} />
 
       {/* 2. Welcome Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-            {data?.welcomeTitle || 'WELCOME TO THAGOSPEL CHURCH'}
-          </h2>
-          
-          <div className="text-center mb-8">
-            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
-              {data?.welcomeMessage || 'We are delighted to welcome you to ThaGospel Church. Our heart is to raise believers rooted in biblical truth and empowered to impact the world. Whether you\'re exploring faith or looking for a spiritual home, we invite you to join our family.'}
-            </p>
-            <div className="mt-6">
-              <p className="font-semibold text-lg mb-1">
-                Prophet Powerman Bekoe & Prophetess Tracy Bekoe
-              </p>
-              <p className="text-blue-600 dark:text-blue-400">
-                Lead Prophet & Prophetess
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex justify-center">
-            <div className="relative w-64 h-80 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
-              {data?.welcomeImage ? (
-                <Image
-                  src={urlFor(data.welcomeImage).url()}
-                  alt="Welcome section image"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 256px"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-6xl text-gray-400">👥</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      <WelcomeMessageSection
+        welcomeMessage={data?.welcomeMessage || 'We are delighted to welcome you to ThaGospel Church, where faith comes alive and lives are transformed through the power of God\'s word. Our church is a vibrant community of believers committed to spreading the gospel, nurturing spiritual growth, and making a positive impact in our community and beyond. Whether you are new to faith or seeking to deepen your relationship with God, you\'ll find a warm, welcoming family here. Join us as we worship, learn, and serve together in unity and love.'}
+        pastorName={data?.pastorName || 'Prophet Christopher Yaw Annor'}
+        pastorImage1={data?.pastorImage1 ? urlFor(data.pastorImage1).url() : '/placeholder-pastor1.jpg'}
+        pastorImage2={data?.pastorImage2 ? urlFor(data.pastorImage2).url() : '/placeholder-pastor2.jpg'}
+        facebookUrl={data?.facebookUrl}
+        twitterUrl={data?.twitterUrl}
+        instagramUrl={data?.instagramUrl}
+      />
 
       {/* 3. Quick Access Ministry Links */}
       <section className="py-16 px-6 bg-gray-50 dark:bg-gray-900">

@@ -28,16 +28,28 @@ export const homepageType = defineType({
     
     // Welcome Section
     defineField({
+      name: 'welcomeTitle',
+      title: 'Welcome Section Title',
+      type: 'string',
+      description: 'The title displayed at the top of the welcome section'
+    }),
+    defineField({
       name: 'welcomeMessage',
       title: 'Welcome Message',
       type: 'text',
       description: 'The main welcome message text displayed in the left column'
     }),
     defineField({
-      name: 'pastorName',
-      title: 'Pastor Name',
+      name: 'malePastorName',
+      title: 'Male Pastor Name',
       type: 'string',
-      description: 'Name of the pastor (e.g., "Prophet Christopher Yaw Annor")'
+      description: 'Name of the male pastor displayed under the first image'
+    }),
+    defineField({
+      name: 'ladyPastorName',
+      title: 'Lady Pastor Name',
+      type: 'string',
+      description: 'Name of the lady pastor displayed under the second image'
     }),
     defineField({
       name: 'pastorImage1',
@@ -116,7 +128,7 @@ export const homepageType = defineType({
             defineField({ name: 'title', title: 'Title', type: 'string' }),
             defineField({ name: 'href', title: 'Link URL', type: 'string' }),
             defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
-            defineField({ name: 'imageUrl', title: 'Image URL', type: 'string' }),
+            defineField({ name: 'image', title: 'Image', type: 'image' }),
             defineField({ name: 'order', title: 'Order', type: 'number' }),
           ],
         },

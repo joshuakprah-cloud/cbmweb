@@ -48,8 +48,10 @@ export default async function Home() {
 
       {/* 2. Welcome Section */}
       <WelcomeMessageSection
+        welcomeTitle={data?.welcomeTitle || 'WELCOME TO THAGOSPEL CHURCH'}
         welcomeMessage={data?.welcomeMessage || 'We are delighted to welcome you to ThaGospel Church, where faith comes alive and lives are transformed through the power of God\'s word. Our church is a vibrant community of believers committed to spreading the gospel, nurturing spiritual growth, and making a positive impact in our community and beyond. Whether you are new to faith or seeking to deepen your relationship with God, you\'ll find a warm, welcoming family here. Join us as we worship, learn, and serve together in unity and love.'}
-        pastorName={data?.pastorName || 'Prophet Christopher Yaw Annor'}
+        malePastorName={data?.malePastorName || 'Prophet Christopher Yaw Annor'}
+        ladyPastorName={data?.ladyPastorName || 'Lady Pastor Name'}
         pastorImage1={data?.pastorImage1 ? urlFor(data.pastorImage1).url() : '/placeholder-pastor1.jpg'}
         pastorImage2={data?.pastorImage2 ? urlFor(data.pastorImage2).url() : '/placeholder-pastor2.jpg'}
         facebookUrl={data?.facebookUrl}

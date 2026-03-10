@@ -12,8 +12,10 @@ export const homepageQuery = groq`
     },
     
     // Welcome Section
+    welcomeTitle,
     welcomeMessage,
-    pastorName,
+    malePastorName,
+    ladyPastorName,
     pastorImage1,
     pastorImage2,
     facebookUrl,

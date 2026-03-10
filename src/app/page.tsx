@@ -67,14 +67,14 @@ export default async function Home() {
               </div>
             </div>
             
-            <div className="relative h-96 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+            <div className="relative w-64 h-80 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg mx-auto">
               {data?.welcomeImage ? (
                 <Image
                   src={urlFor(data.welcomeImage).url()}
                   alt="Welcome section image"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 256px"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

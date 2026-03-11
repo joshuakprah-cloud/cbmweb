@@ -212,4 +212,5 @@ export default function NewHerePage() {
         </div>
       </section>
     </div>
-export default function NewHerePage() {
+  )
+}

@@ -15,14 +15,12 @@ interface NavItemProps {
 }
 
 const NavItem = React.memo<NavItemProps>(({ item, isActive, pathname }) => {
-  const isAboutPage = pathname.startsWith('/about');
-
   return (
     <div className="relative group">
-      {isAboutPage ? (
+      {pathname.startsWith('/about') && item.href === '/about' ? (
         <span
           className={`relative text-foreground cursor-default ${
-            isActive ? 'text-red-500' : 'text-gray-400'
+            isActive ? 'text-red-500' : 'text-foreground'
           }`}
           aria-label={item.title}
         >

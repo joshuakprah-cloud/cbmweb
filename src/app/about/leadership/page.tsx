@@ -72,10 +72,10 @@ export default function LeadershipPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Meet Our Senior Pastor
+              Meet Our Head Pastors
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              A visionary leader called to shepherd our church family
+              Visionary leaders called to shepherd ThaGospel Church with wisdom and spiritual authority
             </p>
           </div>
 
@@ -94,21 +94,21 @@ export default function LeadershipPage() {
 
               {/* Content Side */}
               <div className="p-8 lg:p-12 flex flex-col justify-center">
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">Prophet Christopher Yaw Annor</h3>
-                <p className="text-lg text-blue-600 font-semibold mb-6">Senior Pastor & Founder</p>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">Prophet Powerman Bekoe</h3>
+                <p className="text-lg text-blue-600 font-semibold mb-6">Head Pastor</p>
 
                 <div className="space-y-4 text-gray-700 leading-relaxed mb-8">
                   <p>
-                    Prophet Christopher Yaw Annor is a dynamic leader with a heart for God and a passion
-                    for seeing lives transformed through the power of the Gospel. With over two decades
-                    of ministry experience, he has led ThaGospel Church from its humble beginnings to
-                    becoming a thriving community of faith.
+                    Prophet Powerman Bekoe is the Head Pastor of ThaGospel Church, a dynamic leader with
+                    prophetic insight and apostolic authority. With a heart for God's people and a vision
+                    for spiritual transformation, he leads our congregation with wisdom, compassion, and
+                    unwavering faith in God's purpose for ThaGospel Church.
                   </p>
                   <p>
-                    His vision is to raise leaders who will impact their generation for Christ, and his
-                    teachings combine biblical truth with practical wisdom for everyday living. Under
-                    his leadership, the church has grown not just in numbers, but in spiritual depth
-                    and community impact.
+                    His ministry focuses on equipping believers for kingdom work, fostering spiritual growth,
+                    and building a community that impacts lives and communities throughout Ghana and beyond.
+                    Under his leadership, ThaGospel Church continues to be a beacon of hope and spiritual
+                    nourishment for all who seek God's presence.
                   </p>
                 </div>
 

@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaFacebookF, FaTwitter, FaInstagram, FaCross, FaUsers, FaHandHoldingHeart, FaBible } from 'react-icons/fa'
+import { FaFacebookF, FaTwitter, FaInstagram, FaCross, FaUsers, FaHandHoldingHeart, FaBible, FaPrayingHands, FaHands, FaHeart, FaCalendarAlt, FaVideo, FaUserFriends, FaChurch, FaBookOpen, FaHome } from 'react-icons/fa'
+import Navbar from '@/components/navbar/Navbar'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'About Our Church - ThaGospel Church',
@@ -10,91 +12,46 @@ export const metadata = {
 export default function AboutOverview() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative h-screen bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
-            About Our Church
+      <Navbar />
+      
+      {/* Hero / Page Introduction */}
+      <section className="relative py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            About ThaGospel Church
           </h1>
-          <p className="text-xl md:text-2xl font-light drop-shadow-lg mb-12">
-            Raising Leaders, Shaping Visions & Influencing Society through Christ
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
+            ThaGospel Church is a vibrant faith community dedicated to raising leaders, shaping visions, and influencing society through Christ. We are committed to spreading the gospel, nurturing spiritual growth, and building disciples who make a lasting impact in their communities and the world.
           </p>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
         </div>
       </section>
 
-      {/* Welcome Message */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left Column - Welcome Text */}
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                Welcome to ThaGospel Church
+      {/* Our Story */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Our Story
               </h2>
-              <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+              <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  At ThaGospel Church, we believe in creating a welcoming community where faith comes alive,
-                  lives are transformed, and relationships flourish. Our church is more than just a place
-                  of worship—it's a family that supports, encourages, and grows together.
+                  ThaGospel Church was founded with a vision to create a spiritual home where people from all walks of life could encounter God's love and discover their purpose. What began as a small gathering of believers has grown into a thriving community of faith, hope, and love.
                 </p>
                 <p>
-                  Whether you're exploring faith for the first time or seeking to deepen your spiritual journey,
-                  you'll find a place where you belong. We are committed to spreading the gospel, nurturing
-                  spiritual growth, and making a positive impact in our community and beyond.
+                  Through years of prayer, dedication, and faithful service, our church has become a beacon of hope in our community. We continue to grow, not just in numbers, but in our commitment to spreading God's word and making a lasting impact in the lives of those we serve.
+                </p>
+                <p>
+                  Our story is one of transformation, community, and unwavering faith in God's promises. Join us as we continue to write new chapters in our journey of faith.
                 </p>
               </div>
             </div>
-
-            {/* Right Column - Pastor Images */}
-            <div className="flex flex-col sm:flex-row gap-8 justify-center">
-              {/* Pastor 1 */}
-              <div className="flex flex-col items-center">
-                <div className="relative w-64 h-80 rounded-2xl overflow-hidden shadow-2xl bg-white">
-                  <Image
-                    src="/placeholder-pastor1.jpg"
-                    alt="Senior Pastor"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <p className="text-xl font-bold text-gray-900 mt-6 mb-4">Prophet Christopher Yaw Annor</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
-                    <FaFacebookF className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
-                    <FaTwitter className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
-                    <FaInstagram className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Pastor 2 */}
-              <div className="flex flex-col items-center">
-                <div className="relative w-64 h-80 rounded-2xl overflow-hidden shadow-2xl bg-white">
-                  <Image
-                    src="/placeholder-pastor2.jpg"
-                    alt="Lady Pastor"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <p className="text-xl font-bold text-gray-900 mt-6 mb-4">Lady Pastor Name</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
-                    <FaFacebookF className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
-                    <FaTwitter className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
-                    <FaInstagram className="w-4 h-4" />
-                  </a>
+            <div className="relative">
+              <div className="w-80 h-80 bg-gray-100 rounded-lg mx-auto flex items-center justify-center border-4 border-gray-300">
+                <div className="text-center">
+                  <div className="text-6xl font-bold text-gray-400 mb-2">LOGO</div>
+                  <div className="text-sm text-gray-500">Church Logo</div>
                 </div>
               </div>
             </div>
@@ -102,102 +59,181 @@ export default function AboutOverview() {
         </div>
       </section>
 
-      {/* Mission Vision Values */}
-      <section className="py-20 px-4 bg-white">
+      {/* Mission, Vision & Core Beliefs */}
+      <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Our Mission, Vision & Values
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Mission, Vision & Core Beliefs
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               The foundation of everything we do at ThaGospel Church
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Mission */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6">
                 <FaCross className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
               <p className="text-gray-700 leading-relaxed">
-                To spread the gospel of Jesus Christ, nurture spiritual growth, and make disciples
-                who impact their communities and the world for God's kingdom.
+                To spread the gospel of Jesus Christ, nurture spiritual growth, and make disciples who impact their communities and the world for God's kingdom.
               </p>
             </div>
 
             {/* Vision */}
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-6">
                 <FaUsers className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
               <p className="text-gray-700 leading-relaxed">
-                To be a vibrant faith community where lives are transformed, leaders are raised,
-                and God's love is demonstrated through service and outreach.
+                To be a vibrant faith community where lives are transformed, leaders are raised, and God's love is demonstrated through service and outreach.
               </p>
             </div>
 
-            {/* Values */}
-            <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+            {/* Core Beliefs */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-6">
-                <FaHandHoldingHeart className="w-8 h-8 text-white" />
+                <FaBible className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Values</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Faith in Christ, love for people, excellence in ministry, integrity in leadership,
-                and commitment to community transformation through biblical truth.
-              </p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Core Beliefs</h3>
+              <div className="text-gray-700 leading-relaxed">
+                <ul className="space-y-2">
+                  <li>• The Bible</li>
+                  <li>• Salvation</li>
+                  <li>• Worship</li>
+                  <li>• Community</li>
+                  <li>• Prayer</li>
+                  <li>• Fellowship</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Church History */}
-      <section className="py-20 px-4 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8">Our Story</h2>
-          <div className="space-y-6 text-lg leading-relaxed">
-            <p>
-              ThaGospel Church was founded with a vision to create a spiritual home where people from
-              all walks of life could encounter God's love and discover their purpose. What began as
-              a small gathering of believers has grown into a thriving community of faith, hope, and love.
+      {/* Leadership Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Leadership
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Meet the dedicated leaders who guide our church community
             </p>
-            <p>
-              Through years of prayer, dedication, and faithful service, our church has become a beacon
-              of hope in our community. We continue to grow, not just in numbers, but in our commitment
-              to spreading God's word and making a lasting impact in the lives of those we serve.
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500">Portrait Photo</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-1">Pastor John Doe</h3>
+              <p className="text-blue-600 font-medium">Lead Pastor</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500">Portrait Photo</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-1">Pastor Jane Smith</h3>
+              <p className="text-purple-600 font-medium">Associate Pastor</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500">Portrait Photo</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-1">Elder Michael Johnson</h3>
+              <p className="text-green-600 font-medium">Elder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Community / What We Do */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Community
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover the ways we serve and impact our community
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Worship Services</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Worship Services</h3>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Prayer Meetings</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Prayer Meetings</h3>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Youth Ministry</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Youth Ministry</h3>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Community Outreach</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Community Outreach</h3>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Bible Study</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Bible Study</h3>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
+              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Family Ministry</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Family Ministry</h3>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Call To Action */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-            Ready to Join Our Community?
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Join Us This Sunday
           </h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
-            Experience the love of Christ and discover your place in our faith family.
+          <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
+            Experience the warmth of our community and discover how faith can transform your life. We welcome everyone with open hearts.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              href="/plan-your-visit"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
-            >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/visit" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
               Plan Your Visit
             </Link>
-            <Link
-              href="/sermons"
-              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors"
-            >
+            <Link href="/sermons" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
               Watch Sermons
             </Link>
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

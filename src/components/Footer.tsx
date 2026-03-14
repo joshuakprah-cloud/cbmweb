@@ -56,17 +56,7 @@ const Footer = ({ homepage }: { homepage?: any }) => {
               <div className="flex items-start mb-4">
                 <FaHome className="text-red-500 mr-4 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-300">Gbeshigon Street, La, Accra, Ghana (Near Maale Dada Street)</p>
-                  <p className="text-sm text-gray-400">Digital Address: GL-020-5834</p>
-                </div>
-              </div>
-
-              {/* Location */}
-              <div className="flex items-start mb-4">
-                <FaMapMarkerAlt className="text-red-500 mr-4 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-gray-300">ThaGospel Church – Main Branch</p>
-                  <p className="text-sm text-gray-400">P.O. Box GP 2194, Accra, Ghana</p>
+                  <p className="text-sm text-gray-300">Taifa Burkina, Accra, Ghana, 6262 Accra North</p>
                 </div>
               </div>
 
@@ -74,15 +64,14 @@ const Footer = ({ homepage }: { homepage?: any }) => {
               <div className="flex items-start mb-4">
                 <FaPhoneAlt className="text-red-500 mr-4 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-300">Telephone: (+233) 571 124 180 | 0570 947 621</p>
-                  <p className="text-sm text-gray-400">Helpline: (+233) 543 308 187</p>
+                  <p className="text-sm text-gray-300">Phone: 055 697 8861</p>
                 </div>
               </div>
 
               {/* Email */}
               <div className="flex items-start">
                 <FaEnvelope className="text-red-500 mr-4 mt-1 flex-shrink-0" />
-                <p className="text-sm text-gray-300">info@thagospel.org</p>
+                <p className="text-sm text-gray-300">thagospelchurchheadquarters@gmail.com</p>
               </div>
             </div>
 

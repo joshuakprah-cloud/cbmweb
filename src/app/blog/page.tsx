@@ -6,7 +6,13 @@ import Link from 'next/link'
 export const revalidate = 60
 
 export default async function Blog() {
-  const posts = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } }) || []
+  let posts = []
+  try {
+    posts = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } }) || []
+  } catch (error) {
+    console.error('Failed to fetch posts from Sanity:', error)
+    // Continue with empty posts array
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">

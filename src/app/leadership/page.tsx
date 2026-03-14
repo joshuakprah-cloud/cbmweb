@@ -1,6 +1,8 @@
 import { client } from '../../../sanity/lib/client'
 import { urlFor } from '../../../sanity/lib/image'
 import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
+import { FaUsers, FaPrayingHands, FaBookOpen, FaHands, FaHeart, FaDirections } from 'react-icons/fa'
 import Navbar from '../../components/navbar/Navbar'
 import Footer from '../../components/Footer'
 
@@ -38,43 +40,40 @@ export default async function Leadership() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          {/* Introduction */}
-          <section className="mb-16 text-center">
-            <h2 className="text-3xl font-bold mb-8">Our Leadership Team</h2>
-            <p className="text-lg max-w-3xl mx-auto">
-              {leadershipData?.intro || "Our leadership team is committed to serving God and guiding our congregation with wisdom, compassion, and dedication. Each member brings unique gifts and experiences to help fulfill our mission of spreading God's word and building His kingdom."}
-            </p>
-          </section>
-
-        {/* Senior Pastor Spotlight */}
-        {seniorPastors.length > 0 && (
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Senior Pastors</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {seniorPastors.map((pastor: any) => (
-                <div key={pastor._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                  <div className="h-64 bg-gray-300 flex items-center justify-center">
-                    {pastor.image ? (
-                      <img src={urlFor(pastor.image).url()} alt={pastor.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-gray-600 text-lg">Pastor Photo</span>
-                    )}
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold mb-2">{pastor.name}</h3>
-                    <p className="text-purple-600 font-semibold mb-4">Senior Pastor</p>
-                    {pastor.bio && (
-                      <div className="prose prose-lg">
-                        <PortableText value={pastor.bio} />
-                      </div>
-                    )}
-                  </div>
+      {/* Lead Pastor Spotlight */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-gray-400 mb-2">👨‍💼</div>
+                  <div className="text-sm text-gray-500">Lead Pastor Image</div>
                 </div>
-              ))}
+              </div>
             </div>
-          </section>
-        )}
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Prophet Isaac Bekoe
+              </h2>
+              <h3 className="text-xl text-blue-600 font-semibold mb-6">
+                Lead Pastor
+              </h3>
+              <div className="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Prophet Isaac Bekoe is the founding pastor and spiritual leader of ThaGospel Church. With over two decades of ministry experience, he has dedicated his life to preaching the Gospel and building a community rooted in faith, love, and service.
+                </p>
+                <p>
+                  His prophetic ministry and apostolic calling have guided thousands in their spiritual journey, helping them discover God's purpose for their lives. He is passionate about creating an environment where people can encounter God, grow in their faith, and serve their community.
+                </p>
+                <p>
+                  Under his leadership, ThaGospel Church has grown from a small gathering to a thriving congregation committed to spreading the love of Christ throughout Ghana and beyond.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
         {/* Leadership Team Grid */}
         {otherLeaders.length > 0 && (
@@ -105,55 +104,89 @@ export default async function Leadership() {
           </section>
         )}
 
-        {/* Leadership Philosophy */}
-        <section className="mb-16 bg-gray-50 p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-8 text-center">Our Leadership Philosophy</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {leadershipData?.philosophy?.map((item: any, index: number) => (
-              <div key={index}>
-                <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
-                <p className="text-lg">{item.content}</p>
-              </div>
-            )) || (
-              <>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">Servant Leadership</h3>
-                  <p className="text-lg">Following Jesus' example, our leaders serve with humility and love, putting the needs of others first.</p>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">Spiritual Growth</h3>
-                  <p className="text-lg">We are committed to ongoing spiritual development, ensuring our leadership remains grounded in God's Word.</p>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">Community Focus</h3>
-                  <p className="text-lg">Our leadership works to build and maintain a strong, supportive community where everyone can thrive.</p>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-4">Visionary Direction</h3>
-                  <p className="text-lg">Guided by God's vision, we lead with purpose and direction to fulfill His plans for our church.</p>
-                </div>
-              </>
-            )}
+      {/* Ministry Leaders */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Ministry Leaders
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Dedicated leaders who oversee our various ministry programs and serve our community.
+            </p>
           </div>
-        </section>
 
-        {/* Serve CTA Section */}
-        <section className="text-center bg-green-600 text-white p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-4">Serve With Us</h2>
-          <p className="text-lg mb-6">
-            God has given each of us unique gifts to serve His church and community.
-            Discover your calling and join our ministry teams.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/ministries" className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Explore Ministries
-            </a>
-            <a href="/contact" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-              Get Involved
-            </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Youth Ministry Leader */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center border border-gray-100">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                <FaUsers className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Sarah Mensah</h3>
+              <p className="text-blue-600 font-semibold mb-2">Youth Ministry Leader</p>
+              <p className="text-gray-600 text-sm">Youth Programs</p>
+            </div>
+
+            {/* Worship Leader */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center border border-gray-100">
+              <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                <FaPrayingHands className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">David Asante</h3>
+              <p className="text-purple-600 font-semibold mb-2">Worship Leader</p>
+              <p className="text-gray-600 text-sm">Music Ministry</p>
+            </div>
+
+            {/* Outreach Leader */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center border border-gray-100">
+              <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                <FaHands className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Grace Ofori</h3>
+              <p className="text-green-600 font-semibold mb-2">Outreach Leader</p>
+              <p className="text-gray-600 text-sm">Community Service</p>
+            </div>
+
+            {/* Children's Ministry Leader */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center border border-gray-100">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                <span className="text-2xl font-bold text-white">C</span>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Mary Johnson</h3>
+              <p className="text-red-600 font-semibold mb-2">Children's Ministry</p>
+              <p className="text-gray-600 text-sm">Kids Programs</p>
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* Join a Ministry */}
+      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            Serve With Us
+          </h2>
+          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
+            God has given each of us unique gifts to serve His church and community. Discover your calling and join our ministry teams.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link
+              href="/ministries"
+              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center"
+            >
+              <FaDirections className="w-5 h-5 mr-2" />
+              Get Involved
+            </Link>
+            <Link
+              href="/contact"
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors flex items-center justify-center"
+            >
+              <FaUsers className="w-5 h-5 mr-2" />
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
       </div>
       <Footer />
     </div>

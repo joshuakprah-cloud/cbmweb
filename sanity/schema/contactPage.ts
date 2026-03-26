@@ -36,40 +36,52 @@ export default defineType({
       name: 'officeHours',
       type: 'array',
       of: [
-        defineField({
-          name: 'days',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'hours',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
+        {
+          type: 'object',
+          name: 'officeHour',
+          fields: [
+            defineField({
+              name: 'days',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'hours',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+          ],
+        },
       ],
     }),
     defineField({
       name: 'socialLinks',
       type: 'array',
       of: [
-        defineField({
-          name: 'platform',
-          type: 'string',
-          options: {
-            list: [
-              { title: 'Facebook', value: 'Facebook' },
-              { title: 'Twitter', value: 'Twitter' },
-              { title: 'YouTube', value: 'YouTube' },
-              { title: 'Instagram', value: 'Instagram' },
-            ],
-          },
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'url',
-          type: 'url',
-          validation: Rule => Rule.required(),
-        }),
+        {
+          type: 'object',
+          name: 'socialLink',
+          fields: [
+            defineField({
+              name: 'platform',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Facebook', value: 'Facebook' },
+                  { title: 'Twitter', value: 'Twitter' },
+                  { title: 'YouTube', value: 'YouTube' },
+                  { title: 'Instagram', value: 'Instagram' },
+                ],
+              },
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'url',
+              type: 'url',
+              validation: Rule => Rule.required(),
+            }),
+          ],
+        },
       ],
     }),
     defineField({

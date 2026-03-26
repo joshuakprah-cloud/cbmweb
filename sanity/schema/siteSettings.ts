@@ -27,47 +27,59 @@ export default defineType({
       name: 'serviceTimes',
       type: 'array',
       of: [
-        defineField({
-          name: 'label',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'day',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'timeRange',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'location',
-          type: 'string',
-        }),
+        {
+          type: 'object',
+          name: 'serviceTime',
+          fields: [
+            defineField({
+              name: 'label',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'day',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'timeRange',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'location',
+              type: 'string',
+            }),
+          ],
+        },
       ],
     }),
     defineField({
       name: 'socialMedia',
       type: 'array',
       of: [
-        defineField({
-          name: 'platform',
-          type: 'string',
-          options: {
-            list: [
-              { title: 'Facebook', value: 'facebook' },
-              { title: 'Twitter', value: 'twitter' },
-              { title: 'Instagram', value: 'instagram' },
-              { title: 'YouTube', value: 'youtube' },
-            ],
-          },
-        }),
-        defineField({
-          name: 'url',
-          type: 'url',
-        }),
+        {
+          type: 'object',
+          name: 'socialMediaItem',
+          fields: [
+            defineField({
+              name: 'platform',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Facebook', value: 'facebook' },
+                  { title: 'Twitter', value: 'twitter' },
+                  { title: 'Instagram', value: 'instagram' },
+                  { title: 'YouTube', value: 'youtube' },
+                ],
+              },
+            }),
+            defineField({
+              name: 'url',
+              type: 'url',
+            }),
+          ],
+        },
       ],
     }),
     defineField({

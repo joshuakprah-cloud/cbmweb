@@ -34,7 +34,8 @@ export default defineType({
     }),
     defineField({
       name: 'body',
-      type: 'portableText',
+      type: 'array',
+      of: [{ type: 'block' }],
     }),
     defineField({
       name: 'coverImage',

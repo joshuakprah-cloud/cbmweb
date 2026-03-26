@@ -24,16 +24,22 @@ export default defineType({
       name: 'stats',
       type: 'array',
       of: [
-        defineField({
-          name: 'label',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'value',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
+        {
+          type: 'object',
+          name: 'stat',
+          fields: [
+            defineField({
+              name: 'label',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'value',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+          ],
+        },
       ],
     }),
     defineField({

@@ -48,7 +48,8 @@ export default defineType({
     }),
     defineField({
       name: 'body',
-      type: 'portableText',
+      type: 'array',
+      of: [{ type: 'block' }],
     }),
     defineField({
       name: 'coverImage',
@@ -116,56 +117,74 @@ export default defineType({
       name: 'speakers',
       type: 'array',
       of: [
-        defineField({
-          name: 'name',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'bio',
-          type: 'text',
-        }),
-        defineField({
-          name: 'photo',
-          type: 'image',
-          options: { hotspot: true },
-        }),
+        {
+          type: 'object',
+          name: 'speaker',
+          fields: [
+            defineField({
+              name: 'name',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'bio',
+              type: 'text',
+            }),
+            defineField({
+              name: 'photo',
+              type: 'image',
+              options: { hotspot: true },
+            }),
+          ],
+        },
       ],
     }),
     defineField({
       name: 'schedule',
       type: 'array',
       of: [
-        defineField({
-          name: 'time',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'activity',
-          type: 'string',
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'description',
-          type: 'text',
-        }),
+        {
+          type: 'object',
+          name: 'scheduleItem',
+          fields: [
+            defineField({
+              name: 'time',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'activity',
+              type: 'string',
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              type: 'text',
+            }),
+          ],
+        },
       ],
     }),
     defineField({
       name: 'gallery',
       type: 'array',
       of: [
-        defineField({
-          name: 'image',
-          type: 'image',
-          options: { hotspot: true },
-          validation: Rule => Rule.required(),
-        }),
-        defineField({
-          name: 'caption',
-          type: 'string',
-        }),
+        {
+          type: 'object',
+          name: 'galleryItem',
+          fields: [
+            defineField({
+              name: 'image',
+              type: 'image',
+              options: { hotspot: true },
+              validation: Rule => Rule.required(),
+            }),
+            defineField({
+              name: 'caption',
+              type: 'text',
+            }),
+          ],
+        },
       ],
     }),
     defineField({

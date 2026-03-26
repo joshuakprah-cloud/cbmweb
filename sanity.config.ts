@@ -6,7 +6,6 @@ import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './sanity/schema'
 
 export default defineConfig({
-  basePath: '/studio',
   projectId: '98sik2dm',
   dataset: 'cbmweb',
   schema: {

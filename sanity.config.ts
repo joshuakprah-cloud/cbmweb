@@ -7,7 +7,7 @@ import { schemaTypes } from './sanity/schema'
 
 export default defineConfig({
   basePath: '/studio',
-  projectId: 'cnr6558t',
+  projectId: 'zwhz7xks',
   dataset: 'production',
   schema: {
     types: schemaTypes,

@@ -4,9 +4,10 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './sanity/schema'
+import { deskStructure } from './sanity/deskStructure'
 
 export default defineConfig({
-  basePath: '/admin',
+  basePath: '/studio',
   projectId: 'cnr6558t',
   dataset: 'production',
   schema: {

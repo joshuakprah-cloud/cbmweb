@@ -56,7 +56,6 @@ export default async function RootLayout({
     announcementData = data?.navbar?.announcementBar
   } catch (error) {
     console.error('Error fetching navbar data:', error)
-    // Continue with null values, will use fallbacks
   }
 
   return (

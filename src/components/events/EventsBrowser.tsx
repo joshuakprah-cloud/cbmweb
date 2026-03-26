@@ -53,7 +53,7 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
 
   // Debounced search
   const debouncedSearchQuery = useMemo(() => searchQuery, [searchQuery]);
-  const searchTimeoutRef = useRef<NodeJS.Timeout>();
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Get unique categories from events
   const categories = useMemo(() => {

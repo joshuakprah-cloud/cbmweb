@@ -8,6 +8,7 @@ import { schemaTypes } from './sanity/schema'
 export default defineConfig({
   projectId: '98sik2dm',
   dataset: 'cbmweb',
+  basePath: '/studio',
   schema: {
     types: schemaTypes,
   },

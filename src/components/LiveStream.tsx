@@ -7,7 +7,7 @@ const LiveStream = () => {
         </div>
         <div className="aspect-video">
           <iframe
-            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            src="https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID"
             title="Live Stream"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -41,21 +41,6 @@ const ServiceTimesLocation = ({ services, headline, location, locationLat, locat
               </a>
             </div>
           </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-4 text-foreground">Find Us</h3>
-            <div className="aspect-video">
-              <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOMLD0k9XKTtf8&q=${mapQuery}`}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Church Location"
-              ></iframe>
-            </div>
-          </div>
         </div>
       </div>
     </section>

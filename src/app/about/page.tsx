@@ -1,239 +1,322 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { FaFacebookF, FaTwitter, FaInstagram, FaCross, FaUsers, FaHandHoldingHeart, FaBible, FaPrayingHands, FaHands, FaHeart, FaCalendarAlt, FaVideo, FaUserFriends, FaChurch, FaBookOpen, FaHome } from 'react-icons/fa'
-import Navbar from '@/components/navbar/Navbar'
-import Footer from '@/components/Footer'
+import React from 'react';
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import PageHero from '@/components/about/PageHero';
+import SectionHeader from '@/components/about/SectionHeader';
+import { client } from '../../../sanity/lib/client';
+import { aboutPageQuery, locationsQuery } from '../../../sanity/lib/queries';
+import { urlFor } from '../../../sanity/lib/image';
+import { ABOUT_FALLBACKS, SEO_FALLBACKS } from '@/constants/fallbacks';
+import Script from 'next/script';
+import { PortableText } from '@portabletext/react';
+import { BookOpenIcon, UsersIcon, HeartIcon } from '@heroicons/react/24/outline';
 
-export const metadata = {
-  title: 'About Our Church - ThaGospel Church',
-  description: 'Learn about ThaGospel Church - our mission, vision, values, and story of faith and community.',
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  let aboutData = null;
+
+  try {
+    aboutData = await client.fetch(aboutPageQuery, {}, { next: { revalidate: 60 } });
+  } catch (error) {
+    console.error('Error fetching about metadata:', error);
+  }
+
+  const seoData = aboutData?.seo || SEO_FALLBACKS;
+  const metaTitle = seoData.metaTitle || 'About Us | ThaGospel Church';
+  const metaDescription = seoData.metaDescription || 'Learn about ThaGospel Church\'s story, mission, vision, and the community that makes us who we are.';
+  const ogImage = seoData.ogImage ? urlFor(seoData.ogImage).url() : null;
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+      type: 'website',
+      url: 'https://thagospel.com/about',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [ogImage] : undefined,
+    },
+    robots: {
+      index: !seoData.noIndex,
+      follow: true,
+    },
+  };
 }
 
-export default function AboutOverview() {
+// Navigation cards data
+const navigationCards = [
+  {
+    title: 'Our Story',
+    href: '/about/story',
+    description: 'Discover our journey of faith, growth, and community since our founding.',
+    icon: BookOpenIcon,
+  },
+  {
+    title: 'Our Beliefs',
+    href: '/about/beliefs',
+    description: 'Explore the biblical foundations and core doctrines that guide our faith.',
+    icon: HeartIcon,
+  },
+  {
+    title: 'Meet the Team',
+    href: '/about/leadership',
+    description: 'Get to know our pastors and leaders who serve our community.',
+    icon: UsersIcon,
+  },
+];
+
+export default async function AboutOverview() {
+  let aboutData = null;
+  let locationsData = null;
+
+  try {
+    const [about, locations] = await Promise.all([
+      client.fetch(aboutPageQuery, {}, { next: { revalidate: 60 } }),
+      client.fetch(locationsQuery, {}, { next: { revalidate: 60 } }),
+    ]);
+
+    aboutData = about;
+    locationsData = locations;
+  } catch (error) {
+    console.error('Error fetching about data:', error);
+  }
+
+  const heroTitle = aboutData?.heroTitle || ABOUT_FALLBACKS.heroTitle;
+  const heroSubtitle = aboutData?.heroSubtitle || ABOUT_FALLBACKS.heroSubtitle;
+  const heroImage = aboutData?.heroImage;
+  const historyTitle = aboutData?.historyTitle || ABOUT_FALLBACKS.historyTitle;
+  const historyBody = aboutData?.historyBody;
+  const missionStatement = aboutData?.missionStatement || ABOUT_FALLBACKS.missionStatement;
+  const visionStatement = aboutData?.visionStatement || ABOUT_FALLBACKS.visionStatement;
+
+  // Generate JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: heroTitle,
+    description: aboutData?.seo?.metaDescription || SEO_FALLBACKS.metaDescription,
+    url: 'https://thagospel.com/about',
+  };
+
+  // Breadcrumb JSON-LD
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://thagospel.com' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://thagospel.com/about' },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
+    <>
+      <Script
+        id="about-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Script
+        id="breadcrumb-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       
-      {/* Hero / Page Introduction */}
-      <section className="relative py-20 bg-gradient-to-br from-blue-50 to-purple-50">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-            About ThaGospel Church
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
-            ThaGospel Church is a vibrant faith community dedicated to raising leaders, shaping visions, and influencing society through Christ. We are committed to spreading the gospel, nurturing spiritual growth, and building disciples who make a lasting impact in their communities and the world.
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="bg-gray-50 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-gray-900 font-medium">About</li>
+          </ol>
         </div>
-      </section>
+      </nav>
 
-      {/* Our Story */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Our Story
-              </h2>
-              <div className="space-y-4 text-gray-700 leading-relaxed">
-                <p>
-                  ThaGospel Church was founded with a vision to create a spiritual home where people from all walks of life could encounter God's love and discover their purpose. What began as a small gathering of believers has grown into a thriving community of faith, hope, and love.
-                </p>
-                <p>
-                  Through years of prayer, dedication, and faithful service, our church has become a beacon of hope in our community. We continue to grow, not just in numbers, but in our commitment to spreading God's word and making a lasting impact in the lives of those we serve.
-                </p>
-                <p>
-                  Our story is one of transformation, community, and unwavering faith in God's promises. Join us as we continue to write new chapters in our journey of faith.
-                </p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="w-80 h-80 bg-gray-100 rounded-lg mx-auto flex items-center justify-center border-4 border-gray-300">
-                <div className="text-center">
-                  <div className="text-6xl font-bold text-gray-400 mb-2">LOGO</div>
-                  <div className="text-sm text-gray-500">Church Logo</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section with h1 */}
+      <PageHero 
+        title={heroTitle} 
+        subtitle={heroSubtitle}
+        image={heroImage}
+      />
 
-      {/* Mission, Vision & Core Beliefs */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Mission, Vision & Core Beliefs
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The foundation of everything we do at ThaGospel Church
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Mission */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-6">
-                <FaCross className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
-              <p className="text-gray-700 leading-relaxed">
-                To spread the gospel of Jesus Christ, nurture spiritual growth, and make disciples who impact their communities and the world for God's kingdom.
-              </p>
-            </div>
-
-            {/* Vision */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-6">
-                <FaUsers className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
-              <p className="text-gray-700 leading-relaxed">
-                To be a vibrant faith community where lives are transformed, leaders are raised, and God's love is demonstrated through service and outreach.
-              </p>
-            </div>
-
-            {/* Core Beliefs */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-6">
-                <FaBible className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Core Beliefs</h3>
-              <div className="text-gray-700 leading-relaxed">
-                <ul className="space-y-2">
-                  <li>• The Bible</li>
-                  <li>• Salvation</li>
-                  <li>• Worship</li>
-                  <li>• Community</li>
-                  <li>• Prayer</li>
-                  <li>• Fellowship</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Leadership Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Leadership
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Meet the dedicated leaders who guide our church community
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500">Portrait Photo</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-1">Pastor John Doe</h3>
-              <p className="text-blue-600 font-medium">Lead Pastor</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500">Portrait Photo</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-1">Pastor Jane Smith</h3>
-              <p className="text-purple-600 font-medium">Associate Pastor</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
-              <div className="w-48 h-64 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500">Portrait Photo</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-1">Elder Michael Johnson</h3>
-              <p className="text-green-600 font-medium">Elder</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Community / What We Do */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Community
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover the ways we serve and impact our community
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Worship Services</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Worship Services</h3>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Prayer Meetings</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Prayer Meetings</h3>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Youth Ministry</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Youth Ministry</h3>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Community Outreach</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Community Outreach</h3>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Bible Study</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Bible Study</h3>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-2xl text-center hover:shadow-lg transition-shadow">
-              <div className="w-48 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <span className="text-gray-500 text-sm">Family Ministry</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Family Ministry</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call To Action */}
-      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join Us This Sunday
+      {/* Navigation Cards Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+            Learn More About Us
           </h2>
-          <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-            Experience the warmth of our community and discover how faith can transform your life. We welcome everyone with open hearts.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/visit" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Plan Your Visit
-            </Link>
-            <Link href="/sermons" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              Watch Sermons
-            </Link>
+          <div className="grid md:grid-cols-3 gap-8">
+            {navigationCards.map((card) => {
+              const IconComponent = card.icon;
+              return (
+                <Link
+                  key={card.href}
+                  href={card.href}
+                  className="group block bg-gray-50 rounded-2xl p-8 hover:bg-teal-50 transition-all duration-300 hover:shadow-lg"
+                >
+                  <div className="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-teal-200 transition-colors">
+                    <IconComponent className="w-7 h-7 text-teal-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-teal-600 transition-colors">
+                    {card.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">
+                    {card.description}
+                  </p>
+                  <span className="inline-flex items-center text-teal-600 font-semibold group-hover:translate-x-1 transition-transform">
+                    Learn More
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <Footer />
-    </div>
-  )
+      {/* History Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader title={historyTitle} />
+          
+          <div className="max-w-4xl mx-auto">
+            {historyBody ? (
+              <div className="prose prose-lg max-w-none">
+                <PortableText value={historyBody} />
+              </div>
+            ) : (
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {ABOUT_FALLBACKS.historyBody}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section - Card Layout */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Mission Card */}
+            <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-8 lg:p-12">
+              <div className="w-12 h-12 bg-teal-600 rounded-xl flex items-center justify-center mb-6">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {missionStatement}
+              </p>
+            </div>
+
+            {/* Vision Card */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 lg:p-12">
+              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-6">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h2>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {visionStatement}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Locations Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader 
+            title="Our Locations" 
+            subtitle="Find a campus near you"
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {locationsData && locationsData.length > 0 ? (
+              locationsData.map((location: any) => (
+                <div key={location._id} className="bg-white rounded-lg shadow-md p-6">
+                  {location.photo ? (
+                    <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
+                      <Image
+                        src={urlFor(location.photo).width(400).height(300).url()}
+                        alt={location.name}
+                        width={400}
+                        height={300}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full h-48 mb-4 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <span className="text-gray-400">No image</span>
+                    </div>
+                  )}
+                  
+                  <h4 className="text-xl font-bold text-gray-900 mb-2">
+                    {location.name}
+                    {location.isMainCampus && (
+                      <span className="ml-2 text-xs bg-teal-100 text-teal-800 px-2 py-1 rounded">
+                        Main Campus
+                      </span>
+                    )}
+                  </h4>
+                  
+                  <p className="text-gray-600 mb-2">{location.address}</p>
+                  <p className="text-gray-600 mb-2">{location.city}</p>
+                  
+                  {location.phone && (
+                    <p className="text-gray-600 mb-2">
+                      <a href={`tel:${location.phone}`} className="text-teal-600 hover:text-teal-700">
+                        {location.phone}
+                      </a>
+                    </p>
+                  )}
+                  
+                  {location.email && (
+                    <p className="text-gray-600 mb-2">
+                      <a href={`mailto:${location.email}`} className="text-teal-600 hover:text-teal-700">
+                        {location.email}
+                      </a>
+                    </p>
+                  )}
+                  
+                  {location.mapLink && (
+                    <a 
+                      href={location.mapLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block text-teal-600 hover:text-teal-700 font-medium"
+                    >
+                      Get Directions →
+                    </a>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-500">
+                <p>No locations available at this time.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

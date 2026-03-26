@@ -1,89 +1,231 @@
-import { client } from '../../../../../sanity/lib/client'
-import Navbar from '../../../../components/navbar/Navbar'
-import Footer from '../../../../components/Footer'
-import LazyYouTube from '../../../../components/LazyYouTube'
+import React from 'react';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import Navbar from '@/components/navbar/Navbar';
+import Footer from '@/components/Footer';
+import PageHero from '@/components/about/PageHero';
+import SectionHeader from '@/components/about/SectionHeader';
+import SermonCard from '@/components/sermons/SermonCard';
+import LazyYouTubeWrapper from '@/components/sermons/LazyYouTubeWrapper';
+import { client } from '../../../../../sanity/lib/client';
+import { urlFor } from '../../../../../sanity/lib/image';
+import { SEO_FALLBACKS } from '@/constants/fallbacks';
+import Script from 'next/script';
+import { groq } from 'next-sanity';
 
-interface Sermon {
-  _id: string
-  title: string
-  slug: { current: string }
-  preacher: { name: string }
-  date: string
-  videoUrl: string
-  audioUrl: string
-  series: string
-  scripture: string
-}
+export const revalidate = 3600;
 
-export async function generateMetadata({ params }: { params: { series: string } }) {
-  const series = decodeURIComponent(params.series)
+// Query to get sermons by series slug
+const sermonsBySeriesQuery = groq`
+  *[_type == "sermon" && isPublished == true && seriesSlug == $seriesSlug] | order(publishedAt desc) {
+    title,
+    slug,
+    description,
+    scriptureReference,
+    duration,
+    publishedAt,
+    videoUrl,
+    audioUrl,
+    thumbnail,
+    seriesTitle,
+    seriesSlug,
+    seriesCoverImage,
+    "speaker": speaker->{
+      name,
+      photo,
+      slug
+    }
+  }
+`;
+
+// Query to get series info
+const seriesBySlugQuery = groq`
+  *[_type == "sermon" && isPublished == true && seriesSlug == $seriesSlug][0] {
+    seriesTitle,
+    seriesSlug,
+    seriesCoverImage
+  }
+`;
+
+export async function generateMetadata({ params }: { params: { series: string } }): Promise<Metadata> {
+  const seriesSlug = params.series;
+  let seriesData = null;
+
+  try {
+    seriesData = await client.fetch(seriesBySlugQuery, { seriesSlug }, { next: { revalidate: 3600 } });
+  } catch (error) {
+    console.error('Error fetching series metadata:', error);
+  }
+
+  if (!seriesData) {
+    return {
+      title: 'Series Not Found - ThaGospel Church',
+      description: 'This sermon series could not be found.',
+    };
+  }
+
+  const metaTitle = `${seriesData.seriesTitle} Series - ThaGospel Church`;
+  const metaDescription = `Browse all sermons in the ${seriesData.seriesTitle} series from ThaGospel Church.`;
+
   return {
-    title: `${series} Sermons | ThaGospel Church`,
-    description: `Browse all sermons in the ${series} series from ThaGospel Church.`,
+    title: metaTitle,
+    description: metaDescription,
     openGraph: {
-      title: `${series} Sermons | ThaGospel Church`,
-      description: `Browse all sermons in the ${series} series from ThaGospel Church.`,
+      title: metaTitle,
+      description: metaDescription,
+      images: seriesData.seriesCoverImage ? [{
+        url: urlFor(seriesData.seriesCoverImage).width(1200).height(630).url(),
+        alt: seriesData.seriesTitle,
+      }] : undefined,
       type: 'website',
     },
-  }
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: metaDescription,
+      images: seriesData.seriesCoverImage ? [urlFor(seriesData.seriesCoverImage).width(1200).height(630).url()] : undefined,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
-export const revalidate = 60
-
 export default async function SeriesDetail({ params }: { params: { series: string } }) {
-  const series = decodeURIComponent(params.series)
-  const sermons = await client.fetch(`*[_type == "sermon" && series == $series] | order(date desc)`, { series }, { next: { revalidate: 60 } }) as Sermon[]
+  const seriesSlug = params.series;
+  let seriesData = null;
+  let sermonsData = null;
 
-  const extractYouTubeId = (url: string) => {
-    const match = url.match(/(?:youtube\.com\/embed\/|youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)
-    return match ? match[1] : null
+  try {
+    const [series, sermons] = await Promise.all([
+      client.fetch(seriesBySlugQuery, { seriesSlug }, { next: { revalidate: 3600 } }),
+      client.fetch(sermonsBySeriesQuery, { seriesSlug }, { next: { revalidate: 3600 } }),
+    ]);
+
+    seriesData = series;
+    sermonsData = sermons;
+  } catch (error) {
+    console.error('Error fetching series data:', error);
   }
 
-  return (
-    <div>
-      <Navbar />
-      <main>
-        <section className="bg-navy text-white py-20">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-inter">{series} Series</h1>
-            <p className="text-xl font-inter">Sermons from the {series} series.</p>
-          </div>
-        </section>
+  if (!seriesData) {
+    notFound();
+  }
 
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4">
-            {sermons.length === 0 ? (
-              <div className="text-center py-16">
-                <p>No sermons found in this series.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sermons.map((sermon) => (
-                  <div key={sermon._id} className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    {sermon.videoUrl && (() => {
-                      const videoId = extractYouTubeId(sermon.videoUrl);
-                      return videoId ? (
-                        <div className="mb-4 aspect-video">
-                          <LazyYouTube videoId={videoId} title={sermon.title} />
-                        </div>
-                      ) : null;
-                    })()}
-                    <h3 className="text-xl font-bold mb-2">{sermon.title}</h3>
-                    <p className="text-gray-600 mb-2">By {sermon.preacher.name}</p>
-                    <p className="text-sm text-gray-500 mb-2">{new Date(sermon.date).toLocaleDateString()}</p>
-                    {sermon.scripture && <p className="text-sm text-gray-700 mb-4">Scripture: {sermon.scripture}</p>}
-                    <div className="flex space-x-2">
-                      {sermon.videoUrl && <a href={sermon.videoUrl} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Watch</a>}
-                      {sermon.audioUrl && <a href={sermon.audioUrl} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Listen</a>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      </main>
+  // Generate JSON-LD structured data for the series
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${seriesData.seriesTitle} Series`,
+    description: `Sermons in the ${seriesData.seriesTitle} series from ThaGospel Church`,
+    url: `https://thagospel.com/sermons/series/${seriesSlug}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: sermonsData?.length || 0,
+      itemListElement: sermonsData?.map((sermon: any, index: number) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'CreativeWork',
+          name: sermon.title,
+          url: `https://thagospel.com/sermons/${sermon.slug}`,
+          datePublished: sermon.publishedAt,
+        },
+      })) || [],
+    },
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Script
+        id="series-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Navbar />
+      
+      {/* Breadcrumb Navigation */}
+      <nav className="bg-white border-b border-gray-200" aria-label="Breadcrumb">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 py-4 text-sm text-gray-600">
+            <li>
+              <a href="/" className="hover:text-teal-600 transition-colors">Home</a>
+            </li>
+            <li className="flex items-center">
+              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
+              </svg>
+              <a href="/sermons" className="hover:text-teal-600 transition-colors">Sermons</a>
+            </li>
+            <li className="flex items-center">
+              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
+              </svg>
+              <a href="/sermons/series" className="hover:text-teal-600 transition-colors">Series</a>
+            </li>
+            <li className="flex items-center">
+              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
+              </svg>
+              <span className="text-gray-900 font-medium">{seriesData.seriesTitle}</span>
+            </li>
+          </ol>
+        </div>
+      </nav>
+      
+      {/* Hero Section */}
+      <PageHero 
+        title={`${seriesData.seriesTitle} Series`} 
+        subtitle={`Sermons from the ${seriesData.seriesTitle} series`}
+        image={seriesData.seriesCoverImage}
+      />
+
+      {/* Sermons Grid */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader 
+            title={`${seriesData.seriesTitle} Series`}
+            subtitle={`${sermonsData?.length || 0} sermons in this series`}
+          />
+          
+          {sermonsData && sermonsData.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sermonsData.map((sermon: any) => (
+                <SermonCard
+                  key={sermon.slug}
+                  sermon={sermon}
+                  variant="grid"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No sermons found in this series yet.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Back to All Series */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <a
+            href="/sermons/series"
+            className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors"
+          >
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to All Series
+          </a>
+        </div>
+      </section>
+
       <Footer />
     </div>
-  )
+  );
 }

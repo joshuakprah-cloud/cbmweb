@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { urlFor } from '../../sanity/lib/image';
 
 const MinistriesPreview = ({ services, headline, intro, ministries, button }: { services?: any[], headline?: string, intro?: string, ministries?: any[], button?: string }) => {
@@ -18,11 +19,15 @@ const MinistriesPreview = ({ services, headline, intro, ministries, button }: { 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredMinistries.map((ministry, index) => (
             <div key={index} className="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-              <img
-                src={ministry.image ? urlFor(ministry.image).url() : `https://via.placeholder.com/120x80?text=${encodeURIComponent(ministry.name || ministry.title)}`}
-                alt={ministry.name || ministry.title}
-                className="w-full h-32 object-cover mb-4 rounded"
-              />
+              <div className="relative w-full h-32 mb-4 rounded">
+                <Image
+                  src={ministry.image ? urlFor(ministry.image).url() : `https://via.placeholder.com/120x80?text=${encodeURIComponent(ministry.name || ministry.title)}`}
+                  alt={ministry.name || ministry.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                />
+              </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">{ministry.name || ministry.title}</h3>
               <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{ministry.description}</p>
               <Link href="/ministries">

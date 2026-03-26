@@ -1,138 +1,183 @@
-import { client } from '../../../../sanity/lib/client'
-import { PortableText } from '@portabletext/react'
-import Navbar from '../../../components/navbar/Navbar'
-import Footer from '../../../components/Footer'
+import React from 'react';
+import { Metadata } from 'next';
+import Image from 'next/image';
+import PageHero from '@/components/about/PageHero';
+import SectionHeader from '@/components/about/SectionHeader';
+import { client } from '../../../../sanity/lib/client';
+import { overviewPageQuery } from '../../../../sanity/lib/queries';
+import { urlFor } from '../../../../sanity/lib/image';
+import { CORE_VALUES_FALLBACKS, SEO_FALLBACKS } from '@/constants/fallbacks';
+import { PortableText } from '@portabletext/react';
 
-interface CoreValue {
-  title: string
-  description: string
-}
+export const revalidate = 3600;
 
-export const metadata = {
-  title: 'Church Overview | ThaGospel Church',
-  description: 'Learn about ThaGospel Church\'s story, mission, vision, and core values.',
-  openGraph: {
-    title: 'Church Overview | ThaGospel Church',
-    description: 'Learn about ThaGospel Church\'s story, mission, vision, and core values.',
-    type: 'website',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  let overviewData = null;
+
+  try {
+    overviewData = await client.fetch(overviewPageQuery, {}, { next: { revalidate: 3600 } });
+  } catch (error) {
+    console.error('Error fetching overview metadata:', error);
+  }
+
+  const seoData = overviewData?.seo || SEO_FALLBACKS;
+  const metaTitle = seoData.metaTitle || 'Church Overview - ThaGospel Church';
+  const metaDescription = seoData.metaDescription || 'Learn about ThaGospel Church\'s story, mission, vision, and core values.';
+  const ogImage = seoData.ogImage ? urlFor(seoData.ogImage).url() : null;
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [ogImage] : undefined,
+    },
+    robots: {
+      index: !seoData.noIndex,
+      follow: true,
+    },
+  };
 }
 
 export default async function Overview() {
-  const data = await client.fetch(`*[_type == "overviewPage"][0]`)
+  let overviewData = null;
 
-  if (!data) {
-    return (
-      <div>
-        <Navbar />
-        <main className="min-h-screen bg-background text-foreground">
-          <div className="max-w-7xl mx-auto px-4 py-16">
-            <h1 className="text-4xl font-bold">Page not found</h1>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
+  try {
+    overviewData = await client.fetch(overviewPageQuery, {}, { next: { revalidate: 3600 } });
+  } catch (error) {
+    console.error('Error fetching overview data:', error);
+    // Continue with null data - will use fallbacks
   }
 
+  const featuredImage = overviewData?.featuredImage;
+  const coreValues = overviewData?.coreValues || CORE_VALUES_FALLBACKS;
+
   return (
-    <div>
-      <Navbar />
-      <main className="min-h-screen bg-background text-foreground">
-        {/* Hero Section */}
-        <div className="relative h-96 bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold mb-4">{data.heroTitle || 'About ThaGospel Church'}</h1>
-            <p className="text-xl">{data.heroSubtitle || 'Discover our story, mission, and community'}</p>
+    <>
+      {/* Hero Section */}
+      <PageHero 
+        title="Church Overview" 
+        subtitle="Discover our story, mission, and community"
+        image={featuredImage}
+      />
+
+      {/* Featured Image Section */}
+      {featuredImage && (
+        <section className="py-16 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative w-full h-64 lg:h-96 rounded-2xl overflow-hidden">
+              <Image
+                src={urlFor(featuredImage).width(1200).height(600).url()}
+                alt="Church overview featured image"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority={false}
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Core Values Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader 
+            title="Our Core Values"
+            subtitle="The principles that guide everything we do"
+          />
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {coreValues.map((value: any, index: number) => (
+              <div key={index} className="text-center">
+                <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-3xl">{value.icon || '💎'}</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.label}</h3>
+                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+              </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          {/* Our Story Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Our Story</h2>
-            <div className="max-w-4xl mx-auto prose prose-lg">
-              {data.story ? <PortableText value={data.story} /> : (
-                <p className="text-lg leading-relaxed">
-                  ThaGospel Church was founded with a vision to create a vibrant community where faith comes alive and lives are transformed through the power of God's word.
-                </p>
-              )}
+      {/* Mission & Vision Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Mission */}
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Mission</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {overviewData?.missionStatement || 'To raise believers and impact nations through the power of the gospel.'}
+              </p>
             </div>
-          </section>
 
-          {/* Mission & Vision */}
-          <section className="mb-16 bg-gray-50 p-8 rounded-lg">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="text-center">
-                <h3 className="text-2xl font-semibold mb-4 text-purple-600">Our Mission</h3>
-                <p className="text-lg">{data.mission || 'To glorify God by making disciples of Jesus Christ, spreading the gospel, and building a community of faith that serves others with love and compassion.'}</p>
-              </div>
-              <div className="text-center">
-                <h3 className="text-2xl font-semibold mb-4 text-blue-600">Our Vision</h3>
-                <p className="text-lg">{data.vision || 'To be a beacon of hope and transformation in our community, where every person can experience God\'s love and discover their purpose in His kingdom.'}</p>
-              </div>
+            {/* Vision */}
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Vision</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {overviewData?.visionStatement || 'To be a beacon of hope and transformation in our community and beyond.'}
+              </p>
             </div>
-          </section>
-
-          {/* Core Values Grid */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Our Core Values</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {data.coreValues ? data.coreValues.map((value: CoreValue, index: number) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">💎</span>
-                  </div>
-                  <h4 className="text-xl font-semibold mb-2">{value.title}</h4>
-                  <p>{value.description}</p>
-                </div>
-              )) : (
-                <>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">📖</span>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2">Scripture</h4>
-                    <p>The Bible is our foundation and guide.</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">🙏</span>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2">Prayer</h4>
-                    <p>Communicating with God in all circumstances.</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">🤝</span>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2">Community</h4>
-                    <p>Supporting one another in faith and life.</p>
-                  </div>
-                </>
-              )}
-            </div>
-          </section>
-
-          {/* Call to Action */}
-          <section className="text-center bg-purple-600 text-white p-8 rounded-lg">
-            <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
-            <p className="text-lg mb-6">
-              Whether you're new to faith or seeking to deepen your relationship with God,
-              you'll find a welcoming home at ThaGospel Church.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/plan-your-visit" className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Plan Your Visit
-              </a>
-              <a href="/donate" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Give Today
-              </a>
-            </div>
-          </section>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </div>
-  )
+      </section>
+
+      {/* Story Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader 
+            title="Our Story"
+            subtitle="How ThaGospel Church began and grew"
+          />
+          
+          <div className="prose prose-lg max-w-none">
+            <p className="text-gray-700 leading-relaxed">
+              ThaGospel Church was founded with a vision to create a vibrant community where faith comes alive and lives are transformed through the power of God's word. From humble beginnings to a thriving congregation, we've remained committed to our calling to make disciples and impact our community with the love and message of Jesus Christ.
+            </p>
+            
+            <p className="text-gray-700 leading-relaxed">
+              Through every season of growth and change, our core mission has remained the same: to be a place where people can encounter God's presence, grow in their faith, and find purpose in serving others. We believe that the church is not just a building, but a family of believers committed to making Jesus known in every sphere of life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <SectionHeader 
+            label="Join Our Community"
+            title="This Family Has a Place for You."
+          />
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="/plan-your-visit"
+              className="inline-flex items-center px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold uppercase tracking-wide rounded-full transition-colors duration-200"
+              style={{ fontSize: '13px' }}
+            >
+              Plan Your Visit
+            </a>
+            <a
+              href="/connect/groups"
+              className="inline-flex items-center px-8 py-3 bg-transparent border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-bold uppercase tracking-wide rounded-full transition-colors duration-200"
+              style={{ fontSize: '13px' }}
+            >
+              Get Connected
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

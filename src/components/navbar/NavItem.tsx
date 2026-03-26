@@ -14,39 +14,23 @@ interface NavItemProps {
   pathname: string;
 }
 
-const NavItem = React.memo<NavItemProps>(({ item, isActive, pathname }) => {
+const NavItem = React.memo<NavItemProps>(({ item, isActive }) => {
   return (
     <div className="relative group">
-      {pathname.startsWith('/about') && item.href === '/about' ? (
+      <Link
+        href={item.href}
+        className={`relative text-foreground hover:text-red-500 transition-colors duration-200 ${
+          isActive ? 'text-red-500 hover:text-red-600' : ''
+        }`}
+        aria-label={item.title}
+      >
+        {item.title}
         <span
-          className={`relative text-foreground cursor-default ${
-            isActive ? 'text-red-500' : 'text-foreground'
+          className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
+            isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
           }`}
-          aria-label={item.title}
-        >
-          {item.title}
-          <span
-            className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
-              isActive ? 'scale-x-100' : 'scale-x-0'
-            }`}
-          ></span>
-        </span>
-      ) : (
-        <Link
-          href={item.href}
-          className={`relative text-foreground hover:text-red-500 transition-colors duration-200 ${
-            isActive ? 'text-red-500 hover:text-red-600' : ''
-          }`}
-          aria-label={item.title}
-        >
-          {item.title}
-          <span
-            className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-500 transform transition-transform duration-300 origin-left ${
-              isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-            }`}
-          ></span>
-        </Link>
-      )}
+        ></span>
+      </Link>
       {item.dropdown && <Dropdown items={item.dropdown} />}
     </div>
   );

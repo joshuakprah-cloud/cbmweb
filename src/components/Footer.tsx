@@ -18,174 +18,231 @@ import {
 const Footer = ({ homepage }: { homepage?: any }) => {
   const { theme } = useTheme();
   const [email, setEmail] = useState('');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: Replace with real newsletter API integration
     console.log('Newsletter subscription:', email);
     setEmail('');
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Contact form submission:', formData);
-    setFormData({ name: '', email: '', phone: '', message: '' });
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
   return (
     <>
-      <footer className="bg-gray-900 text-white py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      {/* Main Footer */}
+      <footer className="bg-[#1a1a1a] text-white py-20 px-10 lg:px-16">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             
-            {/* COLUMN 1 — CONTACT INFORMATION */}
+            {/* COLUMN 1 — CHURCH INFO */}
             <div>
-              <h4 className="text-lg font-bold mb-6">Contact Information</h4>
+              {/* Church Name */}
+              <h3 className="text-white font-bold text-xl tracking-wide mb-2">
+                ThaGospel Church
+              </h3>
               
-              {/* Address */}
-              <div className="flex items-start mb-4">
-                <FaHome className="text-red-500 mr-4 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-gray-300">Taifa Burkina, Accra, Ghana, 6262 Accra North</p>
+              {/* Tagline */}
+              <p className="text-[#aaaaaa] text-sm mb-6 leading-relaxed" style={{ maxWidth: '260px' }}>
+                Love & Humility
+              </p>
+              
+              {/* Contact Details */}
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center">
+                  <FaHome className="text-teal-500 mr-3 flex-shrink-0" style={{ fontSize: '16px' }} />
+                  <span className="text-[#cccccc] text-sm">Taifa Burkina, Accra, Ghana, 6262 Accra North</span>
+                </div>
+                <div className="flex items-center">
+                  <FaPhoneAlt className="text-teal-500 mr-3 flex-shrink-0" style={{ fontSize: '16px' }} />
+                  <span className="text-[#cccccc] text-sm">055 697 8861</span>
+                </div>
+                <div className="flex items-center">
+                  <FaEnvelope className="text-teal-500 mr-3 flex-shrink-0" style={{ fontSize: '16px' }} />
+                  <span className="text-[#cccccc] text-sm">thagospelchurchheadquarters@gmail.com</span>
                 </div>
               </div>
-
-              {/* Phone */}
-              <div className="flex items-start mb-4">
-                <FaPhoneAlt className="text-red-500 mr-4 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-gray-300">Phone: 055 697 8861</p>
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className="flex items-start">
-                <FaEnvelope className="text-red-500 mr-4 mt-1 flex-shrink-0" />
-                <p className="text-sm text-gray-300">thagospelchurchheadquarters@gmail.com</p>
+              
+              {/* Social Media Icons */}
+              <div className="flex space-x-2.5">
+                {/* TODO: Replace with real social media URLs */}
+                <a href="#" className="w-9 h-9 border border-[#444] rounded-full flex items-center justify-center hover:bg-white hover:text-[#1a1a1a] transition-all duration-200">
+                  <FaFacebookF className="text-teal-500" style={{ fontSize: '14px' }} />
+                </a>
+                <a href="#" className="w-9 h-9 border border-[#444] rounded-full flex items-center justify-center hover:bg-white hover:text-[#1a1a1a] transition-all duration-200">
+                  <FaTwitter className="text-teal-500" style={{ fontSize: '14px' }} />
+                </a>
+                <a href="#" className="w-9 h-9 border border-[#444] rounded-full flex items-center justify-center hover:bg-white hover:text-[#1a1a1a] transition-all duration-200">
+                  <FaYoutube className="text-teal-500" style={{ fontSize: '14px' }} />
+                </a>
+                <a href="#" className="w-9 h-9 border border-[#444] rounded-full flex items-center justify-center hover:bg-white hover:text-[#1a1a1a] transition-all duration-200">
+                  <FaInstagram className="text-teal-500" style={{ fontSize: '14px' }} />
+                </a>
               </div>
             </div>
 
-            {/* COLUMN 2 — SOCIAL + NEWSLETTER + MAP */}
+            {/* COLUMN 2 — QUICK LINKS + NEWSLETTER */}
             <div>
-              {/* Social Media */}
-              <h4 className="text-lg font-bold mb-6">Follow us on Social Media</h4>
-              <div className="flex space-x-3 mb-8">
-                <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                  <FaFacebookF className="text-white text-sm" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                  <FaTwitter className="text-white text-sm" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                  <FaYoutube className="text-white text-sm" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                  <FaInstagram className="text-white text-sm" />
-                </a>
+              {/* Section Header */}
+              <span 
+                className="text-[#aaaaaa] italic"
+                style={{ 
+                  fontSize: '16px',
+                  fontFamily: 'Georgia, serif'
+                }}
+              >
+                Explore
+              </span>
+              <h3 
+                className="text-white font-bold mt-2 mb-5" 
+                style={{ fontSize: '22px' }}
+              >
+                Quick Links
+              </h3>
+              
+              {/* Quick Links List */}
+              <div className="space-y-3 mb-10">
+                {/* TODO: Confirm all route paths match actual Next.js routing */}
+                <Link href="/" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  Home
+                </Link>
+                <Link href="/about" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  About Us
+                </Link>
+                <Link href="/sermons" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  Sermons
+                </Link>
+                <Link href="/ministries" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  Ministries
+                </Link>
+                <Link href="/connect/groups" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  Get Connected
+                </Link>
+                <Link href="/give" className="block text-[#cccccc] text-sm hover:text-teal-500 transition-colors duration-200">
+                  Give
+                </Link>
               </div>
-
-              {/* Newsletter */}
-              <h4 className="text-lg font-bold mb-4">Sign-up to receive our Newsletter</h4>
-              <form onSubmit={handleNewsletterSubmit} className="mb-8">
-                <div className="flex flex-col sm:flex-row gap-2">
+              
+              {/* Newsletter Signup */}
+              <div>
+                <span 
+                  className="text-[#aaaaaa] italic"
+                  style={{ 
+                    fontSize: '16px',
+                    fontFamily: 'Georgia, serif'
+                  }}
+                >
+                  Stay Updated
+                </span>
+                <p className="text-[#888888] text-sm mb-4">
+                  Get updates straight to your inbox.
+                </p>
+                
+                <form onSubmit={handleNewsletterSubmit} className="flex">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your Email here"
-                    className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+                    placeholder="Your email address"
+                    className="flex-1 px-4 py-3 bg-[#2a2a2a] border border-[#333] text-white placeholder-gray-500 focus:outline-none focus:border-teal-500 transition-colors text-sm rounded-l-[50px]"
                     required
                   />
                   <button
                     type="submit"
-                    className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center justify-center"
+                    className="bg-teal-500 hover:bg-teal-600 text-white px-5 py-3 rounded-r-[50px] transition-colors font-medium flex items-center justify-center"
                   >
-                    Send
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </button>
-                </div>
-              </form>
+                </form>
+              </div>
+            </div>
 
-              {/* Map */}
-              <div className="w-full h-48 bg-gray-800 rounded-lg overflow-hidden">
+            {/* COLUMN 3 — FIND US (MAP) */}
+            <div>
+              {/* Section Header */}
+              <span 
+                className="text-[#aaaaaa] italic"
+                style={{ 
+                  fontSize: '16px',
+                  fontFamily: 'Georgia, serif'
+                }}
+              >
+                Find Us
+              </span>
+              <h3 
+                className="text-white font-bold mt-2 mb-5" 
+                style={{ fontSize: '22px' }}
+              >
+                ThaGospel Church, Accra
+              </h3>
+              
+              {/* Google Maps Embed */}
+              <div className="w-full h-[220px] bg-gray-800 rounded-[16px] overflow-hidden border border-[#333] mb-6">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.8265424175!2d-0.1877!3d5.5612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMzMnMzYuMiJOwcrwMTAnMzYuNiJF!5e0!3m2!1sen!2sgh!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.2539232976937!2d-0.2581310260121519!3d5.6763861324294815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9f4df7adcb59%3A0xb277288105e12c4b!2sTHAGOSPEL%20CHURCH!5e0!3m2!1sen!2sus!4v1773850826371!5m2!1sen!2sus"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="ThaGospel Church Accra Ghana"
+                  title="THAGOSPEL CHURCH Accra Ghana"
                 />
               </div>
-            </div>
-
-            {/* COLUMN 3 — CONTACT FORM */}
-            <div>
-              <h4 className="text-lg font-bold mb-6">Write to us:</h4>
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Your full Name here"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Your Email here"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
-                  required
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Your Phone Number here"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
-                  required
-                />
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Message"
-                  rows={4}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors resize-none"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors font-medium"
-                >
-                  SUBMIT
-                </button>
-              </form>
+              
+              {/* Get Directions Button */}
+              {/* TODO: Replace with real Google Maps directions URL */}
+              <Link
+                href="https://maps.google.com"
+                className="inline-flex items-center border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-bold py-2.5 px-6 rounded-[50px] transition-all duration-200"
+                style={{ fontSize: '13px', letterSpacing: '0.05em' }}
+              >
+                GET DIRECTIONS
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Floating WhatsApp Button */}
+      {/* BOTTOM BAR */}
+      <div className="bg-[#111111] border-t border-[#2a2a2a] py-6 px-10 lg:px-16">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            {/* Copyright */}
+            <div className="text-[#666666] text-sm">
+              © 2025 ThaGospel Church. All rights reserved.
+            </div>
+            
+            {/* Contact CTA (desktop only) */}
+            <div className="hidden md:flex items-center space-x-2">
+              <span className="text-[#888888] text-sm">Have a question?</span>
+              {/* TODO: Create /contact page with the full contact form moved from footer */}
+              <Link href="/connect/contact" className="text-teal-500 hover:text-teal-600 font-medium text-sm transition-colors">
+                Contact Us →
+              </Link>
+            </div>
+            
+            {/* Legal Links */}
+            <div className="flex items-center space-x-4">
+              {/* TODO: Create privacy and terms pages or remove links if not needed */}
+              <Link href="/privacy" className="text-[#666666] hover:text-teal-500 text-sm transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-[#666666] hover:text-teal-500 text-sm transition-colors">
+                Terms of Use
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact form moved to /contact page. 
+      TODO: Create dedicated contact page with this form */}
+
+      {/* Floating WhatsApp Button - UNCHANGED */}
       <a
         href="https://wa.me/233571124180"
         target="_blank"

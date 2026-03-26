@@ -63,7 +63,7 @@ export default async function Beliefs() {
           <p className="text-lg mb-6">
             We'd love to discuss our beliefs with you and answer any questions you may have.
           </p>
-          <a href="/contact" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <a href="/connect/contact" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             Contact Us
           </a>
         </section>

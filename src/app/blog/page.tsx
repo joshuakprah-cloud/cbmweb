@@ -1,5 +1,5 @@
 import { client } from '../../../sanity/lib/client'
-import { postsQuery } from '../../../sanity/lib/queries'
+import { allPostsQuery } from '../../../sanity/lib/queries';
 import { urlFor } from '../../../sanity/lib/image'
 import Link from 'next/link'
 
@@ -8,7 +8,7 @@ export const revalidate = 60
 export default async function Blog() {
   let posts = []
   try {
-    posts = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } }) || []
+    posts = await client.fetch(allPostsQuery, {}, { next: { revalidate: 60 } }) || []
   } catch (error) {
     console.error('Failed to fetch posts from Sanity:', error)
     // Continue with empty posts array

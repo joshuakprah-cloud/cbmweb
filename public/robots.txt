@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://church-website.vercel.app/sitemap.xml
+# Host
+Host: https://thagospel.com
+
+# Sitemaps
+Sitemap: https://thagospel.com/sitemap.xml

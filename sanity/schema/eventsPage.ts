@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'eventsPage',
@@ -6,39 +6,42 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'heroTitle',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'heroHeadline',
-      title: 'Hero Headline',
-      type: 'string'
+      name: 'heroTagline',
+      type: 'string',
+      validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'heroSubtext',
-      title: 'Hero Subtext',
-      type: 'text'
-    }),
-    defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: [{ type: 'block' }]
-    }),
-    defineField({
-      name: 'upcomingEventsIntro',
-      title: 'Upcoming Events Intro',
-      type: 'text'
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
+      name: 'heroImage',
       type: 'image',
-      options: {
-        hotspot: true
-      }
-    })
-  ]
-})
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'seo',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'metaTitle',
+          type: 'string',
+        }),
+        defineField({
+          name: 'metaDescription',
+          type: 'text',
+        }),
+        defineField({
+          name: 'ogImage',
+          type: 'image',
+        }),
+      ],
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'heroTitle',
+    },
+  },
+});

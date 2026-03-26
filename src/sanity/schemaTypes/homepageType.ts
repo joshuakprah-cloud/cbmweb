@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {seoType} from './objects/seo'
 
 export const homepageType = defineType({
   name: 'homepage',
@@ -396,6 +397,12 @@ export const homepageType = defineType({
       name: 'footerBottomText',
       title: 'Footer Bottom Text',
       type: 'text',
+    }),
+    defineField({
+      name: 'seo',
+      type: 'seo',
+      title: 'SEO Settings',
+      description: 'SEO settings for the homepage',
     }),
   ],
 })

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const MeetPastor = ({ pastorMessage }: { pastorMessage: any }) => {
   return (
     <section className="py-16 bg-background">
@@ -7,11 +9,15 @@ const MeetPastor = ({ pastorMessage }: { pastorMessage: any }) => {
         </h2>
         <div className="md:flex items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <img
-              src="/placeholder-pastor.jpg" // Placeholder image
-              alt="Lead Pastor"
-              className="w-full h-96 object-cover rounded-lg shadow-lg"
-            />
+            <div className="relative w-full h-96">
+              <Image
+                src="/placeholder-pastor.jpg" // Placeholder image
+                alt="Lead Pastor"
+                fill
+                className="object-cover rounded-lg shadow-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
           </div>
           <div className="md:w-1/2 md:pl-12">
             <p className="text-lg text-foreground leading-relaxed mb-4">

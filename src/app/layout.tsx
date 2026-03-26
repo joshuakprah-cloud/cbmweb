@@ -2,6 +2,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '../components/theme-provider'
+import { client } from '../sanity/lib/client'
+import { navbarQuery } from 'sanity/lib/queries'
+import Navbar from '../components/navbar/Navbar'
+import AnnouncementBar from '../components/layout/AnnouncementBar'
+import Footer from '../components/Footer'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -37,16 +42,42 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  let navbarData = null
+  let announcementData = null
+
+  try {
+    const data = await client.fetch(navbarQuery, {}, { next: { revalidate: 3600 } })
+    navbarData = data?.navbar
+    announcementData = data?.navbar?.announcementBar
+  } catch (error) {
+    console.error('Error fetching navbar data:', error)
+    // Continue with null values, will use fallbacks
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider defaultTheme="light">
-          {children}
+          <a 
+            href="#main-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded"
+          >
+            Skip to main content
+          </a>
+          <AnnouncementBar
+            isActive={announcementData?.isActive || false}
+            message={announcementData?.message || ''}
+            linkLabel={announcementData?.linkLabel}
+            linkUrl={announcementData?.linkUrl}
+          />
+          <Navbar navbarData={navbarData} />
+          <main id="main-content">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

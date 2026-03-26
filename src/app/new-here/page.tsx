@@ -375,7 +375,7 @@ export default function NewHerePage() {
             <Link href="/plan-your-visit" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
               Get Directions
             </Link>
-            <Link href="/contact" className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+            <Link href="/connect/contact" className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
               Contact Us
             </Link>
           </div>

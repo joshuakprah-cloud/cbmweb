@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField } from 'sanity';
 
 export default defineType({
   name: 'contactPage',
@@ -6,68 +6,110 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'heroTitle',
       type: 'string',
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'heroHeadline',
-      title: 'Hero Headline',
-      type: 'string'
+      name: 'heroTagline',
+      type: 'string',
+      validation: Rule => Rule.required(),
     }),
     defineField({
-      name: 'heroSubtext',
-      title: 'Hero Subtext',
-      type: 'text'
+      name: 'heroImage',
+      type: 'image',
+      options: { hotspot: true },
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
+      name: 'address',
+      type: 'text',
+    }),
+    defineField({
+      name: 'phone',
+      type: 'string',
+    }),
+    defineField({
+      name: 'email',
+      type: 'string',
+    }),
+    defineField({
+      name: 'officeHours',
       type: 'array',
-      of: [{ type: 'block' }]
+      of: [
+        defineField({
+          name: 'days',
+          type: 'string',
+          validation: Rule => Rule.required(),
+        }),
+        defineField({
+          name: 'hours',
+          type: 'string',
+          validation: Rule => Rule.required(),
+        }),
+      ],
     }),
     defineField({
-      name: 'contactInfo',
-      title: 'Contact Information',
+      name: 'socialLinks',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'platform',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Facebook', value: 'Facebook' },
+              { title: 'Twitter', value: 'Twitter' },
+              { title: 'YouTube', value: 'YouTube' },
+              { title: 'Instagram', value: 'Instagram' },
+            ],
+          },
+          validation: Rule => Rule.required(),
+        }),
+        defineField({
+          name: 'url',
+          type: 'url',
+          validation: Rule => Rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'scriptureReference',
+      type: 'string',
+    }),
+    defineField({
+      name: 'scriptureText',
+      type: 'text',
+    }),
+    defineField({
+      name: 'closingCtaTitle',
+      type: 'string',
+    }),
+    defineField({
+      name: 'closingCtaSubtitle',
+      type: 'text',
+    }),
+    defineField({
+      name: 'seo',
       type: 'object',
       fields: [
         defineField({
-          name: 'address',
-          title: 'Address',
-          type: 'string'
+          name: 'metaTitle',
+          type: 'string',
         }),
         defineField({
-          name: 'phone',
-          title: 'Phone',
-          type: 'string'
+          name: 'metaDescription',
+          type: 'text',
         }),
         defineField({
-          name: 'email',
-          title: 'Email',
-          type: 'string'
+          name: 'ogImage',
+          type: 'image',
         }),
-        defineField({
-          name: 'serviceTimes',
-          title: 'Service Times',
-          type: 'array',
-          of: [{ type: 'string' }]
-        })
-      ]
+      ],
     }),
-    defineField({
-      name: 'showContactForm',
-      title: 'Show Contact Form',
-      type: 'boolean',
-      initialValue: true
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
-    })
-  ]
-})
+  ],
+  preview: {
+    select: {
+      title: 'heroTitle',
+    },
+  },
+});

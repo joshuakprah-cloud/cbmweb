@@ -1,10 +1,10 @@
 import { client } from '../../sanity/lib/client';
-import { sermonsQuery } from '../../sanity/lib/queries';
+import { allSermonsQuery } from '../../sanity/lib/queries';
 import Image from 'next/image';
 import { urlFor } from '../../sanity/lib/image';
 
 const SermonSection = async ({ homepage }: { homepage: any }) => {
-  const sermons = await client.fetch(sermonsQuery);
+  const sermons = await client.fetch(allSermonsQuery);
 
   const featuredSermon = sermons[0];
   const recentSermons = sermons.slice(1, 5);
@@ -23,7 +23,7 @@ const SermonSection = async ({ homepage }: { homepage: any }) => {
               <div className="order-2 lg:order-1">
                 <div className="aspect-video mb-6">
                   <iframe
-                    src={`https://www.youtube.com/embed/${featuredSermon.videoUrl?.split('v=')[1]}`}
+                    src={`https://www.youtube-nocookie.com/embed/${featuredSermon.videoUrl?.split('v=')[1]}`}
                     title={featuredSermon.title}
                     className="w-full h-full rounded-lg"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -54,7 +54,7 @@ const SermonSection = async ({ homepage }: { homepage: any }) => {
                 <div key={sermon._id} className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                   <div className="aspect-video">
                     <iframe
-                      src={`https://www.youtube.com/embed/${sermon.videoUrl?.split('v=')[1]}`}
+                      src={`https://www.youtube-nocookie.com/embed/${sermon.videoUrl?.split('v=')[1]}`}
                       title={sermon.title}
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

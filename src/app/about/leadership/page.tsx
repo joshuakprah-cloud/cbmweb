@@ -1,235 +1,172 @@
-import Image from 'next/image'
-import { FaFacebookF, FaTwitter, FaInstagram, FaUserTie, FaHandsHelping, FaMusic } from 'react-icons/fa'
+import { Metadata } from 'next';
+import Link from 'next/link';
+import PageHero from '@/components/about/PageHero';
+import SectionHeader from '@/components/about/SectionHeader';
+import LeadershipClient from '@/components/about/LeadershipClient';
+import { StaffMember } from '@/types/staff';
+import { client } from '../../../../sanity/lib/client';
+import { leadershipPageQuery, staffMembersQuery } from '../../../../sanity/lib/queries';
+import { urlFor } from '../../../../sanity/lib/image';
+import { SEO_FALLBACKS } from '@/constants/fallbacks';
+import Script from 'next/script';
 
-export const metadata = {
-  title: 'Our Leadership - ThaGospel Church',
-  description: 'Meet the dedicated leaders and pastors who guide ThaGospel Church in ministry and service.',
+async function getLeadershipData(): Promise<{ pageData: any; staffMembers: StaffMember[] }> {
+  try {
+    const [pageData, staffMembers] = await Promise.all([
+      client.fetch(leadershipPageQuery, {}, { next: { revalidate: 60 } }),
+      client.fetch(staffMembersQuery, {}, { next: { revalidate: 60 } }),
+    ]);
+    return { pageData: pageData || {}, staffMembers: staffMembers || [] };
+  } catch (error) {
+    console.error('Error fetching leadership data:', error);
+    return { pageData: {}, staffMembers: [] };
+  }
 }
 
-export default function LeadershipPage() {
-  const leadershipTeam = [
-    {
-      name: "Pastor David Johnson",
-      role: "Youth Pastor",
-      bio: "Passionate about reaching the next generation with God's love and truth.",
-      image: "/placeholder-pastor3.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
+function getInitials(name: string): string {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function groupByCategory(members: StaffMember[]) {
+  const groups: { [key: string]: StaffMember[] } = {};
+  members.forEach(member => {
+    const category = member.leadershipCategory || 'Team Members';
+    if (!groups[category]) groups[category] = [];
+    groups[category].push(member);
+  });
+  
+  const categoryOrder = ['Pastoral Team', 'Ministry Leaders', 'Support Staff'];
+  const sortedGroups: { [key: string]: StaffMember[] } = {};
+  categoryOrder.forEach(cat => { if (groups[cat]) sortedGroups[cat] = groups[cat]; });
+  Object.keys(groups).forEach(cat => { if (!sortedGroups[cat]) sortedGroups[cat] = groups[cat]; });
+  return sortedGroups;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  let pageData = null;
+
+  try {
+    pageData = await client.fetch(leadershipPageQuery, {}, { next: { revalidate: 60 } });
+  } catch (error) {
+    console.error('Error fetching leadership metadata:', error);
+  }
+
+  const seoData = pageData?.seo || SEO_FALLBACKS;
+  const metaTitle = seoData.metaTitle || 'Our Leadership | ThaGospel Church';
+  const metaDescription = seoData.metaDescription || 'Meet the leadership team of ThaGospel Church.';
+  const ogImage = seoData.ogImage ? urlFor(seoData.ogImage).url() : null;
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+      type: 'website',
     },
-    {
-      name: "Pastor Sarah Williams",
-      role: "Worship Leader",
-      bio: "Leading our congregation in powerful worship experiences that draw us closer to God.",
-      image: "/placeholder-pastor4.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [ogImage] : undefined,
     },
-    {
-      name: "Pastor Michael Brown",
-      role: "Outreach Director",
-      bio: "Dedicated to extending God's love and care to our community through service and outreach.",
-      image: "/placeholder-pastor5.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
+    robots: {
+      index: !seoData.noIndex,
+      follow: true,
     },
-    {
-      name: "Pastor Emily Davis",
-      role: "Children's Ministry",
-      bio: "Nurturing young hearts and minds with biblical truths and God's amazing love.",
-      image: "/placeholder-pastor6.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
-    },
-    {
-      name: "Pastor Robert Wilson",
-      role: "Elder",
-      bio: "Providing spiritual guidance and wisdom to our church family.",
-      image: "/placeholder-pastor7.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
-    },
-    {
-      name: "Pastor Lisa Garcia",
-      role: "Prayer Ministry",
-      bio: "Leading our prayer efforts and helping others develop deeper prayer lives.",
-      image: "/placeholder-pastor8.jpg",
-      social: { facebook: "#", twitter: "#", instagram: "#" }
-    }
-  ]
+  };
+}
+
+export default async function LeadershipPage() {
+  const { pageData, staffMembers } = await getLeadershipData();
+  const groupedStaff = groupByCategory(staffMembers);
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://thagospel.com' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://thagospel.com/about' },
+      { '@type': 'ListItem', position: 3, name: 'Our Leadership', item: 'https://thagospel.com/about/leadership' },
+    ],
+  };
+
+  const leadershipJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ThaGospel Church Leadership',
+    url: 'https://thagospel.com/about/leadership',
+    members: staffMembers.slice(0, 10).map((m: StaffMember) => ({
+      '@type': 'Person',
+      name: m.name,
+      jobTitle: m.role,
+      image: m.photo ? urlFor(m.photo).url() : undefined,
+    })),
+  };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative h-screen bg-gradient-to-br from-indigo-900 via-blue-800 to-purple-900 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
-            Our Leadership
-          </h1>
-          <p className="text-xl md:text-2xl font-light drop-shadow-lg mb-12">
-            Dedicated servants leading with vision, faith, and love
-          </p>
+    <>
+      <Script id="breadcrumb-data" type="application/ld+json" strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <Script id="leadership-data" type="application/ld+json" strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(leadershipJsonLd) }} />
+
+      {/* Breadcrumb */}
+      <nav className="bg-white border-b border-gray-200" aria-label="Breadcrumb">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 py-4 text-sm text-gray-600">
+            <li>
+              <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
+            </li>
+            <li className="flex items-center">
+              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
+              </svg>
+              <Link href="/about" className="hover:text-teal-600 transition-colors">About</Link>
+            </li>
+            <li className="flex items-center">
+              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
+              </svg>
+              <span className="text-gray-900 font-medium">Leadership</span>
+            </li>
+          </ol>
+        </div>
+      </nav>
+
+      <PageHero 
+        title={pageData?.heroTitle || 'Leadership'} 
+        subtitle={pageData?.heroSubtitle || 'Meet our dedicated leadership team'}
+        image={pageData?.heroBackgroundImage} 
+      />
+
+      {/* Leadership Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader 
+            title="Our Leadership Team"
+            subtitle="Meet the dedicated individuals who serve and lead our church"
+          />
+          
+          <LeadershipClient groupedStaff={groupedStaff} />
         </div>
       </section>
 
-      {/* Senior Pastor Section */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Meet Our Head Pastors
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Visionary leaders called to shepherd ThaGospel Church with wisdom and spiritual authority
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              {/* Image Side */}
-              <div className="relative h-96 lg:h-auto">
-                <Image
-                  src="/placeholder-pastor1.jpg"
-                  alt="Senior Pastor"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-
-              {/* Content Side */}
-              <div className="p-8 lg:p-12 flex flex-col justify-center">
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">Prophet Powerman Bekoe</h3>
-                <p className="text-lg text-blue-600 font-semibold mb-6">Head Pastor</p>
-
-                <div className="space-y-4 text-gray-700 leading-relaxed mb-8">
-                  <p>
-                    Prophet Powerman Bekoe is the Head Pastor of ThaGospel Church, a dynamic leader with
-                    prophetic insight and apostolic authority. With a heart for God's people and a vision
-                    for spiritual transformation, he leads our congregation with wisdom, compassion, and
-                    unwavering faith in God's purpose for ThaGospel Church.
-                  </p>
-                  <p>
-                    His ministry focuses on equipping believers for kingdom work, fostering spiritual growth,
-                    and building a community that impacts lives and communities throughout Ghana and beyond.
-                    Under his leadership, ThaGospel Church continues to be a beacon of hope and spiritual
-                    nourishment for all who seek God's presence.
-                  </p>
-                </div>
-
-                {/* Social Media Links */}
-                <div className="flex space-x-4">
-                  <a
-                    href="#"
-                    className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                    aria-label="Facebook"
-                  >
-                    <FaFacebookF className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                    aria-label="Twitter"
-                  >
-                    <FaTwitter className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-12 h-12 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors"
-                    aria-label="Instagram"
-                  >
-                    <FaInstagram className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Back to About */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Link
+            href="/about"
+            className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold transition-colors"
+          >
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to About
+          </Link>
         </div>
       </section>
-
-      {/* Leadership Team */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Our Leadership Team
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              A dedicated team of ministers and leaders serving with passion and purpose
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {leadershipTeam.map((leader, index) => (
-              <div key={index} className="bg-gray-50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
-                {/* Image */}
-                <div className="relative w-full h-64 rounded-xl overflow-hidden mb-6 bg-white">
-                  <Image
-                    src={leader.image}
-                    alt={leader.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{leader.name}</h3>
-                  <p className="text-blue-600 font-semibold mb-4">{leader.role}</p>
-                  <p className="text-gray-600 leading-relaxed mb-6">{leader.bio}</p>
-
-                  {/* Social Media */}
-                  <div className="flex justify-center space-x-3">
-                    <a
-                      href={leader.social.facebook}
-                      className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                      aria-label="Facebook"
-                    >
-                      <FaFacebookF className="w-4 h-4" />
-                    </a>
-                    <a
-                      href={leader.social.twitter}
-                      className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                      aria-label="Twitter"
-                    >
-                      <FaTwitter className="w-4 h-4" />
-                    </a>
-                    <a
-                      href={leader.social.instagram}
-                      className="w-8 h-8 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors"
-                      aria-label="Instagram"
-                    >
-                      <FaInstagram className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-            Join Our Ministry Team
-          </h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
-            Feel called to serve? We'd love to connect with you about ministry opportunities.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="/contact"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
-            >
-              Get in Touch
-            </a>
-            <a
-              href="/ministries"
-              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors"
-            >
-              Explore Ministries
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
+    </>
+  );
 }

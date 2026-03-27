@@ -16,7 +16,37 @@ import eventRegistrationType from './eventRegistration'
 import contactPageType from './contactPage'
 import contactSubmissionType from './contactSubmission'
 import prayerRequestType from './prayerRequest'
-import siteSettingsType from './siteSettings'
+import { siteSettingsType } from './siteSettingsType'
+import { announcementBannerType } from './announcementBannerType'
+import { footerType } from './footerType'
+import { aboutPageType } from './aboutPageType'
+import { storyPageType } from './storyPageType'
+import { beliefsPageType } from './beliefsPageType'
+import { leadershipPageType } from './leadershipPageType'
+import { teamMemberType } from './teamMemberType'
+import { campusType } from './campusType'
+import { sermonsPageType } from './sermonsPageType'
+import { sermonType } from './sermonType'
+import { sermonSeriesType } from './sermonSeriesType'
+import { preacherType } from './preacherType'
+import { connectPageType } from './connectPageType'
+import { newHerePageType } from './newHerePageType'
+import { groupsPageType } from './groupsPageType'
+import { smallGroupType } from './smallGroupType'
+import { contactSubjectType } from './contactSubjectType'
+import { prayerRequestCategoryType } from './prayerRequestCategoryType'
+import { serviceTimesType } from './serviceTimesType'
+import { testimonyType } from './testimonyType'
+import { notFoundPageType } from './notFoundPageType'
+import { cookieConsentType } from './cookieConsentType'
+import { blogPageType } from './blogPageType'
+import { galleryPageType } from './galleryPageType'
+import { galleryType } from './galleryType'
+import { podcastPageType } from './podcastPageType'
+import { givePageType } from './givePageType'
+import { givingTypeType } from './givingTypeType'
+import { faqType } from './faqType'
+import { locationType } from './locationType'
 
 export const schemaTypes = [
   homepageType,
@@ -37,5 +67,35 @@ export const schemaTypes = [
   contactPageType,
   contactSubmissionType,
   prayerRequestType,
-  siteSettingsType
+  siteSettingsType,
+  announcementBannerType,
+  footerType,
+  aboutPageType,
+  storyPageType,
+  beliefsPageType,
+  leadershipPageType,
+  teamMemberType,
+  campusType,
+  sermonsPageType,
+  sermonType,
+  sermonSeriesType,
+  preacherType,
+  connectPageType,
+  newHerePageType,
+  groupsPageType,
+  smallGroupType,
+  contactSubjectType,
+  prayerRequestCategoryType,
+  serviceTimesType,
+  testimonyType,
+  notFoundPageType,
+  cookieConsentType,
+  blogPageType,
+  galleryPageType,
+  galleryType,
+  podcastPageType,
+  givePageType,
+  givingTypeType,
+  faqType,
+  locationType
 ]

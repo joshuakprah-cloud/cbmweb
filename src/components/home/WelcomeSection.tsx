@@ -76,7 +76,7 @@ const WelcomeSection = ({
           </div>
 
           {/* Right Column - Image */}
-          <div className="relative">
+          <div className="relative w-full aspect-video">
             {pastorImage1 ? (
               <Image
                 src={pastorImage1}
@@ -87,9 +87,9 @@ const WelcomeSection = ({
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
-              // TODO: Replace with real congregation photo from Sanity — 600 x 640px
-              <div className="bg-gray-500 flex items-center justify-center w-full h-[640px] rounded-[20px] text-gray-200 text-sm font-sans">
-                Congregation Photo — 600 x 640px
+              // TODO: Replace with real congregation photo from Sanity
+              <div className="bg-gray-500 flex items-center justify-center w-full h-full rounded-[20px] text-gray-200 text-sm font-sans">
+                Congregation Photo — Landscape 16:9
               </div>
             )}
           </div>

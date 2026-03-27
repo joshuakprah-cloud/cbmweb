@@ -5,12 +5,20 @@ interface WelcomeSectionProps {
   welcomeTitle?: string;
   welcomeMessage?: string;
   pastorImage1?: string;
+  sectionLabel?: string;
+  title?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
 const WelcomeSection = ({
   welcomeTitle = 'WELCOME TO THAGOSPEL CHURCH',
   welcomeMessage = 'We are delighted to welcome you to ThaGospel Church, where faith comes alive and lives are transformed through the power of God\'s word. Our church is a vibrant community of believers committed to spreading the gospel, nurturing spiritual growth, and making a positive impact in our community and beyond.',
-  pastorImage1
+  pastorImage1,
+  sectionLabel = 'Who We Are',
+  title = 'A Warm Welcome Awaits You',
+  ctaText = 'OUR STORY',
+  ctaLink = '/about'
 }: WelcomeSectionProps) => {
   // Fallback message if no content provided
   const hasContent = welcomeMessage && welcomeMessage.trim().length > 0;
@@ -29,7 +37,7 @@ const WelcomeSection = ({
                 fontFamily: 'Georgia, serif'
               }}
             >
-              Who We Are
+              {sectionLabel}
             </span>
             
             {/* Heading - Changed from h1 to h2 */}
@@ -37,7 +45,7 @@ const WelcomeSection = ({
               className="text-black font-bold mt-4 mb-6" 
               style={{ fontSize: '52px', lineHeight: '1.1' }}
             >
-              A Warm Welcome Awaits You
+              {title}
             </h2>
             
             {/* Body Copy with fallback */}
@@ -56,11 +64,11 @@ const WelcomeSection = ({
             
             {/* CTA Button */}
             <Link
-              href="/about"
+              href={ctaLink}
               className="inline-flex items-center border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
               style={{ fontSize: '13px', letterSpacing: '0.05em' }}
             >
-              OUR STORY
+              {ctaText}
               <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

@@ -206,7 +206,14 @@ export default async function Home() {
         <UpcomingEventsCarousel events={upcomingEventsData} />
 
         {/* 6. Ministries Snapshot */}
-        <MinistriesSnapshot />
+        <MinistriesSnapshot 
+          sectionLabel={homepageData?.ministriesSection?.sectionLabel}
+          title={homepageData?.ministriesSection?.title}
+          description={homepageData?.ministriesSection?.description}
+          featuredMinistries={homepageData?.ministriesSection?.featuredMinistries || []}
+          ctaText={homepageData?.ministriesSection?.ctaText}
+          ctaLink={homepageData?.ministriesSection?.ctaLink}
+        />
 
         {/* 7. Pastor Teaser */}
         <PastorTeaser
@@ -218,10 +225,23 @@ export default async function Home() {
         <SermonsTeaser sermons={recentSermonsData} />
 
         {/* 9. Testimony Section */}
-        <TestimonySection testimonies={activeTestimoniesData} />
+        <TestimonySection 
+          testimonies={homepageData?.testimonySection?.featuredTestimonies || []}
+          sectionTitle={homepageData?.testimonySection?.title}
+          sectionDescription={homepageData?.testimonySection?.description}
+          ctaText={homepageData?.testimonySection?.ctaText}
+          ctaLink={homepageData?.testimonySection?.ctaLink}
+        />
 
         {/* 10. Closing CTA */}
-        <ClosingCTA />
+        <ClosingCTA 
+          title={homepageData?.closingCTASection?.title}
+          description={homepageData?.closingCTASection?.description}
+          primaryCtaText={homepageData?.closingCTASection?.primaryCtaText}
+          primaryCtaLink={homepageData?.closingCTASection?.primaryCtaLink}
+          secondaryCtaText={homepageData?.closingCTASection?.secondaryCtaText}
+          secondaryCtaLink={homepageData?.closingCTASection?.secondaryCtaLink}
+        />
       </main>
     </>
   );

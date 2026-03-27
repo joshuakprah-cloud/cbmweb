@@ -37,7 +37,7 @@ const WhatToExpect = ({
 }: WhatToExpectProps) => {
 
   return (
-    <section id="what-to-expect" className="bg-[#f0f0ee] py-32">
+    <section id="what-to-expect" className="bg-[#fafafa] py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Block - Header */}

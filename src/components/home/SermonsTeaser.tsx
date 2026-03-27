@@ -2,26 +2,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { urlFor } from '../../sanity/lib/image';
 
-interface Sermon {
-  title: string;
-  slug: string;
-  thumbnail?: any;
-  seriesTitle?: string;
-  publishedAt: string;
-  duration?: string;
-  videoUrl?: string | null;
-  audioUrl?: string | null;
-  speaker: {
-    name: string;
-    photo?: any;
-  };
-}
-
 interface SermonsTeaserProps {
-  sermons?: Sermon[];
+  sermons?: Array<{
+    title: string;
+    slug: string;
+    thumbnail?: any;
+    seriesTitle?: string;
+    publishedAt: string;
+    duration?: string;
+    videoUrl?: string | null;
+    audioUrl?: string | null;
+    speaker: {
+      name: string;
+      photo?: any;
+    };
+  }>;
+  sectionTitle?: string;
+  sectionDescription?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
-const SermonsTeaser = ({ sermons }: SermonsTeaserProps) => {
+const SermonsTeaser = ({ 
+  sermons = [],
+  sectionTitle = 'Fresh Word',
+  sectionDescription = 'Listen to our latest sermons and get inspired by God\'s word.',
+  ctaText = 'View All Sermons',
+  ctaLink = '/sermons'
+}: SermonsTeaserProps) => {
   const hasSermons = sermons && sermons.length > 0;
 
   return (
@@ -36,15 +44,26 @@ const SermonsTeaser = ({ sermons }: SermonsTeaserProps) => {
               fontFamily: 'Georgia, serif'
             }}
           >
-            Fresh Word
+            {sectionTitle}
           </span>
           
           <h2 
             className="text-black font-bold mt-4 mb-6" 
             style={{ fontSize: '52px', lineHeight: '1.1' }}
           >
-            Latest Messages
+            {sectionTitle}
           </h2>
+          
+          <p 
+            className="text-gray-600 mb-8" 
+            style={{ 
+              fontSize: '16px', 
+              lineHeight: '1.7', 
+              maxWidth: '520px' 
+            }}
+          >
+            {sectionDescription}
+          </p>
         </div>
 
         {/* Sermons Grid */}
@@ -133,10 +152,10 @@ const SermonsTeaser = ({ sermons }: SermonsTeaserProps) => {
             <h3 className="text-xl font-bold text-gray-900 mb-2">No sermons available</h3>
             <p className="text-gray-600 mb-4">Check back soon for new messages from our pastors.</p>
             <Link
-              href="/sermons"
+              href={ctaLink}
               className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold"
             >
-              Browse all sermons
+              {ctaText}
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -147,11 +166,11 @@ const SermonsTeaser = ({ sermons }: SermonsTeaserProps) => {
         {/* CTA Button */}
         <div className="text-center">
           <Link
-            href="/sermons"
+            href={ctaLink}
             className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-8 rounded-full transition-all duration-200 hover:scale-105"
             style={{ fontSize: '13px', letterSpacing: '0.05em' }}
           >
-            VIEW ALL MESSAGES
+            {ctaText}
             <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

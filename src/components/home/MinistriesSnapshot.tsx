@@ -4,7 +4,28 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
-const MinistriesSnapshot = () => {
+interface MinistriesSnapshotProps {
+  sectionLabel?: string;
+  title?: string;
+  description?: string;
+  featuredMinistries?: Array<{
+    name: string;
+    slug: string;
+    heroImage: any;
+    tagline: string;
+  }>;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const MinistriesSnapshot = ({
+  sectionLabel = 'Get Involved',
+  title = 'Our Ministries',
+  description = "There's a place for you to belong and serve. Find the ministry that fits your season of life.",
+  featuredMinistries = [],
+  ctaText = 'EXPLORE ALL MINISTRIES',
+  ctaLink = '/ministries'
+}: MinistriesSnapshotProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [autoRotate, setAutoRotate] = useState(false);
@@ -49,7 +70,7 @@ const MinistriesSnapshot = () => {
     setCurrentSlide((prev) => (prev - 1 + ministries.length) % ministries.length);
   };
 
-  const currentMinistry = ministries[currentSlide];
+  const currentMinistry = ministries[currentSlide] || featuredMinistries[0];
 
   // IntersectionObserver for performance optimization
   useEffect(() => {
@@ -96,14 +117,14 @@ const MinistriesSnapshot = () => {
               fontFamily: 'Georgia, serif'
             }}
           >
-            Get Involved
+            {sectionLabel}
           </span>
           
           <h2 
             className="text-black font-bold mt-4 mb-6" 
             style={{ fontSize: '58px', lineHeight: '1.1' }}
           >
-            Our Ministries
+            {title}
           </h2>
           
           <p 
@@ -114,7 +135,7 @@ const MinistriesSnapshot = () => {
               maxWidth: '520px' 
             }}
           >
-            There\'s a place for you to belong and serve. Find the ministry that fits your season of life.
+            {description}
           </p>
         </div>
 
@@ -251,11 +272,11 @@ const MinistriesSnapshot = () => {
         {/* Explore All Button */}
         <div className="text-center mt-20">
           <Link
-            href="/ministries"
+            href={ctaLink}
             className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
             style={{ fontSize: '13px', letterSpacing: '0.05em' }}
           >
-            EXPLORE ALL MINISTRIES
+            {ctaText}
             <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

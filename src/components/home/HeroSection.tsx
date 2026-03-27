@@ -31,9 +31,9 @@ const HeroSection = ({ slides }: HeroSectionProps) => {
   const ctaText = slides?.[0]?.cta || 'PLAN YOUR VISIT';
 
   return (
-    <section className="grid h-screen pt-32 bg-[#fafafa] grid-cols-1 md:grid-cols-[2fr_3fr]" style={{ height: '100vh' }}>
+    <section className="grid h-screen pt-8 bg-[#fafafa] grid-cols-1 md:grid-cols-[2fr_3fr]" style={{ height: '100vh' }}>
       {/* Left Column - Text */}
-      <div className="bg-[#fafafa] p-16 lg:p-20 flex flex-col justify-center">
+      <div className="bg-[#fafafa] p-16 lg:p-20 flex flex-col justify-center pt-8 lg:pt-20">
         {/* Page Label */}
         <div className="text-black font-bold mb-8 text-center" style={{ fontSize: '70px', lineHeight: '1' }}>
           {pageTitle}

@@ -59,12 +59,12 @@ const ServiceTimesStrip = ({ serviceTimes }: ServiceTimesStripProps) => {
   }
 
   return (
-    <section id="services" className="bg-neutral-900 py-32">
+    <section id="services" className="bg-gray-50 py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           {/* Section Label */}
           <span 
-            className="text-teal-500 italic"
+            className="text-teal-600 italic"
             style={{ 
               fontSize: '12px',
               fontFamily: 'Georgia, serif',
@@ -76,7 +76,7 @@ const ServiceTimesStrip = ({ serviceTimes }: ServiceTimesStripProps) => {
           
           {/* Heading */}
           <h2 
-            className="text-white font-bold mt-4 mb-16" 
+            className="text-gray-900 font-bold mt-4 mb-16" 
             style={{ fontSize: '48px', lineHeight: '1.1' }}
           >
             Service Times
@@ -86,17 +86,17 @@ const ServiceTimesStrip = ({ serviceTimes }: ServiceTimesStripProps) => {
         {/* Service Items Grid - 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
           {services.map((service, index) => (
-            <div key={index} className="border-b border-[#333333] py-6">
+            <div key={index} className="border-b border-gray-300 py-6">
               <div className="flex items-start space-x-4">
-                <ClockIcon className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
+                <ClockIcon className="w-5 h-5 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <h3 className="text-gray-900 font-bold text-sm uppercase tracking-wide mb-2" style={{ letterSpacing: '0.08em' }}>
                     {service.label}
                   </h3>
-                  <p className="text-gray-800 text-sm mb-1">
+                  <p className="text-gray-700 text-sm mb-1">
                     {service.day} • {service.timeRange}
                   </p>
-                  <p className="text-gray-800 text-xs">
+                  <p className="text-gray-600 text-xs">
                     {service.location}
                   </p>
                 </div>

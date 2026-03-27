@@ -4,18 +4,26 @@ import { useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { urlFor } from '../../sanity/lib/image';
 
-interface Testimony {
-  memberName: string;
-  role: string;
-  quote: string;
-  photo?: any;
-}
-
 interface TestimonySectionProps {
-  testimonies?: Testimony[];
+  testimonies?: Array<{
+    memberName: string;
+    role: string;
+    quote: string;
+    photo?: any;
+  }>;
+  sectionTitle?: string;
+  sectionDescription?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
-const TestimonySection = ({ testimonies: cmsTestimonies }: TestimonySectionProps) => {
+const TestimonySection = ({ 
+  testimonies = [],
+  sectionTitle = 'Member Stories',
+  sectionDescription = 'Hear from our church family about their faith journeys.',
+  ctaText = 'Share Your Story',
+  ctaLink = '/connect'
+}: TestimonySectionProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedQuotes, setExpandedQuotes] = useState<Set<number>>(new Set());
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -25,7 +33,7 @@ const TestimonySection = ({ testimonies: cmsTestimonies }: TestimonySectionProps
   const minSwipeDistance = 50;
 
   // Fallback testimonies if no CMS data
-  const defaultTestimonies: Testimony[] = [
+  const allTestimonies = testimonies || [
     {
       memberName: "Sarah Johnson",
       role: "Main Campus",
@@ -39,16 +47,16 @@ const TestimonySection = ({ testimonies: cmsTestimonies }: TestimonySectionProps
     {
       memberName: "Maria Rodriguez",
       role: "North Campus",
-      quote: "The youth ministry here is incredible! My teenagers have found their identity in Christ and made lifelong friends. I'm so grateful for a place that invests in the next generation.",
+      quote: "The youth ministry here is incredible! My teenagers have found their identity in Christ and made lifelong friendships. I'm so grateful for a place that invests in the next generation.",
     }
   ];
 
-  const testimonies = cmsTestimonies || defaultTestimonies;
+  const currentTestimony = allTestimonies[currentIndex];
 
   const goToTestimony = useCallback((index: number) => {
     setCurrentIndex(index);
-  }, []);
-
+  }, [allTestimonies]);
+  
   const toggleQuoteExpansion = (index: number) => {
     setExpandedQuotes(prev => {
       const newSet = new Set(prev);
@@ -85,7 +93,6 @@ const TestimonySection = ({ testimonies: cmsTestimonies }: TestimonySectionProps
     }
   };
 
-  const currentTestimony = testimonies[currentIndex];
   const isQuoteExpanded = expandedQuotes.has(currentIndex);
   
   // Truncate quote to 3 lines (~150 chars) if not expanded

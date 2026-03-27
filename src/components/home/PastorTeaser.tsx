@@ -4,11 +4,25 @@ import Link from 'next/link';
 interface PastorTeaserProps {
   pastorImage1?: string;
   malePastorName?: string;
+  sectionLabel?: string;
+  pastorName?: string;
+  pastorBio?: string;
+  primaryCtaText?: string;
+  primaryCtaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
 }
 
 const PastorTeaser = ({
   pastorImage1,
-  malePastorName = 'Prophet Powerman Bekoe'
+  malePastorName = 'Prophet Powerman Bekoe',
+  sectionLabel = 'Our Leadership',
+  pastorName = 'Prophet Powerman Bekoe',
+  pastorBio = 'The church is not a building, it\'s the people. We\'re called to be a beacon of hope, love, and transformation in our community and beyond. Join us in this incredible journey of faith.',
+  primaryCtaText = 'Meet Prophet Bekoe',
+  primaryCtaLink = '/about/leadership',
+  secondaryCtaText = 'Meet Our Team',
+  secondaryCtaLink = '/about/leadership'
 }: PastorTeaserProps) => {
   return (
     <section id="leadership" className="bg-[#f0f0ee] py-32">
@@ -43,7 +57,7 @@ const PastorTeaser = ({
                 fontFamily: 'Georgia, serif'
               }}
             >
-              Our Leadership
+              {sectionLabel}
             </span>
             
             {/* Pastor Name */}
@@ -51,7 +65,7 @@ const PastorTeaser = ({
               className="text-black font-bold mt-4 mb-6" 
               style={{ fontSize: '58px', lineHeight: '1.1' }}
             >
-              {malePastorName}
+              {pastorName}
             </h2>
             
             {/* Bio */}
@@ -63,28 +77,28 @@ const PastorTeaser = ({
                 maxWidth: '540px' 
               }}
             >
-              The church is not a building, it&apos;s the people. We&apos;re called to be a beacon of hope, love, and transformation in our community and beyond. Join us in this incredible journey of faith.
+              {pastorBio}
             </p>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/about/leadership"
+                href={primaryCtaLink}
                 className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
                 style={{ fontSize: '13px', letterSpacing: '0.05em' }}
               >
-                Meet Prophet Bekoe
+                {primaryCtaText}
                 <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
               
               <Link
-                href="/about/leadership"
+                href={secondaryCtaLink}
                 className="inline-flex items-center border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
                 style={{ fontSize: '13px', letterSpacing: '0.05em' }}
               >
-                Meet Our Team
+                {secondaryCtaText}
               </Link>
             </div>
           </div>

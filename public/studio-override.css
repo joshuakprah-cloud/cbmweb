@@ -1,0 +1,65 @@
+/* Sanity Studio UI Overrides - Hide navbar and WhatsApp bubble */
+
+/* Hide main website navbar that might be injected */
+[data-testid="navbar"],
+[data-testid="navigation"],
+nav,
+header {
+  display: none !important;
+}
+
+/* Hide WhatsApp bubble/chat widgets */
+[data-testid="whatsapp-bubble"],
+[data-testid="chat-widget"],
+.whatsapp-bubble,
+.chat-widget,
+.whatsapp-chat,
+[data-whatsapp-widget],
+[style*="whatsapp"],
+[style*="chat"] {
+  display: none !important;
+}
+
+/* Hide any floating widgets */
+.floating-button,
+.floating-widget,
+.chat-float,
+.whatsapp-float {
+  display: none !important;
+}
+
+/* Ensure Sanity Studio interface is clean */
+.sanity-studio {
+  background: #000 !important;
+}
+
+/* Hide any external scripts that might inject widgets */
+script[src*="whatsapp"],
+script[src*="chat"],
+script[src*="widget"] {
+  display: none !important;
+}
+
+/* Sanity Studio specific overrides */
+[data-ui="Header"] {
+  background: #000 !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+[data-ui="Pane"] {
+  background: #0a0a0a !important;
+  border-right: 1px solid #333 !important;
+}
+
+[data-ui="Card"] {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+[data-ui="TextInput"],
+[data-ui="TextArea"],
+[data-ui="Select"] {
+  background: #2a2a2a !important;
+  color: #fff !important;
+  border: 1px solid #333 !important;
+}

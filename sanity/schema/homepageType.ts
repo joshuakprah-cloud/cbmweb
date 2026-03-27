@@ -39,6 +39,18 @@ export const homepageType = defineType({
       type: 'text',
       description: 'The main welcome message text displayed in the left column'
     }),
+    defineField({
+      name: 'malePastorName',
+      title: 'Male Pastor Name',
+      type: 'string',
+      description: 'Name of male pastor displayed under the first image'
+    }),
+    defineField({
+      name: 'pastorImage1',
+      title: 'Pastor Image 1',
+      type: 'image',
+      description: 'First pastor portrait image for the right column'
+    }),
     
     // Quick Access Ministry Links
     defineField({

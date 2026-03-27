@@ -185,12 +185,18 @@ export default async function Home() {
         <HeroSection slides={homepageData?.heroSlides || []} />
 
         {/* 2. What To Expect - Moved higher for mobile (2nd position) */}
-        <WhatToExpect />
+        <WhatToExpect 
+          title={homepageData?.whatToExpectSection?.title}
+          headline={homepageData?.whatToExpectSection?.headline}
+          description={homepageData?.whatToExpectSection?.description}
+          expectations={homepageData?.whatToExpectSection?.expectations || []}
+        />
 
         {/* 3. Welcome Section */}
         <WelcomeSection
-          welcomeTitle={homepageData?.welcomeTitle}
-          welcomeMessage={homepageData?.welcomeMessage}
+          welcomeTitle={homepageData?.welcomeSection?.title}
+          welcomeMessage={homepageData?.welcomeSection?.message}
+          pastorImage1={homepageData?.welcomeSection?.image ? urlFor(homepageData.welcomeSection.image).url() : '/placeholder-pastor1.jpg'}
         />
 
         {/* 4. Service Times Strip */}
@@ -204,8 +210,8 @@ export default async function Home() {
 
         {/* 7. Pastor Teaser */}
         <PastorTeaser
-          pastorImage1={homepageData?.pastorImage1 ? urlFor(homepageData.pastorImage1).url() : '/placeholder-pastor1.jpg'}
-          malePastorName={homepageData?.malePastorName}
+          pastorImage1={homepageData?.pastorSection?.pastorImage ? urlFor(homepageData.pastorSection.pastorImage).url() : '/placeholder-pastor1.jpg'}
+          malePastorName={homepageData?.pastorSection?.pastorName}
         />
 
         {/* 8. Sermons Teaser */}

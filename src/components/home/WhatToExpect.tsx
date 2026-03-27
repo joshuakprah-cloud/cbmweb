@@ -1,23 +1,40 @@
 import { MapPinIcon, HeartIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
-const WhatToExpect = () => {
-  const expectations = [
-    {
-      icon: MapPinIcon,
-      title: 'We Saved You A Seat',
-      description: 'From parking to finding your seat, we have got you covered every step of the way. Just show up and we will take care of the rest.'
-    },
-    {
-      icon: HeartIcon,
-      title: 'Your Kids Are In Good Hands',
-      description: 'We have a safe, fun, and age-appropriate environment for every child. Check them in with ease and enjoy service with total peace of mind.'
-    },
-    {
-      icon: SparklesIcon,
-      title: 'Come As You Are',
-      description: 'No dress code, no pressure, no performance. Whether this is your first time in a church or you are coming back after years away, you belong here.'
-    }
-  ];
+interface WhatToExpectProps {
+  title?: string;
+  headline?: string;
+  description?: string;
+  expectations?: Array<{
+    title: string;
+    description: string;
+    icon: string; // Icon name/emoji from Sanity
+    order?: number;
+  }>;
+}
+
+// Icon mapping function
+const getIconComponent = (iconName: string) => {
+  switch (iconName) {
+    case 'MapPinIcon':
+    case 'map-pin':
+      return MapPinIcon;
+    case 'HeartIcon':
+    case 'heart':
+      return HeartIcon;
+    case 'SparklesIcon':
+    case 'sparkles':
+      return SparklesIcon;
+    default:
+      return MapPinIcon; // fallback
+  }
+};
+
+const WhatToExpect = ({ 
+  title = "First Time Here?",
+  headline = "Here's What to Expect.",
+  description = "We've thought about your visit so you don't have to.",
+  expectations = []
+}: WhatToExpectProps) => {
 
   return (
     <section id="what-to-expect" className="bg-[#f0f0ee] py-32">
@@ -25,6 +42,7 @@ const WhatToExpect = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Block - Header */}
           <div>
+            {/* Section Label */}
             <span 
               className="text-gray-600 italic"
               style={{ 
@@ -32,14 +50,15 @@ const WhatToExpect = () => {
                 fontFamily: 'Georgia, serif'
               }}
             >
-              First Time Here?
+              {title}
             </span>
             
+            {/* Heading - Changed from h1 to h2 */}
             <h2 
               className="text-black font-bold mt-4 mb-6" 
               style={{ fontSize: '52px', lineHeight: '1.1' }}
             >
-              Here's What to Expect.
+              {headline}
             </h2>
             
             <p 
@@ -50,14 +69,14 @@ const WhatToExpect = () => {
                 maxWidth: '320px' 
               }}
             >
-              We've thought about your visit so you don't have to.
+              {description}
             </p>
           </div>
 
           {/* Right Block - Numbered Items */}
           <div className="space-y-10">
             {expectations.map((item, index) => {
-              const IconComponent = item.icon;
+              const IconComponent = getIconComponent(item.icon);
               const itemNumber = String(index + 1).padStart(2, '0');
               
               return (

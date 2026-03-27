@@ -2,22 +2,113 @@ import { groq } from 'next-sanity'
 
 export const homepageQuery = groq`
   *[_type == "homepage"][0] {
-    heroHeadline,
-    heroSubtext,
-    heroPrimaryButton,
-    heroSecondaryButton,
-    heroBackgroundImage,
-    aboutHeadline,
-    aboutContent,
-    pastorMessage,
-    aboutButton,
-    sermonHeadline,
-    sermonIntro,
-    sermonButton,
-    sermonSecondaryButton,
+    heroSlides[] {
+      title,
+      subtitle,
+      cta,
+      ctaLink,
+      image,
+      order
+    },
+    whatToExpectSection {
+      title,
+      headline,
+      description,
+      expectations[] {
+        title,
+        description,
+        icon,
+        order
+      }
+    },
+    welcomeSection {
+      sectionLabel,
+      title,
+      message,
+      image,
+      ctaText,
+      ctaLink
+    },
+    serviceTimesOverride {
+      enabled,
+      title,
+      message
+    },
+    ministriesSection {
+      sectionLabel,
+      title,
+      description,
+      featuredMinistries[]-> {
+        name,
+        slug,
+        heroImage,
+        tagline
+      },
+      ctaText,
+      ctaLink
+    },
+    pastorSection {
+      sectionLabel,
+      pastorName,
+      pastorBio,
+      pastorImage,
+      primaryCtaText,
+      primaryCtaLink,
+      secondaryCtaText,
+      secondaryCtaLink
+    },
+    latestSermonSection {
+      enabled,
+      title,
+      description,
+      featuredSermon-> {
+        title,
+        speaker,
+        coverImage,
+        publishedAt
+      },
+      ctaText,
+      ctaLink
+    },
+    upcomingEventsSection {
+      enabled,
+      title,
+      description,
+      featuredEvents[]-> {
+        title,
+        date,
+        location,
+        coverImage
+      },
+      ctaText,
+      ctaLink
+    },
+    testimonySection {
+      enabled,
+      title,
+      description,
+      featuredTestimonies[]-> {
+        memberName,
+        role,
+        quote,
+        photo
+      },
+      ctaText,
+      ctaLink
+    },
+    closingCTASection {
+      title,
+      description,
+      primaryCtaText,
+      primaryCtaLink,
+      secondaryCtaText,
+      secondaryCtaLink,
+      backgroundImage
+    },
     seo {
       metaTitle,
       metaDescription,
+      ogImage,
       noIndex
     }
   }

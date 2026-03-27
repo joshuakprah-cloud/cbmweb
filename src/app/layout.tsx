@@ -4,9 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '../components/theme-provider'
 import { client } from '../sanity/lib/client'
 import { navbarQuery } from 'sanity/lib/queries'
-import Navbar from '../components/navbar/Navbar'
-import AnnouncementBar from '../components/layout/AnnouncementBar'
-import Footer from '../components/Footer'
+import ConditionalLayout from '../components/ConditionalLayout'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -68,15 +66,12 @@ export default async function RootLayout({
           >
             Skip to main content
           </a>
-          <AnnouncementBar
-            isActive={announcementData?.isActive || false}
-            message={announcementData?.message || ''}
-            linkLabel={announcementData?.linkLabel}
-            linkUrl={announcementData?.linkUrl}
-          />
-          <Navbar navbarData={navbarData} />
-          <main id="main-content">{children}</main>
-          <Footer />
+          <ConditionalLayout 
+            navbarData={navbarData} 
+            announcementData={announcementData}
+          >
+            {children}
+          </ConditionalLayout>
         </ThemeProvider>
       </body>
     </html>

@@ -1,5 +1,3 @@
-import '/studio-override.css'
-
 export default function StudioLayout({
   children,
 }: {

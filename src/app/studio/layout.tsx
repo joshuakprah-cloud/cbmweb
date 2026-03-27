@@ -1,4 +1,4 @@
-import './studio.css'
+import '../public/studio.css'
 
 export default function StudioLayout({
   children,

@@ -39,80 +39,6 @@ export const homepageType = defineType({
       type: 'text',
       description: 'The main welcome message text displayed in the left column'
     }),
-    defineField({
-      name: 'malePastorName',
-      title: 'Male Pastor Name',
-      type: 'string',
-      description: 'Name of the male pastor displayed under the first image'
-    }),
-    defineField({
-      name: 'ladyPastorName',
-      title: 'Lady Pastor Name',
-      type: 'string',
-      description: 'Name of the lady pastor displayed under the second image'
-    }),
-    defineField({
-      name: 'pastorImage1',
-      title: 'Pastor Image 1',
-      type: 'image',
-      description: 'First pastor portrait image for the right column'
-    }),
-    defineField({
-      name: 'pastorImage2',
-      title: 'Pastor Image 2',
-      type: 'image',
-      description: 'Second pastor portrait image for the right column'
-    }),
-    defineField({
-      name: 'facebookUrl',
-      title: 'Facebook URL',
-      type: 'url',
-      description: 'URL for Facebook social media link'
-    }),
-    defineField({
-      name: 'twitterUrl',
-      title: 'Twitter URL',
-      type: 'url',
-      description: 'URL for Twitter/X social media link'
-    }),
-    defineField({
-      name: 'instagramUrl',
-      title: 'Instagram URL',
-      type: 'url',
-      description: 'URL for Instagram social media link'
-    }),
-    
-    // Spiritual Leaders Information
-    defineField({
-      name: 'prophetName',
-      title: 'Prophet Name',
-      type: 'string',
-    }),
-    defineField({
-      name: 'prophetTitle',
-      title: 'Prophet Title',
-      type: 'string',
-    }),
-    defineField({
-      name: 'prophetImage',
-      title: 'Prophet Image',
-      type: 'image',
-    }),
-    defineField({
-      name: 'firstLadyName',
-      title: 'First Lady Name',
-      type: 'string',
-    }),
-    defineField({
-      name: 'firstLadyTitle',
-      title: 'First Lady Title',
-      type: 'string',
-    }),
-    defineField({
-      name: 'firstLadyImage',
-      title: 'First Lady Image',
-      type: 'image',
-    }),
     
     // Quick Access Ministry Links
     defineField({
@@ -172,54 +98,6 @@ export const homepageType = defineType({
       ],
     }),
     
-    // Prayer Section
-    defineField({
-      name: 'prayerSection',
-      title: 'Prayer Request Section',
-      type: 'object',
-      fields: [
-        defineField({ name: 'backgroundImage', title: 'Background Image', type: 'image' }),
-        defineField({ name: 'title', title: 'Section Title', type: 'string' }),
-        defineField({ name: 'submitButtonText', title: 'Submit Button Text', type: 'string' }),
-      ],
-    }),
     
-    // Footer Information
-    defineField({
-      name: 'footerColumns',
-      title: 'Footer Columns',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'footerColumn',
-          title: 'Footer Column',
-          fields: [
-            defineField({ name: 'title', title: 'Column Title', type: 'string' }),
-            defineField({ 
-              name: 'links', 
-              title: 'Links', 
-              type: 'array',
-              of: [{ type: 'string' }]
-            }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'footerContact',
-      title: 'Footer Contact Information',
-      type: 'object',
-      fields: [
-        defineField({ name: 'phone', title: 'Phone Numbers', type: 'string' }),
-        defineField({ name: 'email', title: 'Email Address', type: 'string' }),
-        defineField({ name: 'address', title: 'Physical Address', type: 'string' }),
-      ],
-    }),
-    defineField({
-      name: 'footerBottomText',
-      title: 'Footer Bottom Text',
-      type: 'text',
-    }),
   ],
 })

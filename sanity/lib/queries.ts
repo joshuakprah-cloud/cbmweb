@@ -1032,6 +1032,31 @@ export const serviceTimesQuery = groq`
   }
 `;
 
+// Livestream Query
+export const livestreamQuery = groq`
+  {
+    "livestreamSettings": *[_type == "siteSettings"][0] {
+      livestream {
+        pageTitle,
+        pageDescription,
+        liveVideoId,
+        isLive,
+        nextServiceTime,
+        serviceDays,
+        youtubeChannelId
+      }
+    },
+    "recentSermons": *[_type == "sermon" && isPublished == true] | order(publishedAt desc) [0..5] {
+      title,
+      slug,
+      publishedAt,
+      thumbnail,
+      duration,
+      "speaker": preacher->{ name, photo }
+    }
+  }
+`;
+
 // Navbar Query
 export const navbarQuery = groq`
   *[_type == "siteSettings"][0] {

@@ -88,7 +88,7 @@ export default async function SermonsPage() {
         datePublished: sermon.publishedAt,
         author: {
           '@type': 'Person',
-          name: sermon.speaker.name,
+          name: sermon.speaker?.name || 'Unknown Speaker',
         },
         url: `https://thagospel.com/messages/${sermon.slug}`,
       },

@@ -466,33 +466,29 @@ export const featuredSermonQuery = groq`
     videoFile,
     externalVideoUrl,
     audioUrl,
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     seriesTitle,
     seriesSlug,
     seriesCoverImage,
+    relatedScriptures,
     "speaker": preacher->{
+      _id,
       name,
       photo,
       bio,
       slug
-    }
-  }
-`;
-
-export const latestSermonQuery = groq`
-  *[_type == "sermon" && isPublished == true] | order(publishedAt desc) [0] {
-    title,
-    slug,
-    description,
-    scriptureReference,
-    duration,
-    publishedAt,
-    videoSource,
-    videoUrl,
-    videoFile,
-    externalVideoUrl,
     audioUrl,
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     seriesTitle,
     seriesSlug,
     seriesCoverImage,
@@ -518,7 +514,12 @@ export const allSermonsQuery = groq`
     videoFile,
     externalVideoUrl,
     audioUrl,
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     seriesTitle,
     seriesSlug,
     seriesCoverImage,
@@ -544,7 +545,12 @@ export const sermonsByPreacherQuery = groq`
     videoFile,
     externalVideoUrl,
     audioUrl,
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     seriesTitle,
     seriesSlug,
     seriesCoverImage,
@@ -590,7 +596,12 @@ export const sermonsBySeriesQuery = groq`
     publishedAt,
     videoUrl,
     audioUrl,
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     seriesTitle,
     seriesSlug,
     seriesCoverImage,
@@ -663,7 +674,12 @@ export const archivePageQuery = groq`
         _id
       }
     },
-    thumbnail,
+    thumbnail {
+      asset-> {
+        url,
+        _id
+      }
+    },
     duration
   }
 `;
@@ -1064,7 +1080,12 @@ export const livestreamQuery = groq`
       title,
       slug,
       publishedAt,
-      thumbnail,
+      thumbnail {
+        asset-> {
+          url,
+          _id
+        }
+      },
       duration,
       "speaker": preacher->{ name, photo }
     }

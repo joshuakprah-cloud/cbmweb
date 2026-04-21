@@ -9,7 +9,7 @@ import { ARCHIVE_FALLBACKS, SEO_FALLBACKS } from '@/constants/fallbacks';
 import Script from 'next/script';
 import Link from 'next/link';
 
-export const revalidate = 3600; // 1 hour
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export async function generateMetadata(): Promise<Metadata> {
   const metaTitle = 'Sermon Archive | ThaGospel Church';
@@ -47,7 +47,7 @@ export default async function SermonArchive({ searchParams }: ArchivePageProps) 
   let allSermonsData = null;
 
   try {
-    allSermonsData = await client.fetch(archivePageQuery, {}, { next: { revalidate: 3600 } });
+    allSermonsData = await client.fetch(archivePageQuery, {}, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching archive data:', error);
     // Continue with null data - will use fallbacks

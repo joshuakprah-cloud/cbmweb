@@ -9,7 +9,7 @@ import { urlFor } from '../../../../sanity/lib/image';
 import { PREACHERS_FALLBACKS } from '@/constants/fallbacks';
 import Script from 'next/script';
 
-export const revalidate = 3600;
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export async function generateMetadata(): Promise<Metadata> {
   const metaTitle = 'Our Speakers | ThaGospel Church';
@@ -39,7 +39,7 @@ export default async function PreachersPage() {
   let preachersData = null;
 
   try {
-    preachersData = await client.fetch(allPreachersQuery, {}, { next: { revalidate: 3600 } });
+    preachersData = await client.fetch(allPreachersQuery, {}, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching preachers data:', error);
     // Continue with null data - will use fallbacks

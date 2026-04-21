@@ -11,7 +11,7 @@ import Script from 'next/script';
 import { groq } from 'next-sanity';
 import Link from 'next/link';
 
-export const revalidate = 3600;
+export const revalidate = 60; // Revalidate every 60 seconds
 
 // Query to get all sermon slugs for static generation
 const sermonSlugsQuery = groq`
@@ -22,9 +22,9 @@ const sermonSlugsQuery = groq`
 
 export async function generateStaticParams() {
   try {
-    const sermons = await client.fetch(sermonSlugsQuery, {}, { next: { revalidate: 3600 } });
+    const sermons = await client.fetch(sermonSlugsQuery, {}, { next: { revalidate: 60 } });
     return sermons.map((sermon: any) => ({
-      slug: String(sermon.slug?.current || ''),
+      slug: String(sermon.slug || ''),
     })).filter((item: any) => item.slug);
   } catch (error) {
     console.error('Error generating static params:', error);
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   let sermonData = null;
 
   try {
-    sermonData = await client.fetch(sermonBySlugQuery, { slug: params.slug }, { next: { revalidate: 3600 } });
+    sermonData = await client.fetch(sermonBySlugQuery, { slug: params.slug }, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching sermon metadata:', error);
   }
@@ -111,7 +111,7 @@ export default async function SermonDetail({ params }: { params: { slug: string 
   let sermonData = null;
 
   try {
-    sermonData = await client.fetch(sermonBySlugQuery, { slug: params.slug }, { next: { revalidate: 3600 } });
+    sermonData = await client.fetch(sermonBySlugQuery, { slug: params.slug }, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching sermon data:', error);
   }

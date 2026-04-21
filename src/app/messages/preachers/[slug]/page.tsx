@@ -12,11 +12,11 @@ import { SEO_FALLBACKS } from '@/constants/fallbacks';
 import Script from 'next/script';
 import { PortableText } from '@portabletext/react';
 
-export const revalidate = 3600;
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export async function generateStaticParams() {
   try {
-    const preachers = await client.fetch(allPreachersQuery, {}, { next: { revalidate: 3600 } });
+    const preachers = await client.fetch(allPreachersQuery, {}, { next: { revalidate: 60 } });
     return preachers.map((preacher: any) => ({
       slug: String(preacher.slug?.current || ''),
     })).filter((item: any) => item.slug);
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   let preacherData = null;
 
   try {
-    preacherData = await client.fetch(preacherBySlugQuery, { slug: params.slug }, { next: { revalidate: 3600 } });
+    preacherData = await client.fetch(preacherBySlugQuery, { slug: params.slug }, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching preacher metadata:', error);
   }
@@ -78,8 +78,8 @@ export default async function PreacherDetail({ params }: { params: { slug: strin
 
   try {
     const [preacherData, sermonsData] = await Promise.all([
-      client.fetch(preacherBySlugQuery, { slug: params.slug }, { next: { revalidate: 3600 } }),
-      client.fetch(sermonsByPreacherQuery, { preacherId: params.slug }, { next: { revalidate: 3600 } }),
+      client.fetch(preacherBySlugQuery, { slug: params.slug }, { next: { revalidate: 60 } }),
+      client.fetch(sermonsByPreacherQuery, { preacherId: params.slug }, { next: { revalidate: 60 } }),
     ]);
   } catch (error) {
     console.error('Error fetching preacher data:', error);
@@ -93,7 +93,7 @@ export default async function PreacherDetail({ params }: { params: { slug: strin
   let sermons = [];
   if (preacherData && preacherData._id) {
     try {
-      sermons = await client.fetch(sermonsByPreacherQuery, { preacherId: preacherData._id }, { next: { revalidate: 3600 } });
+      sermons = await client.fetch(sermonsByPreacherQuery, { preacherId: preacherData._id }, { next: { revalidate: 60 } });
     } catch (error) {
       console.error('Error fetching sermons:', error);
     }

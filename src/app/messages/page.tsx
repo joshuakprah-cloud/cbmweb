@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   let sermonsPageData = null;
 
   try {
-    sermonsPageData = await client.fetch(sermonsPageQuery, {}, { next: { revalidate: 3600 } });
+    sermonsPageData = await client.fetch(sermonsPageQuery, {}, { next: { revalidate: 60 } });
   } catch (error) {
     console.error('Error fetching sermons metadata:', error);
   }

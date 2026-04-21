@@ -130,12 +130,12 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
 
   if (submitStatus === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <div className="text-green-600 text-4xl mb-4">✓</div>
-        <h3 className="text-lg font-semibold text-green-900 mb-2">
+      <div className="bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 rounded-xl p-8 text-center">
+        <div className="text-[#C6A75E] text-4xl mb-4">✓</div>
+        <h3 className="text-lg font-bold text-[#0B1F3A] mb-2">
           Thank You!
         </h3>
-        <p className="text-green-700" aria-live="polite">
+        <p className="text-gray-600" aria-live="polite">
           {submitMessage}
         </p>
       </div>
@@ -144,9 +144,9 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
 
   if (submitStatus === 'error') {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+      <div className="bg-red-50 border border-red-200 rounded-xl p-8 text-center">
         <div className="text-red-600 text-4xl mb-4">✕</div>
-        <h3 className="text-lg font-semibold text-red-900 mb-2">
+        <h3 className="text-lg font-bold text-red-900 mb-2">
           Submission Failed
         </h3>
         <p className="text-red-700 mb-4" aria-live="polite">
@@ -154,7 +154,7 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
         </p>
         <button
           onClick={handleRetry}
-          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          className="px-6 py-3 bg-[#0B1F3A] text-white rounded-lg hover:bg-[#0B1F3A]/90 transition-colors font-semibold"
         >
           Try Again
         </button>
@@ -163,16 +163,16 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
   }
 
   return (
-    <div id="join" className="bg-gray-50 rounded-lg p-6">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">
-        Join {ministryName}
-      </h3>
+    <div id="join">
+      <p className="text-gray-600 mb-6">
+        Fill out the form below and we&apos;ll connect you with the {ministryName} team.
+      </p>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <input type="hidden" name="ministry" value={ministrySlug} />
         
         <div>
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="fullName" className="block text-sm font-medium text-[#0B1F3A] mb-2">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -182,8 +182,8 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
             value={formData.fullName}
             onChange={handleInputChange}
             onBlur={handleBlur}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none ${
-              errors.fullName ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none transition-all ${
+              errors.fullName ? 'border-red-500' : 'border-gray-200'
             }`}
             aria-required="true"
             aria-describedby={errors.fullName ? 'fullName-error' : undefined}
@@ -196,7 +196,7 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-[#0B1F3A] mb-2">
             Email <span className="text-red-500">*</span>
           </label>
           <input
@@ -206,8 +206,8 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
             value={formData.email}
             onChange={handleInputChange}
             onBlur={handleBlur}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none transition-all ${
+              errors.email ? 'border-red-500' : 'border-gray-200'
             }`}
             aria-required="true"
             aria-describedby={errors.email ? 'email-error' : undefined}
@@ -220,7 +220,7 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="phone" className="block text-sm font-medium text-[#0B1F3A] mb-2">
             Phone
           </label>
           <input
@@ -229,12 +229,12 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
             name="phone"
             value={formData.phone}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none transition-all"
           />
         </div>
 
         <div>
-          <label htmlFor="ageGroup" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="ageGroup" className="block text-sm font-medium text-[#0B1F3A] mb-2">
             Age Group
           </label>
           <select
@@ -242,7 +242,7 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
             name="ageGroup"
             value={formData.ageGroup}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none transition-all bg-white"
           >
             <option value="">Select age group</option>
             <option value="Under 13">Under 13</option>
@@ -254,7 +254,7 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="message" className="block text-sm font-medium text-[#0B1F3A] mb-2">
             Message (Optional)
           </label>
           <textarea
@@ -263,14 +263,14 @@ const MinistryJoinForm: React.FC<MinistryJoinFormProps> = ({
             value={formData.message}
             onChange={handleInputChange}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none resize-none transition-all"
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-6 py-4 bg-[#0B1F3A] text-white font-semibold rounded-lg hover:bg-[#0B1F3A]/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Submitting...' : 'Join Ministry'}
         </button>

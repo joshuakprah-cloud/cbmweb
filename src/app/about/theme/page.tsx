@@ -1,7 +1,5 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Navbar from '@/components/navbar/Navbar';
-import Footer from '@/components/Footer';
 import PageHero from '@/components/about/PageHero';
 import SectionHeader from '@/components/about/SectionHeader';
 import { client } from '../../../../sanity/lib/client';
@@ -63,9 +61,7 @@ export default async function ThemePage() {
   const pillars = themeData?.pillars || THEME_FALLBACKS.pillars;
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
+    <>
       {/* Hero Section */}
       <PageHero 
         title={`${year} Theme`} 
@@ -202,7 +198,6 @@ export default async function ThemePage() {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </>
   );
 }

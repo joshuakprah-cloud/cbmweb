@@ -1,13 +1,19 @@
 import Image from 'next/image';
 
-export const Logo = () => {
+interface LogoProps {
+  variant?: 'dark' | 'white';
+}
+
+export const Logo = ({ variant = 'dark' }: LogoProps) => {
+  const logoSrc = variant === 'white' ? '/logo w.png' : '/logo.png';
+
   return (
     <div className="relative w-48 h-16">
       <Image
-        src="/logo.png"
+        src={logoSrc}
         alt="ThaGospel Church Logo"
         fill
-        className="object-contain"
+        className="object-contain transition-opacity duration-300"
       />
     </div>
   );

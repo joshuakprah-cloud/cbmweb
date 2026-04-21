@@ -1,10 +1,9 @@
 'use client'
 
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { HandRaisedIcon, UserGroupIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 interface PrayerRequestForm {
   name: string;
@@ -51,22 +50,28 @@ export default function Prayer() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <main>
-        {/* Hero Section */}
-        <section className="bg-navy text-white py-20">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-inter">Prayer Requests</h1>
-            <p className="text-xl font-inter">Share your needs and let our community lift you up in prayer.</p>
-          </div>
-        </section>
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-[300px] md:min-h-[400px] flex items-center justify-center overflow-hidden bg-[#0B1F3A]">
+        <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-lg">
+            Prayer Requests
+          </h1>
+          <p className="mt-6 text-xl text-white/90 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
+            Share your needs and let our community lift you up in prayer
+          </p>
+        </div>
+      </section>
 
         {/* Prayer Request Form */}
-        <section className="py-16 bg-white">
-          <div className="max-w-4xl mx-auto px-4">
-            <div className="bg-neutral p-8 rounded-lg shadow-md">
-              <h2 className="text-3xl font-bold mb-6 text-center font-inter text-navy">Submit a Prayer Request</h2>
+        <section className="py-20 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white p-8 md:p-12 rounded-2xl shadow-lg border border-gray-100">
+              <div className="text-center mb-8">
+                <span className="text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase">We're Here For You</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] mt-3">Submit a Prayer Request</h2>
+              </div>
               <p className="text-center text-gray-600 mb-8">
                 Your prayer requests are confidential and will be shared only with our prayer team. We respect your privacy and handle all requests with care.
               </p>
@@ -76,7 +81,7 @@ export default function Prayer() {
                   <input
                     type="text"
                     {...register('name', { required: 'Name is required' })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d9488] focus:border-transparent"
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                 </div>
@@ -92,7 +97,7 @@ export default function Prayer() {
                         message: 'Invalid email address'
                       }
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d9488] focus:border-transparent"
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
@@ -102,7 +107,7 @@ export default function Prayer() {
                   <input
                     type="tel"
                     {...register('phone')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d9488] focus:border-transparent"
                   />
                 </div>
 
@@ -112,7 +117,7 @@ export default function Prayer() {
                     rows={6}
                     {...register('message', { required: 'Message is required' })}
                     placeholder="Please share your prayer request. Be as specific or general as you'd like."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent resize-vertical"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d9488] focus:border-transparent resize-vertical"
                   />
                   {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
                 </div>
@@ -121,7 +126,7 @@ export default function Prayer() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Request Type</label>
                   <select
                     {...register('requestType')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0d9488] focus:border-transparent"
                   >
                     <option value="private">Private (Only prayer team)</option>
                     <option value="public">Public (Can be shared anonymously)</option>
@@ -130,7 +135,7 @@ export default function Prayer() {
 
                 <div>
                   <label className="flex items-center">
-                    <input type="checkbox" {...register('followUpRequested')} className="mr-3 h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded" />
+                    <input type="checkbox" {...register('followUpRequested')} className="mr-3 h-4 w-4 text-[#0d9488] focus:ring-[#0d9488] border-gray-300 rounded" />
                     <span className="text-sm text-gray-700">Request follow-up from our prayer team</span>
                   </label>
                 </div>
@@ -150,7 +155,7 @@ export default function Prayer() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-gold text-navy px-8 py-3 rounded-lg font-inter font-semibold hover:bg-opacity-80 transition-colors disabled:opacity-50"
+                    className="bg-[#0d9488] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#0f766e] transition-colors disabled:opacity-50 shadow-lg hover:shadow-xl"
                   >
                     {loading ? 'Submitting...' : 'Submit Prayer Request'}
                   </button>
@@ -159,8 +164,8 @@ export default function Prayer() {
 
               {/* Success Message */}
               {submitted && (
-                <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-md">
-                  <p className="text-green-800 text-center">
+                <div className="mt-8 p-6 bg-[#0d9488]/10 border border-[#0d9488]/20 rounded-xl">
+                  <p className="text-[#0d9488] text-center font-medium">
                     Thank you for sharing your prayer request. Our prayer team will lift you up in prayer.
                   </p>
                 </div>
@@ -170,26 +175,33 @@ export default function Prayer() {
         </section>
 
         {/* How We Pray */}
-        <section className="py-16 bg-neutral">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 font-inter text-navy">How We Pray</h2>
-              <p className="text-lg text-gray-600">Our prayer ministry is dedicated to interceding for our congregation and community.</p>
+        <section className="py-20 bg-[#F8F9FB] border-t border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <span className="text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase">Prayer Ministry</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] mt-3">How We Pray</h2>
+              <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Our prayer ministry is dedicated to interceding for our congregation and community.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-4xl mb-4">🙏</div>
-                <h3 className="text-xl font-bold mb-2 font-inter text-navy">Weekly Prayer Meetings</h3>
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+                <div className="w-16 h-16 bg-[#0d9488]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <HandRaisedIcon className="w-8 h-8 text-[#0d9488]" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-[#0B1F3A]">Weekly Prayer Meetings</h3>
                 <p className="text-gray-600">Join us every Wednesday for corporate prayer and worship.</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl mb-4">📖</div>
-                <h3 className="text-xl font-bold mb-2 font-inter text-navy">Prayer Partners</h3>
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+                <div className="w-16 h-16 bg-[#0d9488]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <UserGroupIcon className="w-8 h-8 text-[#0d9488]" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-[#0B1F3A]">Prayer Partners</h3>
                 <p className="text-gray-600">Connect with a prayer partner for ongoing support and encouragement.</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl mb-4">❤️</div>
-                <h3 className="text-xl font-bold mb-2 font-inter text-navy">24/7 Prayer Line</h3>
+              <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+                <div className="w-16 h-16 bg-[#0d9488]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <ClockIcon className="w-8 h-8 text-[#0d9488]" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-[#0B1F3A]">24/7 Prayer Line</h3>
                 <p className="text-gray-600">Call our prayer hotline anytime for immediate prayer support.</p>
               </div>
             </div>
@@ -197,16 +209,17 @@ export default function Prayer() {
         </section>
 
         {/* Scripture */}
-        <section className="py-16 bg-navy text-white">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <blockquote className="text-xl md:text-2xl italic mb-4 font-inter">
+        <section className="py-20 bg-[#0B1F3A] text-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="w-16 h-16 bg-[#0d9488]/20 rounded-2xl flex items-center justify-center mx-auto mb-8">
+              <span className="text-3xl">📖</span>
+            </div>
+            <blockquote className="text-xl md:text-2xl italic mb-4 leading-relaxed">
               "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."
             </blockquote>
-            <cite className="text-gold font-inter">- Philippians 4:6</cite>
+            <cite className="text-[#0d9488] font-semibold not-italic">— Philippians 4:6</cite>
           </div>
         </section>
-      </main>
-      <Footer />
-    </div>
+    </main>
   );
 }

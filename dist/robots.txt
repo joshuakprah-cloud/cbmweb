@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://thagospel.com
+
+# Sitemaps
+Sitemap: https://thagospel.com/sitemap.xml

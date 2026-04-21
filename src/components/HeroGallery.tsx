@@ -17,13 +17,31 @@ interface HeroSlide {
 
 interface HeroGalleryProps {
   slides?: HeroSlide[];
+  currentSlide?: number;
+  onSlideChange?: (index: number) => void;
+  showControls?: boolean;
 }
 
-const HeroGallery = ({ slides = [] }: HeroGalleryProps) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const HeroGallery = ({
+  slides = [],
+  currentSlide: externalSlide,
+  onSlideChange,
+  showControls = false
+}: HeroGalleryProps) => {
+  const [internalSlide, setInternalSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set());
+
+  // Use external slide if provided, otherwise internal
+  const currentSlide = externalSlide !== undefined ? externalSlide : internalSlide;
+  const setCurrentSlide = (value: number | ((prev: number) => number)) => {
+    const newIndex = typeof value === 'function' ? value(currentSlide) : value;
+    if (externalSlide === undefined) {
+      setInternalSlide(newIndex);
+    }
+    onSlideChange?.(newIndex);
+  };
   
   // Use Sanity slides or fallback to default slides
   const heroSlides = slides.length > 0 ? slides : [
@@ -73,7 +91,7 @@ const HeroGallery = ({ slides = [] }: HeroGalleryProps) => {
   const togglePlayPause = () => setIsPlaying(prev => !prev);
 
   return (
-    <div className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden bg-gray-200">
+    <div className="relative w-full h-full overflow-hidden bg-gray-200">
       {/* Loading Skeleton */}
       {isLoading && (
         <div className="absolute inset-0 z-20 bg-gray-200 animate-pulse flex items-center justify-center">
@@ -127,51 +145,55 @@ const HeroGallery = ({ slides = [] }: HeroGalleryProps) => {
         ))}
       </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-        aria-label="Previous slide"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-        aria-label="Next slide"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Play/Pause Toggle */}
-      <button
-        onClick={togglePlayPause}
-        className="absolute bottom-6 right-20 z-30 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-        aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-      >
-        {isPlaying ? (
-          <PauseIcon className="w-5 h-5" />
-        ) : (
-          <PlayIcon className="w-5 h-5" />
-        )}
-      </button>
-
-      {/* Dot Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
-        {sortedSlides.map((_, index) => (
+      {/* Navigation Arrows - only shown when showControls is true */}
+      {showControls && (
+        <>
           <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === currentSlide ? 'true' : undefined}
-          />
-        ))}
-      </div>
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+            aria-label="Previous slide"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+            aria-label="Next slide"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Play/Pause Toggle */}
+          <button
+            onClick={togglePlayPause}
+            className="absolute bottom-6 right-20 z-30 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+            aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
+          >
+            {isPlaying ? (
+              <PauseIcon className="w-5 h-5" />
+            ) : (
+              <PlayIcon className="w-5 h-5" />
+            )}
+          </button>
+
+          {/* Dot Indicators */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+            {sortedSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`}
+                aria-label={`Go to slide ${index + 1}`}
+                aria-current={index === currentSlide ? 'true' : undefined}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <style jsx>{`
         @keyframes shimmer {

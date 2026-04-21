@@ -1,126 +1,148 @@
-import Link from 'next/link';
-import { ClockIcon, MapPinIcon } from '@heroicons/react/24/outline';
+'use client';
 
-interface ServiceTime {
-  label?: string;
+import Link from 'next/link';
+import { ClockIcon, CalendarIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+
+interface Service {
+  name?: string;
+  serviceType?: string;
   day?: string;
-  timeRange?: string;
   time?: string;
   location?: string;
+  showOnHomepage?: boolean;
 }
 
 interface ServiceTimesStripProps {
-  serviceTimes?: ServiceTime[];
+  serviceTimes?: Service[];
 }
 
+// Hardcoded fallback services (only 3, no Allnight or Counseling)
+const fallbackServices = [
+  {
+    name: 'Feast of Manna',
+    day: 'Sunday',
+    time: '9:00 AM – 12:00 PM'
+  },
+  {
+    name: 'Prophetic Encounter',
+    day: 'Wednesday',
+    time: '6:00 PM – 8:30 PM'
+  },
+  {
+    name: 'The Youth Church',
+    day: 'Friday',
+    time: '6:00 PM – 8:00 PM'
+  }
+];
+
 const ServiceTimesStrip = ({ serviceTimes }: ServiceTimesStripProps) => {
-  // Transform Sanity data format to our display format
-  const transformServiceTimes = (times: ServiceTime[] | undefined) => {
-    if (!times || times.length === 0) return null;
-    
-    return times.map((service: ServiceTime) => ({
-      label: service.label || 'Service',
+  // Filter and transform Sanity data if available
+  const getServices = () => {
+    if (!serviceTimes || serviceTimes.length === 0) {
+      return fallbackServices;
+    }
+
+    // Filter: showOnHomepage true, exclude Allnight and Counseling
+    const filtered = serviceTimes.filter((service) => {
+      const displayName = (service.name || service.serviceType || '').toLowerCase();
+      const isExcluded = displayName.includes('allnight') || displayName.includes('counseling');
+      return service.showOnHomepage !== false && !isExcluded;
+    });
+
+    // Map to display format, limit to 3
+    // Use 'name' if available, otherwise fall back to 'serviceType' for backwards compatibility
+    return filtered.slice(0, 3).map((service) => ({
+      name: service.name || service.serviceType || 'Service',
       day: service.day || 'Sunday',
-      timeRange: service.timeRange || service.time || '9:00 AM - 12:00 PM',
-      location: service.location || 'Main Campus'
+      time: service.time || '9:00 AM'
     }));
   };
 
-  const transformedServices = transformServiceTimes(serviceTimes);
-
-  // Fallback service times if no CMS data
-  const defaultServices = [
-    { label: 'FEAST OF MANNA', day: 'Sunday', timeRange: '9:00 AM - 12:00 PM', location: 'Main Campus' },
-    { label: 'THE YOUTH CHURCH', day: 'Friday', timeRange: '6:00 PM - 8:00 PM', location: 'Main Campus' },
-    { label: 'PROPHETIC ENCOUNTER SERVICE', day: 'Wednesday', timeRange: '6:00 PM - 8:30 PM', location: 'Main Campus' },
-    { label: 'ALLNIGHT SERVICE', day: 'First Friday of the Month', timeRange: '10:00 PM - 4:00 AM', location: 'Main Campus' },
-    { label: 'COUNSELING', day: 'Any Day', timeRange: 'After Every Service', location: 'Main Campus' }
-  ];
-
-  const services = transformedServices || defaultServices;
-
-  // Fallback UI when no service times available
-  if (!services || services.length === 0) {
-    return (
-      <section id="services" className="bg-neutral-900 py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-teal-500 italic text-sm tracking-widest">
-            GATHER WITH US
-          </span>
-          <h2 className="text-white font-bold mt-4 mb-8" style={{ fontSize: '48px', lineHeight: '1.1' }}>
-            Service Times
-          </h2>
-          <p className="text-gray-400 text-lg">
-            Service schedule coming soon. Please check back later or contact us for current service times.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  const services = getServices();
 
   return (
-    <section id="services" className="bg-gray-50 py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          {/* Section Label */}
-          <span 
-            className="text-teal-600 italic"
-            style={{ 
-              fontSize: '12px',
-              fontFamily: 'Georgia, serif',
-              letterSpacing: '0.15em'
-            }}
+    <section id="services" className="bg-white border-b border-[#e5e7eb]">
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-20 py-10 lg:py-12">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+          <div>
+            {/* Eyebrow */}
+            <span className="text-[11px] uppercase tracking-[0.12em] text-[#0d9488] font-medium">
+              WEEKLY SERVICES
+            </span>
+            {/* Heading */}
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-[#111111] mt-1.5">
+              Come As You Are
+            </h2>
+          </div>
+          {/* View All Link - desktop only */}
+          <Link
+            href="/plan-your-visit"
+            className="hidden sm:flex items-center gap-1 text-[14px] text-[#0d9488] font-medium hover:underline"
+            aria-label="View all church service times and information"
           >
-            GATHER WITH US
-          </span>
-          
-          {/* Heading */}
-          <h2 
-            className="text-gray-900 font-bold mt-4 mb-16" 
-            style={{ fontSize: '48px', lineHeight: '1.1' }}
-          >
-            Service Times
-          </h2>
+            View All Services
+            <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
+          </Link>
         </div>
 
-        {/* Service Items Grid - 2 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+        {/* Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {services.map((service, index) => (
-            <div key={index} className="border-b border-gray-300 py-6">
-              <div className="flex items-start space-x-4">
-                <ClockIcon className="w-5 h-5 text-teal-600 flex-shrink-0 mt-1" />
-                <div className="flex-1">
-                  <h3 className="text-gray-900 font-bold text-sm uppercase tracking-wide mb-2" style={{ letterSpacing: '0.08em' }}>
-                    {service.label}
-                  </h3>
-                  <p className="text-gray-700 text-sm mb-1">
-                    {service.day} • {service.timeRange}
-                  </p>
-                  <p className="text-gray-600 text-xs">
-                    {service.location}
-                  </p>
-                </div>
+            <div
+              key={index}
+              className="bg-[#f9fafb] border border-[#e5e7eb] rounded-xl p-7 hover:border-[#0d9488] transition-colors duration-200"
+            >
+              {/* Day Badge */}
+              <span className="inline-block bg-[#e6fffa] text-[#0f766e] text-[11px] uppercase tracking-[0.1em] font-semibold px-2.5 py-1 rounded-md">
+                {service.day}
+              </span>
+
+              {/* Service Name */}
+              <h3 className="text-[18px] sm:text-[20px] font-bold text-[#111111] mt-4 mb-1.5">
+                {service.name}
+              </h3>
+
+              {/* Time */}
+              <div className="flex items-center gap-1.5 text-[14px] sm:text-[15px] text-[#555555]">
+                <ClockIcon className="w-4 h-4 text-[#0d9488]" aria-hidden="true" />
+                {service.time}
+              </div>
+
+              {/* Footer - Add to Calendar */}
+              <div className="mt-5 pt-4 border-t border-[#e5e7eb]">
+                <button
+                  className="flex items-center gap-1 text-[13px] text-[#0d9488] font-medium hover:underline"
+                  aria-label={`Add ${service.name} to your calendar`}
+                >
+                  <CalendarIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                  Add to Calendar
+                </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA Buttons */}
-        <div className="text-center space-x-4">
+        {/* Mobile View All Link */}
+        <Link
+          href="/plan-your-visit"
+          className="sm:hidden flex items-center justify-center gap-1 text-[14px] text-[#0d9488] font-medium mt-6"
+          aria-label="View all church service times and information"
+        >
+          View All Services
+          <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
+        </Link>
+
+        {/* Bottom CTA */}
+        <div className="flex items-center justify-center mt-9">
           <Link
-            href="/directions"
-            className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
-            style={{ fontSize: '13px', letterSpacing: '0.05em' }}
+            href="https://maps.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center bg-[#0d9488] hover:bg-[#0f766e] text-white font-semibold py-3 px-7 rounded-lg transition-colors duration-200 text-[14px]"
+            aria-label="Get directions to ThaGospel Church on Google Maps"
           >
-            <MapPinIcon className="w-4 h-4 mr-2" />
-            GET DIRECTIONS
-          </Link>
-          <Link
-            href="/plan-your-visit"
-            className="inline-flex items-center text-teal-400 hover:text-teal-300 font-medium py-3.5 px-8 transition-colors duration-200"
-            style={{ fontSize: '13px', letterSpacing: '0.05em' }}
-          >
-            First time? Plan your visit →
+            Get Directions
           </Link>
         </div>
       </div>

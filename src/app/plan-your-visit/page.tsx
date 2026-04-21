@@ -15,7 +15,7 @@ import {
   MinusIcon
 } from '@heroicons/react/24/outline';
 import Navbar from '@/components/navbar/Navbar';
-import Footer from '@/components/Footer';
+import { Footer } from '@/components/footer/Footer';
 
 export default function PlanYourVisitPage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);

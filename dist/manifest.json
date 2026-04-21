@@ -1,0 +1,9 @@
+{
+  "name": "ThaGospel Church",
+  "short_name": "ThaGospel",
+  "description": "Welcome to ThaGospel Church, where faith comes alive and lives are transformed through the power of God's word.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}

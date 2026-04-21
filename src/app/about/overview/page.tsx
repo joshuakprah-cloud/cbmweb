@@ -63,10 +63,9 @@ export default async function Overview() {
   return (
     <>
       {/* Hero Section */}
-      <PageHero 
-        title="Church Overview" 
+      <PageHero
+        title="Church Overview"
         subtitle="Discover our story, mission, and community"
-        image={featuredImage}
       />
 
       {/* Featured Image Section */}
@@ -110,7 +109,7 @@ export default async function Overview() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-20 bg-white">
+      <section id="vision-mission" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Mission */}

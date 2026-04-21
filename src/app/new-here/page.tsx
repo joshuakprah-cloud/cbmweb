@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaUsers, FaPrayingHands, FaBookOpen, FaClock, FaMapMarkerAlt, FaDirections, FaEnvelope, FaHeart, FaHands, FaChild, FaUserFriends, FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import Navbar from '@/components/navbar/Navbar'
-import Footer from '@/components/Footer'
+import { Footer } from '@/components/footer/Footer'
 
 export const metadata = {
   title: 'New Here? - ThaGospel Church',

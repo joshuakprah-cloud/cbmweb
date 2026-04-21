@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import Navbar from './navbar/Navbar'
 import AnnouncementBar from './layout/AnnouncementBar'
-import Footer from './Footer'
+import { Footer } from './footer/Footer'
 
 interface ConditionalLayoutProps {
   children: React.ReactNode
@@ -14,6 +14,8 @@ interface ConditionalLayoutProps {
 export default function ConditionalLayout({ children, navbarData, announcementData }: ConditionalLayoutProps) {
   const pathname = usePathname()
   const isStudioRoute = pathname?.startsWith('/studio')
+  const isAdminRoute = pathname?.startsWith('/admin')
+  const hideLayout = isStudioRoute || isAdminRoute
 
   return (
     <>
@@ -23,7 +25,7 @@ export default function ConditionalLayout({ children, navbarData, announcementDa
       >
         Skip to main content
       </a>
-      {!isStudioRoute && (
+      {!hideLayout && (
         <>
           <AnnouncementBar
             isActive={announcementData?.isActive || false}
@@ -35,7 +37,7 @@ export default function ConditionalLayout({ children, navbarData, announcementDa
         </>
       )}
       <main id="main-content">{children}</main>
-      {!isStudioRoute && <Footer />}
+      {!hideLayout && <Footer />}
     </>
   )
 }

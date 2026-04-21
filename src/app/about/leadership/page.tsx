@@ -1,14 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import PageHero from '@/components/about/PageHero';
-import SectionHeader from '@/components/about/SectionHeader';
+import AboutHero from '@/components/about/AboutHero';
+import AboutCTA from '@/components/about/AboutCTA';
 import LeadershipClient from '@/components/about/LeadershipClient';
 import { StaffMember } from '@/types/staff';
 import { client } from '../../../../sanity/lib/client';
 import { leadershipPageQuery, staffMembersQuery } from '../../../../sanity/lib/queries';
 import { urlFor } from '../../../../sanity/lib/image';
 import { SEO_FALLBACKS } from '@/constants/fallbacks';
-import Script from 'next/script';
 
 async function getLeadershipData(): Promise<{ pageData: any; staffMembers: StaffMember[] }> {
   try {
@@ -35,7 +34,7 @@ function groupByCategory(members: StaffMember[]) {
     groups[category].push(member);
   });
   
-  const categoryOrder = ['Pastoral Team', 'Ministry Leaders', 'Support Staff'];
+  const categoryOrder = ['Head Pastors', 'Pastors', 'Ministers', 'Department Leaders'];
   const sortedGroups: { [key: string]: StaffMember[] } = {};
   categoryOrder.forEach(cat => { if (groups[cat]) sortedGroups[cat] = groups[cat]; });
   Object.keys(groups).forEach(cat => { if (!sortedGroups[cat]) sortedGroups[cat] = groups[cat]; });
@@ -107,66 +106,327 @@ export default async function LeadershipPage() {
 
   return (
     <>
-      <Script id="breadcrumb-data" type="application/ld+json" strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <Script id="leadership-data" type="application/ld+json" strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(leadershipJsonLd) }} />
-
-      {/* Breadcrumb */}
-      <nav className="bg-white border-b border-gray-200" aria-label="Breadcrumb">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ol className="flex items-center space-x-2 py-4 text-sm text-gray-600">
-            <li>
-              <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
-            </li>
-            <li className="flex items-center">
-              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
-              </svg>
-              <Link href="/about" className="hover:text-teal-600 transition-colors">About</Link>
-            </li>
-            <li className="flex items-center">
-              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
-              </svg>
-              <span className="text-gray-900 font-medium">Leadership</span>
-            </li>
-          </ol>
-        </div>
-      </nav>
-
-      <PageHero 
-        title={pageData?.heroTitle || 'Leadership'} 
-        subtitle={pageData?.heroSubtitle || 'Meet our dedicated leadership team'}
-        image={pageData?.heroBackgroundImage} 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(leadershipJsonLd) }}
       />
 
-      {/* Leadership Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            title="Our Leadership Team"
-            subtitle="Meet the dedicated individuals who serve and lead our church"
-          />
-          
-          <LeadershipClient groupedStaff={groupedStaff} />
+      {/* Hero Section */}
+      <AboutHero
+        headline="The People Who Lead"
+        subheadline="Meet the pastoral team and ministry leaders behind ThaGospel Church."
+        bodyText="Our leadership team is committed to shepherding the congregation with love, wisdom, and vision. Each leader brings unique gifts and a passion for seeing people grow in their faith and discover their purpose in Christ."
+      />
+
+      {/* Leadership Team Grid */}
+      <section className="bg-[#f9fafb] py-16 md:py-24 px-6 md:px-20 border-t border-[#e5e7eb]">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <span className="text-[13px] uppercase tracking-[0.1em] text-[#0d9488] font-semibold">The Team</span>
+            <h2 className="text-[32px] md:text-[40px] font-bold text-[#111111] leading-[1.1] mt-3">Our Leadership Team</h2>
+          </div>
+
+          {/* Head Pastors */}
+          <div className="mb-16">
+            <h3 className="text-[13px] uppercase tracking-[0.1em] text-[#0d9488] font-bold mb-8 border-b-2 border-[#e5e7eb] pb-3">
+              Head Pastors
+            </h3>
+            {groupedStaff['Head Pastors'] ? (
+              <LeadershipClient groupedStaff={{ 'Head Pastors': groupedStaff['Head Pastors'] }} />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Head Pastor 1 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">👑</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Pastor Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Head Pastor</p>
+                  </div>
+                </div>
+
+                {/* Head Pastor 2 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">👑</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Pastor Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Head Pastor</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Pastors */}
+          <div className="mb-16">
+            <h3 className="text-[13px] uppercase tracking-[0.1em] text-[#0d9488] font-bold mb-8 border-b-2 border-[#e5e7eb] pb-3">
+              Pastors
+            </h3>
+            {groupedStaff['Pastors'] ? (
+              <LeadershipClient groupedStaff={{ 'Pastors': groupedStaff['Pastors'] }} />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Pastor 1 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">📖</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Pastor Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Pastor</p>
+                  </div>
+                </div>
+
+                {/* Pastor 2 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">📖</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Pastor Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Pastor</p>
+                  </div>
+                </div>
+
+                {/* Pastor 3 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">📖</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Pastor Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Pastor</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Ministers */}
+          <div className="mb-16">
+            <h3 className="text-[13px] uppercase tracking-[0.1em] text-[#0d9488] font-bold mb-8 border-b-2 border-[#e5e7eb] pb-3">
+              Ministers
+            </h3>
+            {groupedStaff['Ministers'] ? (
+              <LeadershipClient groupedStaff={{ 'Ministers': groupedStaff['Ministers'] }} />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Minister 1 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">✝️</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Minister Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Minister</p>
+                  </div>
+                </div>
+
+                {/* Minister 2 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">✝️</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Minister Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Minister</p>
+                  </div>
+                </div>
+
+                {/* Minister 3 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">✝️</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Minister Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Minister</p>
+                  </div>
+                </div>
+
+                {/* Minister 4 */}
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                  <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                      <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                    </div>
+                    <div className="relative z-10 text-6xl">✝️</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Minister Name</h4>
+                    <p className="text-[#0d9488] text-sm font-medium mt-1">Minister</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Department Leaders */}
+          <div className="mb-16">
+            <h3 className="text-[13px] uppercase tracking-[0.1em] text-[#0d9488] font-bold mb-8 border-b-2 border-[#e5e7eb] pb-3">
+              Department Leaders
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Our Department Leaders oversee the various ministries that make ThaGospel Church thrive. 
+              From Prayer and Ushering to Media and Outreach, each department plays a vital role.
+            </p>
+            {groupedStaff['Department Leaders'] ? (
+              <LeadershipClient groupedStaff={{ 'Department Leaders': groupedStaff['Department Leaders'] }} />
+            ) : (
+              <>
+                {/* Department Leaders Placeholder Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {/* Prayer Department Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🙏</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">Prayer Department</p>
+                    </div>
+                  </div>
+
+                  {/* Ushering Department Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🤝</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">Ushering Department</p>
+                    </div>
+                  </div>
+
+                  {/* Media Department Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🎥</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">Media Department</p>
+                    </div>
+                  </div>
+
+                  {/* Choir Department Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🎵</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">Choir Department</p>
+                    </div>
+                  </div>
+
+                  {/* Youth Church Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🔥</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">The Youth Church</p>
+                    </div>
+                  </div>
+
+                  {/* Outreach Department Leader */}
+                  <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0d9488] hover:shadow-xl transition-all duration-300 group">
+                    <div className="relative h-56 bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 border border-white/30 rounded-full" />
+                        <div className="absolute bottom-8 right-8 w-32 h-32 border border-white/20 rounded-full" />
+                      </div>
+                      <div className="relative z-10 text-6xl">🌍</div>
+                    </div>
+                    <div className="p-5">
+                      <h4 className="text-lg font-bold text-[#0B1F3A] group-hover:text-[#0d9488] transition-colors">Leader Name</h4>
+                      <p className="text-[#0d9488] text-sm font-medium mt-1">Outreach Department</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center py-6 bg-white rounded-xl border border-[#e5e7eb]">
+                  <p className="text-gray-500 mb-4">More department leaders coming soon.</p>
+                  <Link 
+                    href="/about/departments" 
+                    className="inline-flex items-center text-[#0d9488] font-semibold hover:text-[#0c857a]"
+                  >
+                    View All Departments
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Back to About */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link
-            href="/about"
-            className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold transition-colors"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to About
-          </Link>
-        </div>
-      </section>
+      {/* Final CTA */}
+      <AboutCTA />
     </>
   );
 }

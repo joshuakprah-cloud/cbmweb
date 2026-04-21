@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Navbar from '@/components/navbar/Navbar';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
@@ -97,63 +95,135 @@ export default async function MinistryPage({ params }: { params: { slug: string 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="relative h-96 bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <div className="text-sm uppercase tracking-wider mb-4">{ministry.label}</div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-2xl">
-            {ministry.tagline}
-          </h1>
-        </div>
-        {ministry.heroImage && (
-          <div className="absolute inset-0">
+      {/* Hero Section - Full width image with ministry name overlay */}
+      <section className="relative h-[400px] md:h-[450px] overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          {ministry.heroImage ? (
             <Image
               src={urlFor(ministry.heroImage).url()}
               alt={`${ministry.name} ministry`}
               fill
               className="object-cover"
               priority={true}
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="100vw"
             />
-          </div>
-        )}
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-[#0B1F3A] to-[#1a3a5c]" />
+          )}
+        </div>
+        
+        {/* Teal/Navy overlay for brand consistency */}
+        <div className="absolute inset-0 bg-[#0B1F3A]/50 z-10"></div>
+        
+        {/* Ministry Name - Centered overlay */}
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-wide uppercase drop-shadow-lg">
+            {ministry.name}
+          </h1>
+        </div>
       </section>
 
-      {/* Stats Bar */}
-      {ministry.stats && ministry.stats.length > 0 && (
-        <StatsBar stats={ministry.stats} />
-      )}
-
-      {/* About Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">About {ministry.name}</h2>
-          <div className="prose prose-lg max-w-none text-gray-600">
-            {ministry.body ? (
-              <PortableText value={ministry.body} />
-            ) : ministry.description ? (
-              <p>{ministry.description}</p>
-            ) : (
-              <p>Learn more about {ministry.name} and how you can get involved.</p>
-            )}
+      {/* Content Section - Two Column Layout */}
+      <section className="py-16 md:py-24 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="space-y-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] uppercase tracking-wide">
+                {ministry.tagline || `${ministry.name} Team`}
+              </h2>
+              
+              <div className="prose prose-lg text-gray-600 max-w-none">
+                {ministry.body ? (
+                  <PortableText value={ministry.body} />
+                ) : ministry.description ? (
+                  <p>{ministry.description}</p>
+                ) : (
+                  <p>The {ministry.name} ministry at ThaGospel Church seeks to create an environment where everyone who comes through the doors is seen and loved. Our desire is to make authentic connections with the people we meet and help them feel at home at ThaGospel.</p>
+                )}
+              </div>
+              
+              <p className="text-gray-600">
+                If you feel led to be one of the first things people see when they walk in the door, we are always looking for team members to welcome new and returning congregants to the church.
+              </p>
+              
+              <div className="pt-4">
+                <Link
+                  href="#join-form"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-[#0d9488] text-white font-semibold rounded-lg hover:bg-[#0f766e] transition-all duration-200 uppercase tracking-wide text-sm"
+                >
+                  Join the Team
+                </Link>
+              </div>
+            </div>
+            
+            {/* Right Column - Image */}
+            <div className="relative">
+              <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                {ministry.gallery && ministry.gallery.length > 0 ? (
+                  <Image
+                    src={ministry.gallery[0].image}
+                    alt={`${ministry.name} in action`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : ministry.heroImage ? (
+                  <Image
+                    src={urlFor(ministry.heroImage).url()}
+                    alt={`${ministry.name} ministry`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#0B1F3A] to-[#0d9488] flex items-center justify-center">
+                    <span className="text-white/30 text-6xl">👥</span>
+                  </div>
+                )}
+              </div>
+              
+              {/* Decorative element */}
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#0d9488]/20 rounded-full -z-10" />
+              <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#0B1F3A]/10 rounded-full -z-10" />
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Stats Bar */}
+      {ministry.stats && ministry.stats.length > 0 && (
+        <section className="bg-[#0d9488] py-8">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {ministry.stats.map((stat: any, index: number) => (
+                <div key={index} className="text-center">
+                  <p className="text-3xl md:text-4xl font-bold text-white">{stat.value}</p>
+                  <p className="text-white/80 text-sm mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* What to Expect Section */}
       {ministry.expectations && ministry.expectations.length > 0 && (
-        <section className="py-20 px-4 bg-gray-50">
+        <section className="py-20 px-4 bg-white">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-              {MINISTRIES_FALLBACKS.whatToExpect}
-            </h2>
+            <div className="text-center mb-12">
+              <span className="inline-block text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase mb-4">
+                What to Expect
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A]">
+                {MINISTRIES_FALLBACKS.whatToExpect}
+              </h2>
+            </div>
             <div className="grid md:grid-cols-2 gap-8">
               {ministry.expectations.map((expectation: any, index: number) => (
-                <div key={index} className="text-center">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <div key={index} className="bg-[#F8F9FB] rounded-xl p-6 border border-gray-100">
+                  <h3 className="text-xl font-bold text-[#0B1F3A] mb-3">
                     {expectation.title}
                   </h3>
                   <p className="text-gray-600">{expectation.description}</p>
@@ -166,15 +236,20 @@ export default async function MinistryPage({ params }: { params: { slug: string 
 
       {/* Leadership Section */}
       {ministry.leaders && ministry.leaders.length > 0 && (
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-[#F8F9FB]">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-              {MINISTRIES_FALLBACKS.leadership}
-            </h2>
+            <div className="text-center mb-12">
+              <span className="inline-block text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase mb-4">
+                Leadership
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A]">
+                {MINISTRIES_FALLBACKS.leadership}
+              </h2>
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {ministry.leaders.map((leader: any, index: number) => (
-                <div key={index} className="text-center">
-                  <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden">
+                <div key={index} className="bg-white rounded-xl p-6 text-center border border-gray-100 hover:border-[#0d9488] transition-colors">
+                  <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-2 border-gray-100 hover:border-[#0d9488] transition-colors">
                     {leader.photo ? (
                       <Image
                         src={leader.photo}
@@ -184,13 +259,13 @@ export default async function MinistryPage({ params }: { params: { slug: string 
                         sizes="96px"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400 text-2xl">👤</span>
+                      <div className="w-full h-full bg-[#F8F9FB] flex items-center justify-center">
+                        <span className="text-[#0B1F3A]/30 text-2xl">👤</span>
                       </div>
                     )}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{leader.name}</h3>
-                  <p className="text-gray-600 mb-2">{leader.role}</p>
+                  <h3 className="text-xl font-bold text-[#0B1F3A] mb-1">{leader.name}</h3>
+                  <p className="text-[#0d9488] font-medium text-sm mb-2">{leader.role}</p>
                   {leader.bio && <p className="text-sm text-gray-500">{leader.bio}</p>}
                 </div>
               ))}
@@ -201,11 +276,16 @@ export default async function MinistryPage({ params }: { params: { slug: string 
 
       {/* Gallery Section */}
       {ministry.gallery && ministry.gallery.length > 0 && (
-        <section className="py-20 px-4 bg-gray-50">
+        <section className="py-20 px-4 bg-white">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-              {MINISTRIES_FALLBACKS.gallery}
-            </h2>
+            <div className="text-center mb-12">
+              <span className="inline-block text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase mb-4">
+                Gallery
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A]">
+                {MINISTRIES_FALLBACKS.gallery}
+              </h2>
+            </div>
             <MinistryLightbox
               photos={ministry.gallery.map((item: any) => ({
                 src: item.image,
@@ -282,16 +362,25 @@ export default async function MinistryPage({ params }: { params: { slug: string 
       )}
 
       {/* Join Form Section */}
-      <section className="py-20 px-4">
+      <section id="join-form" className="py-20 px-4 bg-[#F8F9FB]">
         <div className="max-w-2xl mx-auto">
-          <MinistryJoinForm
-            ministryName={ministry.name}
-            ministrySlug={params.slug}
-          />
+          <div className="bg-white rounded-xl p-8 border border-gray-100">
+            <div className="text-center mb-8">
+              <span className="inline-block text-[#0d9488] text-sm font-semibold tracking-[0.15em] uppercase mb-4">
+                Get Involved
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold text-[#0B1F3A]">
+                Join {ministry.name}
+              </h2>
+            </div>
+            <MinistryJoinForm
+              ministryName={ministry.name}
+              ministrySlug={params.slug}
+            />
+          </div>
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

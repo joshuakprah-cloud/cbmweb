@@ -1,290 +1,333 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+
+interface FeaturedMinistry {
+  name: string;
+  slug: string;
+  heroImage?: any;
+  tagline?: string;
+  category?: string;
+  headline?: string;
+  color?: string;
+  isPhotoCard?: boolean;
+  gridClass?: string;
+}
 
 interface MinistriesSnapshotProps {
   sectionLabel?: string;
   title?: string;
   description?: string;
-  featuredMinistries?: Array<{
-    name: string;
-    slug: string;
-    heroImage: any;
-    tagline: string;
-  }>;
+  featuredMinistries?: FeaturedMinistry[];
   ctaText?: string;
   ctaLink?: string;
 }
 
+const fallbackMinistries: FeaturedMinistry[] = [
+  {
+    name: "Kids Ministry",
+    slug: "kids",
+    category: "Children's Ministry",
+    headline: "Raising kids with faith that lasts.",
+    color: "#0a3d6b",
+    heroImage: null,
+    isPhotoCard: false
+  },
+  {
+    name: "Youth Ministry",
+    slug: "youth",
+    category: "Youth Ministry",
+    headline: "Developing a generation that influences culture.",
+    color: "#111111",
+    heroImage: null,
+    isPhotoCard: false
+  },
+  {
+    name: "Women's Ministry",
+    slug: "women",
+    category: "Women's Ministry",
+    headline: "Community, growth, and belonging.",
+    color: "#0d6e56",
+    heroImage: null,
+    isPhotoCard: false
+  },
+  {
+    name: "Men's Ministry",
+    slug: "men",
+    category: "Men's Ministry",
+    headline: "Leading with purpose and integrity.",
+    color: "#7c3aed",
+    heroImage: null,
+    isPhotoCard: false
+  },
+  {
+    name: "Outreach Ministry",
+    slug: "outreach",
+    category: "Outreach Ministry",
+    headline: "Making an impact — locally and globally.",
+    color: "#c2410c",
+    heroImage: null,
+    isPhotoCard: false
+  },
+  {
+    name: "Worship Ministry",
+    slug: "worship",
+    category: "Worship Ministry",
+    headline: "Inspiring worship that ushers in God's presence.",
+    heroImage: null,
+    isPhotoCard: true
+  }
+];
+
 const MinistriesSnapshot = ({
   sectionLabel = 'Get Involved',
-  title = 'Our Ministries',
-  description = "There's a place for you to belong and serve. Find the ministry that fits your season of life.",
+  title = 'Find Your Place',
+  description = 'There is a place for every person in this community.',
   featuredMinistries = [],
-  ctaText = 'EXPLORE ALL MINISTRIES',
+  ctaText = 'Explore All Ministries',
   ctaLink = '/ministries'
 }: MinistriesSnapshotProps) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [autoRotate, setAutoRotate] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const ministries = [
-    { 
-      name: 'Kids Ministry', 
-      category: 'Children',
-      hook: 'Faith that starts early',
-      description: 'A safe, fun environment where children discover God\'s love through age-appropriate teaching, activities, and relationships that build a foundation for lifelong faith.',
-      href: '/ministries/kids'
-    },
-    { 
-      name: 'Youth Ministry', 
-      category: 'Students',
-      hook: 'Bold faith for the next generation',
-      description: 'Dynamic programs and authentic community where teenagers can ask hard questions, discover their purpose, and build friendships that strengthen their walk with God.',
-      href: '/ministries/youth'
-    },
-    { 
-      name: 'Women Ministry', 
-      category: 'Adults',
-      hook: 'Community, growth, and belonging',
-      description: 'A welcoming space for women to connect deeply, grow spiritually through study and prayer, and support each other through every season of life.',
-      href: '/ministries/women'
-    },
-    { 
-      name: 'Men Ministry', 
-      category: 'Adults',
-      hook: 'Leading with purpose and integrity',
-      description: 'Brotherhood and accountability for men to grow as leaders in their homes, workplaces, and community through authentic relationships and practical teaching.',
-      href: '/ministries/men'
-    }
-  ];
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % ministries.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + ministries.length) % ministries.length);
-  };
-
-  const currentMinistry = ministries[currentSlide] || featuredMinistries[0];
-
-  // IntersectionObserver for performance optimization
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        setIsVisible(entry.isIntersecting);
-        setAutoRotate(entry.isIntersecting && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (carouselRef.current) {
-      observer.observe(carouselRef.current);
-    }
-
-    return () => {
-      if (carouselRef.current) {
-        observer.unobserve(carouselRef.current);
-      }
-    };
-  }, []);
-
-  // Auto-rotation logic
-  useEffect(() => {
-    if (!autoRotate) return;
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % ministries.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [autoRotate, ministries.length]);
+  const ministries = featuredMinistries.length >= 6
+    ? featuredMinistries.slice(0, 6)
+    : fallbackMinistries;
 
   return (
-    <section id="ministries" className="bg-[#f0f0ee] py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="ministries"
+      aria-label="Our ministries"
+      className="bg-white border-t border-[#e5e7eb]"
+    >
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-20 py-16 lg:py-24">
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <span 
-            className="text-gray-600 italic"
-            style={{ 
-              fontSize: '18px',
-              fontFamily: 'Georgia, serif'
-            }}
-          >
+        <div className="text-center max-w-[600px] mx-auto mb-14">
+          <span className="text-[11px] uppercase tracking-[0.12em] text-[#0d9488] font-medium">
             {sectionLabel}
           </span>
-          
-          <h2 
-            className="text-black font-bold mt-4 mb-6" 
-            style={{ fontSize: '58px', lineHeight: '1.1' }}
-          >
+          <h2 className="text-[32px] sm:text-[40px] font-bold text-[#111111] leading-[1.15] mt-2.5">
             {title}
           </h2>
-          
-          <p 
-            className="text-gray-600 mx-auto" 
-            style={{ 
-              fontSize: '16px', 
-              lineHeight: '1.7', 
-              maxWidth: '520px' 
-            }}
-          >
+          <p className="text-[17px] text-[#666666] leading-[1.7] mt-3.5">
             {description}
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div 
-          ref={carouselRef}
-          className="rounded-[20px] overflow-hidden relative"
-          style={{ backgroundColor: '#e8e6df', padding: '60px' }}
+        {/* Bento Grid */}
+        <div
+          className="hidden lg:grid gap-4"
+          style={{
+            gridTemplateColumns: 'repeat(6, 1fr)',
+            gridTemplateRows: '280px 260px 320px'
+          }}
         >
-          {/* Ministry Content */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Image Side */}
-            <div className="order-1 lg:order-1">
-              {/* Ministry Image Placeholder */}
-              <div 
-                className="bg-gray-400 flex items-center justify-center w-full h-[420px] rounded-[18px] text-gray-200 text-sm font-sans mb-8"
-                aria-label={`${currentMinistry.name} preview image`}
-              >
-                {currentMinistry.name} Image — 640 x 420px
-              </div>
-
-              {/* Standalone CTA Button */}
-              <Link
-                href={currentMinistry.href}
-                className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-                style={{ fontSize: '13px', letterSpacing: '0.05em' }}
-                aria-label={`Learn more about ${currentMinistry.name}`}
-              >
-                Learn More
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Text Side */}
-            <div className="order-2 lg:order-2">
-              {/* Category Label */}
-              <span 
-                className="text-teal-600 italic"
-                style={{ 
-                  fontSize: '16px',
-                  fontFamily: 'Georgia, serif'
-                }}
-              >
-                {currentMinistry.category}
-              </span>
-              
-              {/* Ministry Name */}
-              <h3 
-                className="text-black font-bold mt-2 mb-4" 
-                style={{ fontSize: '40px', lineHeight: '1.1' }}
-              >
-                {currentMinistry.name}
-              </h3>
-              
-              {/* Tagline */}
-              <p 
-                className="text-gray-600 italic mb-4"
-                style={{ 
-                  fontSize: '19px',
-                  fontFamily: 'Georgia, serif'
-                }}
-              >
-                {currentMinistry.hook}
-              </p>
-              
-              {/* Description */}
-              <p 
-                className="text-gray-700 mb-8 leading-relaxed"
-                style={{ 
-                  fontSize: '16px', 
-                  lineHeight: '1.7',
-                  maxWidth: '480px'
-                }}
-              >
-                {currentMinistry.description}
-              </p>
-              
-              {/* CTA Button */}
-              <Link
-                href={currentMinistry.href}
-                className="inline-flex items-center border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
-                style={{ fontSize: '13px', letterSpacing: '0.05em' }}
-              >
-                EXPLORE {currentMinistry.name.toUpperCase()}
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-8 top-1/2 -translate-y-1/2 text-teal-600 hover:text-teal-700 transition-colors"
-            aria-label="Previous ministry"
-          >
-            <ChevronLeftIcon className="w-8 h-8" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-8 top-1/2 -translate-y-1/2 text-teal-600 hover:text-teal-700 transition-colors"
-            aria-label="Next ministry"
-          >
-            <ChevronRightIcon className="w-8 h-8" />
-          </button>
-
-          {/* Dot Indicators */}
-          <div className="flex justify-center space-x-2 mt-8">
-            {ministries.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-teal-600' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to ${ministries[index].name}`}
-              />
-            ))}
-          </div>
-
-          {/* Pause/Play Button - Hidden but functional */}
-          <button
-            onClick={() => setAutoRotate(!autoRotate)}
-            className="sr-only" /* Screen reader only - visually hidden but accessible */
-            aria-label={autoRotate ? 'Pause auto-rotation' : 'Start auto-rotation'}
-          >
-            {autoRotate ? 'Pause' : 'Play'}
-          </button>
+          {ministries.map((ministry, index) => (
+            <MinistryCard
+              key={ministry.slug}
+              ministry={ministry}
+              isLarge={index < 2}
+              layout="desktop"
+            />
+          ))}
         </div>
 
-        {/* Explore All Button */}
-        <div className="text-center mt-20">
+        {/* Tablet Layout */}
+        <div className="hidden md:grid lg:hidden grid-cols-2 gap-4">
+          {ministries.slice(0, 5).map((ministry) => (
+            <MinistryCard
+              key={ministry.slug}
+              ministry={ministry}
+              isLarge={false}
+              layout="tablet"
+            />
+          ))}
+          <div className="col-span-2">
+            <MinistryCard
+              ministry={ministries[5]}
+              isLarge={false}
+              layout="tablet"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden flex flex-col gap-4">
+          {ministries.map((ministry) => (
+            <MinistryCard
+              key={ministry.slug}
+              ministry={ministry}
+              isLarge={false}
+              layout="mobile"
+            />
+          ))}
+        </div>
+
+        {/* Footer CTA */}
+        <div className="flex justify-center mt-12">
           <Link
             href={ctaLink}
-            className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 px-8 rounded-[50px] transition-all duration-200 hover:scale-105"
-            style={{ fontSize: '13px', letterSpacing: '0.05em' }}
+            className="inline-flex items-center justify-center bg-[#111111] hover:bg-[#333333] text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 text-[15px]"
           >
             {ctaText}
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
           </Link>
         </div>
       </div>
     </section>
   );
 };
+
+interface MinistryCardProps {
+  ministry: FeaturedMinistry;
+  isLarge: boolean;
+  layout: 'desktop' | 'tablet' | 'mobile';
+}
+
+const MinistryCard = ({ ministry, isLarge, layout }: MinistryCardProps) => {
+  const href = `/ministries/${ministry.slug}`;
+  const firstLetter = ministry.name.charAt(0);
+
+  if (ministry.isPhotoCard) {
+    return (
+      <Link
+        href={href}
+        className="group relative block rounded-2xl overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[0.985]"
+        style={{
+          height: layout === 'mobile' ? '260px' : layout === 'tablet' ? '280px' : '320px',
+          gridColumn: layout === 'desktop' ? '1 / 7' : layout === 'tablet' ? '1 / 3' : undefined
+        }}
+        aria-label={`Learn more about ${ministry.name}`}
+      >
+        {/* Background Image */}
+        {ministry.heroImage ? (
+          <Image
+            src={ministry.heroImage.asset?.url || ministry.heroImage}
+            alt="ThaGospel Church worship service"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 100vw"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ backgroundColor: '#0d1117' }}
+          >
+            <span
+              className="text-white font-bold"
+              style={{ fontSize: '120px', opacity: 0.1 }}
+            >
+              {ministry.name}
+            </span>
+          </div>
+        )}
+
+        {/* Gradient Overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%)'
+          }}
+        />
+
+        {/* Content */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 z-10">
+          <p className="text-[12px] text-white/70 mb-2.5 tracking-[0.02em]">
+            {ministry.category}
+          </p>
+          <h3
+            className="font-bold text-white leading-[1.2] mb-4"
+            style={{ fontSize: layout === 'mobile' ? '24px' : '32px', maxWidth: '520px' }}
+          >
+            {ministry.headline || ministry.name}
+          </h3>
+          <div className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white/90 hover:text-white hover:gap-2.5 transition-all duration-200">
+            Learn more
+            <ArrowRightIcon className="w-4 h-4" />
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  // Colored card (rows 1 & 2)
+  return (
+    <Link
+      href={href}
+      className="group relative block rounded-2xl overflow-hidden cursor-pointer p-6 lg:p-7 flex flex-col justify-between transition-transform duration-200 hover:scale-[0.985]"
+      style={{
+        backgroundColor: ministry.color || '#0a3d6b',
+        height: layout === 'mobile' ? '220px' : layout === 'tablet' ? '260px' : 'auto',
+        gridColumn: getGridColumn(ministry.slug, layout),
+        gridRow: layout === 'desktop' ? getGridRow(ministry.slug) : undefined
+      }}
+      role="article"
+      aria-label={`Learn more about ${ministry.name}`}
+    >
+      {/* Decorative Letter Watermark */}
+      <div
+        className="absolute pointer-events-none select-none font-black text-white"
+        style={{
+          fontSize: '160px',
+          opacity: 0.08,
+          bottom: '-20px',
+          right: '-20px',
+          lineHeight: 1
+        }}
+        aria-hidden="true"
+      >
+        {firstLetter}
+      </div>
+
+      {/* Top Section */}
+      <div className="relative z-10">
+        <p className="text-[12px] font-medium text-white/65 tracking-[0.06em] mb-2.5">
+          {ministry.category}
+        </p>
+        <h3
+          className="font-bold text-white leading-[1.25]"
+          style={{
+            fontSize: isLarge ? '26px' : '22px',
+            maxWidth: '280px'
+          }}
+        >
+          {ministry.headline || ministry.name}
+        </h3>
+      </div>
+
+      {/* Footer Section */}
+      <div className="relative z-10">
+        <div className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white/90 hover:text-white hover:gap-2.5 transition-all duration-200">
+          Learn more
+          <ArrowRightIcon className="w-4 h-4" />
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+function getGridColumn(slug: string, layout: 'desktop' | 'tablet' | 'mobile'): string | undefined {
+  if (layout !== 'desktop') return undefined;
+  switch (slug) {
+    case 'kids': return '1 / 4';
+    case 'youth': return '4 / 7';
+    case 'women': return '1 / 3';
+    case 'men': return '3 / 5';
+    case 'outreach': return '5 / 7';
+    default: return undefined;
+  }
+}
+
+function getGridRow(slug: string): number | undefined {
+  switch (slug) {
+    case 'kids':
+    case 'youth':
+      return 1;
+    case 'women':
+    case 'men':
+    case 'outreach':
+      return 2;
+    default:
+      return undefined;
+  }
+}
 
 export default MinistriesSnapshot;

@@ -2,10 +2,12 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import EventCard from './EventCard';
 import EventsCalendar from './EventsCalendar';
 import QuickViewModal from './QuickViewModal';
 import { EVENTS_FALLBACKS } from '@/constants/fallbacks';
+import { CalendarIcon, MagnifyingGlassIcon, FunnelIcon, Squares2X2Icon, ListBulletIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 
 interface Event {
   _id: string;
@@ -20,24 +22,24 @@ interface Event {
   isFree?: boolean;
   ticketPrice?: string;
   requiresRegistration?: boolean;
+  registrationStatus?: string;
   tags?: string[];
 }
 
 interface EventsBrowserProps {
   events: Event[];
+  pastEvents?: Event[];
 }
 
-const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
+const CATEGORIES = ['All', 'Service', 'Study', 'Social', 'Outreach', 'Youth', 'Women', 'Men', 'Special'];
+
+const EventsBrowser: React.FC<EventsBrowserProps> = ({ events, pastEvents = [] }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Debug: Log events data
-  console.log('EventsBrowser received events:', events);
-  console.log('Events count:', events?.length || 0);
-  
   // State from URL params or localStorage
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-  const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'all');
+  const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All');
   const [sortOrder, setSortOrder] = useState(searchParams.get('sort') || 'soonest');
   const [viewMode, setViewMode] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -45,27 +47,22 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
     }
     return 'grid';
   });
+  const [showPastEvents, setShowPastEvents] = useState(false);
+  const [pastPage, setPastPage] = useState(1);
   
   // Modal state
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [showQuickView, setShowQuickView] = useState(false);
   const [quickViewEvents, setQuickViewEvents] = useState<Event[]>([]);
 
-  // Debounced search
-  const debouncedSearchQuery = useMemo(() => searchQuery, [searchQuery]);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Get unique categories from events
-  const categories = useMemo(() => {
-    const cats = Array.from(new Set(events.map(event => event.category)));
-    return cats.sort();
-  }, [events]);
+  const filterBarRef = useRef<HTMLDivElement>(null);
 
   // Update URL params when filters change
   useEffect(() => {
     const params = new URLSearchParams();
     if (searchQuery) params.set('search', searchQuery);
-    if (activeCategory !== 'all') params.set('category', activeCategory);
+    if (activeCategory !== 'All') params.set('category', activeCategory);
     if (sortOrder !== 'soonest') params.set('sort', sortOrder);
     
     const newUrl = params.toString() ? `?${params.toString()}` : '';
@@ -91,11 +88,11 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
 
   // Filter and sort events
   const filteredEvents = useMemo(() => {
-    let filtered = events;
+    let filtered = [...events];
 
     // Search filter
-    if (debouncedSearchQuery) {
-      const query = debouncedSearchQuery.toLowerCase();
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
       filtered = filtered.filter(event =>
         event.title.toLowerCase().includes(query) ||
         (event.excerpt && event.excerpt.toLowerCase().includes(query)) ||
@@ -105,7 +102,7 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
     }
 
     // Category filter
-    if (activeCategory !== 'all') {
+    if (activeCategory !== 'All') {
       filtered = filtered.filter(event => event.category === activeCategory);
     }
 
@@ -149,12 +146,15 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
     });
 
     return filtered;
-  }, [events, debouncedSearchQuery, activeCategory, sortOrder]);
+  }, [events, searchQuery, activeCategory, sortOrder]);
+
+  // Paginated past events
+  const paginatedPastEvents = useMemo(() => {
+    return pastEvents.slice(0, pastPage * 9);
+  }, [pastEvents, pastPage]);
 
   // Handle search with debounce
   const handleSearch = useCallback((value: string) => {
-    setSearchQuery(value);
-    
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
@@ -182,7 +182,7 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
   // Clear all filters
   const clearFilters = useCallback(() => {
     setSearchQuery('');
-    setActiveCategory('all');
+    setActiveCategory('All');
     setSortOrder('soonest');
   }, []);
 
@@ -194,94 +194,28 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
   }, []);
 
   // Check if any filters are active
-  const hasActiveFilters = searchQuery || activeCategory !== 'all' || sortOrder !== 'soonest';
+  const hasActiveFilters = searchQuery || activeCategory !== 'All' || sortOrder !== 'soonest';
 
   return (
     <div>
-      {/* Search and Filter Bar */}
-      <div className="mb-8 space-y-4" role="search" aria-label="Search events">
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Search Input */}
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder={EVENTS_FALLBACKS.searchEvents}
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-            />
-          </div>
-          
-          {/* View Mode Toggle */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => handleViewModeChange('grid')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                viewMode === 'grid' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              aria-label={EVENTS_FALLBACKS.views.grid}
-              aria-pressed={viewMode === 'grid'}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => handleViewModeChange('list')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                viewMode === 'list' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              aria-label={EVENTS_FALLBACKS.views.list}
-              aria-pressed={viewMode === 'list'}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <button
-              onClick={() => handleViewModeChange('calendar')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                viewMode === 'calendar' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              aria-label="Switch to calendar view"
-              aria-pressed={viewMode === 'calendar'}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Category and Sort Filters */}
-        <div className="flex flex-wrap gap-2 items-center">
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handleCategoryChange('all')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                activeCategory === 'all'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              aria-pressed={activeCategory === 'all'}
-            >
-              All Categories
-            </button>
-            {categories.map(category => (
+      {/* 3. FILTER BAR - Sticky */}
+      <div 
+        ref={filterBarRef}
+        className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm"
+        role="search" 
+        aria-label="Search events"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          {/* Row 1: Category Tabs - horizontally scrollable on mobile */}
+          <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+            {CATEGORIES.map(category => (
               <button
                 key={category}
                 onClick={() => handleCategoryChange(category)}
-                className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
                   activeCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-[#0B1F3A] text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
                 }`}
                 aria-pressed={activeCategory === category}
               >
@@ -290,88 +224,248 @@ const EventsBrowser: React.FC<EventsBrowserProps> = ({ events }) => {
             ))}
           </div>
 
-          {/* Sort Dropdown */}
-          <select
-            value={sortOrder}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-          >
-            <option value="soonest">{EVENTS_FALLBACKS.sortOptions.soonest}</option>
-            <option value="latest">{EVENTS_FALLBACKS.sortOptions.latest}</option>
-            <option value="thisWeek">{EVENTS_FALLBACKS.sortOptions.thisWeek}</option>
-            <option value="thisMonth">{EVENTS_FALLBACKS.sortOptions.thisMonth}</option>
-          </select>
+          {/* Row 2: Search, Sort, View Toggle */}
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+            {/* Search Input */}
+            <div className="relative flex-1">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder={EVENTS_FALLBACKS.searchEvents}
+                defaultValue={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none"
+              />
+            </div>
 
-          {/* Clear Filters Button */}
-          {hasActiveFilters && (
-            <button
-              onClick={clearFilters}
-              className="px-4 py-2 text-blue-600 hover:text-blue-700 text-sm font-medium"
-            >
-              {EVENTS_FALLBACKS.clearFilters}
-            </button>
-          )}
-        </div>
+            <div className="flex gap-2">
+              {/* Sort Dropdown */}
+              <select
+                value={sortOrder}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E] outline-none bg-white"
+              >
+                <option value="soonest">{EVENTS_FALLBACKS.sortOptions.soonest}</option>
+                <option value="latest">{EVENTS_FALLBACKS.sortOptions.latest}</option>
+                <option value="thisWeek">{EVENTS_FALLBACKS.sortOptions.thisWeek}</option>
+                <option value="thisMonth">{EVENTS_FALLBACKS.sortOptions.thisMonth}</option>
+              </select>
 
-        {/* Event Counter */}
-        <div className="text-sm text-gray-600">
-          {EVENTS_FALLBACKS.showingEvents.replace('{count}', filteredEvents.length.toString())}
+              {/* View Mode Toggle */}
+              <div className="flex rounded-lg border border-gray-300 overflow-hidden">
+                <button
+                  onClick={() => handleViewModeChange('grid')}
+                  className={`px-3 py-2 transition-colors ${
+                    viewMode === 'grid' 
+                      ? 'bg-[#0B1F3A] text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  aria-label={EVENTS_FALLBACKS.views.grid}
+                  aria-pressed={viewMode === 'grid'}
+                >
+                  <Squares2X2Icon className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => handleViewModeChange('list')}
+                  className={`px-3 py-2 transition-colors ${
+                    viewMode === 'list' 
+                      ? 'bg-[#0B1F3A] text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  aria-label={EVENTS_FALLBACKS.views.list}
+                  aria-pressed={viewMode === 'list'}
+                >
+                  <ListBulletIcon className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => handleViewModeChange('calendar')}
+                  className={`px-3 py-2 transition-colors ${
+                    viewMode === 'calendar' 
+                      ? 'bg-[#0B1F3A] text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  aria-label="Switch to calendar view"
+                  aria-pressed={viewMode === 'calendar'}
+                >
+                  <CalendarDaysIcon className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Clear Filters & Results Counter */}
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+            <span className="text-sm text-gray-500">
+              {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'} found
+            </span>
+            {hasActiveFilters && (
+              <button
+                onClick={clearFilters}
+                className="text-sm text-[#C6A75E] hover:text-[#0B1F3A] font-medium transition-colors"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Events Display */}
-      {filteredEvents.length > 0 ? (
-        <>
-          {viewMode === 'grid' && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredEvents.map(event => (
-                <EventCard
-                  key={event._id}
-                  event={event}
-                  variant="upcoming"
-                />
-              ))}
-            </div>
-          )}
+      {/* 4. EVENTS GRID */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {filteredEvents.length > 0 ? (
+          <>
+            {viewMode === 'grid' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredEvents.map(event => (
+                  <EventCard
+                    key={event._id}
+                    event={event}
+                    variant="upcoming"
+                  />
+                ))}
+              </div>
+            )}
 
-          {viewMode === 'list' && (
-            <div className="space-y-4">
-              {filteredEvents.map(event => (
-                <EventCard
-                  key={event._id}
-                  event={event}
-                  variant="list"
-                />
-              ))}
-            </div>
-          )}
+            {viewMode === 'list' && (
+              <div className="space-y-4">
+                {filteredEvents.map(event => (
+                  <EventCard
+                    key={event._id}
+                    event={event}
+                    variant="list"
+                  />
+                ))}
+              </div>
+            )}
 
-          {viewMode === 'calendar' && (
-            <EventsCalendar
-              events={filteredEvents}
-              onDayClick={handleDayClick}
-            />
-          )}
-        </>
-      ) : (
-        <div className="text-center py-16">
-          <div className="text-gray-400 text-6xl mb-4">🔍</div>
-          <h3 className="text-2xl font-semibold text-gray-700 mb-2">
-            No Events Found
-          </h3>
-          <p className="text-gray-600 mb-4">
-            {EVENTS_FALLBACKS.noResults}
-          </p>
-          {hasActiveFilters && (
-            <button
-              onClick={clearFilters}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              {EVENTS_FALLBACKS.clearFilters}
-            </button>
-          )}
+            {viewMode === 'calendar' && (
+              <EventsCalendar
+                events={filteredEvents}
+                onDayClick={handleDayClick}
+              />
+            )}
+          </>
+        ) : (
+          <div className="text-center py-16">
+            <div className="text-gray-300 text-6xl mb-4">📅</div>
+            <h3 className="text-2xl font-semibold text-gray-700 mb-2">
+              No events found
+            </h3>
+            <p className="text-gray-600 mb-4">
+              No events found. Check back soon or clear your filters.
+            </p>
+            {hasActiveFilters && (
+              <button
+                onClick={clearFilters}
+                className="px-6 py-2 bg-[#0B1F3A] text-white rounded-lg hover:bg-[#0B1F3A]/90 transition-colors"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* 5. CALENDAR DISCOVERY STRIP */}
+      {viewMode !== 'calendar' && (
+        <div className="bg-[#F8F9FB] border-y border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-[#0B1F3A] font-medium">
+                Prefer to browse by date? Switch to Calendar View.
+              </p>
+              <button
+                onClick={() => handleViewModeChange('calendar')}
+                className="inline-flex items-center px-4 py-2 bg-white border border-[#0B1F3A] text-[#0B1F3A] rounded-lg hover:bg-[#0B1F3A] hover:text-white transition-colors"
+              >
+                <CalendarIcon className="w-5 h-5 mr-2" />
+                Open Calendar
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       )}
+
+      {/* 6. PAST EVENTS ARCHIVE */}
+      {pastEvents.length > 0 && (
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+              <span className="text-[#C6A75E] text-sm font-semibold tracking-[0.15em] uppercase">
+                Past Events
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] mt-2">
+                Revisit What God Has Done
+              </h2>
+              <p className="text-gray-600 mt-2">
+                A record of the moments that shaped our community.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {paginatedPastEvents.map(event => (
+                <EventCard
+                  key={event._id}
+                  event={event}
+                  variant="past"
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {pastEvents.length > paginatedPastEvents.length && (
+              <div className="flex justify-center mt-8 gap-2">
+                <button
+                  onClick={() => setPastPage(p => p + 1)}
+                  className="px-6 py-2 bg-[#0B1F3A] text-white rounded-lg hover:bg-[#0B1F3A]/90 transition-colors"
+                >
+                  Load More
+                </button>
+              </div>
+            )}
+
+            <div className="mt-8 text-center">
+              <Link
+                href="/events/archive"
+                className="text-[#C6A75E] hover:text-[#0B1F3A] font-medium transition-colors"
+              >
+                View All Past Events →
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 7. CTA SECTION */}
+      <section className="bg-[#0B1F3A] py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Don't Miss What's Next
+          </h2>
+          <p className="text-white/70 text-lg mb-8">
+            Stay connected and never miss an event at ThaGospel Church.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-8 py-3 bg-[#0d9488] text-white font-semibold rounded-lg hover:bg-[#0f766e] transition-colors"
+            >
+              See All Events
+            </button>
+            <Link
+              href="/connect/newsletter"
+              className="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
+            >
+              Subscribe for Updates
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Quick View Modal */}
       {showQuickView && (

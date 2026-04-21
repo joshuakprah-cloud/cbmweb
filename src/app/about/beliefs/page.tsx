@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import PageHero from '@/components/about/PageHero';
-import SectionHeader from '@/components/about/SectionHeader';
+import BeliefsHero from '@/components/about/BeliefsHero';
 import BeliefsClient from '@/components/about/BeliefsClient';
+import CodePrinciples from '@/components/about/CodePrinciples';
+import AboutCTA from '@/components/about/AboutCTA';
 import { client } from '../../../../sanity/lib/client';
 import { beliefsPageQuery } from '../../../../sanity/lib/queries';
 import { urlFor } from '../../../../sanity/lib/image';
@@ -89,71 +90,21 @@ export default async function BeliefsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Breadcrumb Navigation */}
-      <nav className="bg-white border-b border-gray-200" aria-label="Breadcrumb">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ol className="flex items-center space-x-2 py-4 text-sm text-gray-600">
-            <li>
-              <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
-            </li>
-            <li className="flex items-center">
-              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
-              </svg>
-              <Link href="/about" className="hover:text-teal-600 transition-colors">About</Link>
-            </li>
-            <li className="flex items-center">
-              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 00-1.414 0L8.586 9.414l4.293 4.293a1 1 0 001.414 1.414l-4.293-4.293z" clipRule="evenodd" />
-              </svg>
-              <span className="text-gray-900 font-medium">Beliefs</span>
-            </li>
-          </ol>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <PageHero 
-        title={heroTitle} 
-        subtitle={heroSubtitle}
-        image={heroImage}
-      />
-
-      {/* Introduction Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none text-center">
-            <p className="text-gray-700 leading-relaxed">{introText}</p>
-          </div>
-        </div>
-      </section>
+      <BeliefsHero />
 
       {/* Beliefs Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader 
-            title="Our Core Beliefs"
-            subtitle="Explore the foundational doctrines that guide our faith"
-          />
-          
-          <BeliefsClient beliefs={beliefs} beliefsPdf={beliefsPdf} />
+      <section className="bg-[#0a0a0a] py-16 md:py-24 px-6 md:px-20">
+        <div className="max-w-6xl mx-auto">
+          <BeliefsClient beliefs={beliefs} />
         </div>
       </section>
 
-      {/* Back to About */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link
-            href="/about"
-            className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold transition-colors"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to About
-          </Link>
-        </div>
-      </section>
+      {/* Code Principles Section */}
+      <CodePrinciples />
+
+      {/* Final CTA */}
+      <AboutCTA />
     </>
   );
 }

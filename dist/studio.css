@@ -1,0 +1,93 @@
+/* Custom Sanity Studio Dark Theme Overrides */
+
+/* Service Times Section - Fix white background */
+[data-ui="Card"] {
+  background-color: #1a1a1a !important;
+  border-color: #333333 !important;
+}
+
+[data-ui="Card"][data-theme="dark"] {
+  background-color: #1a1a1a !important;
+  border-color: #333333 !important;
+}
+
+/* Service Times Content */
+[data-ui="Card"] [data-testid="array-item"] {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Input fields */
+[data-ui="TextInput"] {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+[data-ui="TextArea"] {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Buttons and controls */
+[data-ui="Button"] {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+}
+
+[data-ui="Button"]:hover {
+  background-color: #059669 !important;
+}
+
+/* Navbar and header */
+[data-ui="Header"] {
+  background-color: #000000 !important;
+  border-bottom-color: #333333 !important;
+}
+
+/* Sidebar */
+[data-ui="Pane"] {
+  background-color: #0a0a0a !important;
+  border-right-color: #333333 !important;
+}
+
+/* Tool menu */
+[data-ui="MenuButton"] {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+[data-ui="MenuButton"]:hover {
+  background-color: #2a2a2a !important;
+}
+
+/* Form labels and text */
+[data-ui="Label"] {
+  color: #ffffff !important;
+}
+
+/* Select dropdowns */
+[data-ui="Select"] {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Array items */
+[data-ui="ArrayItem"] {
+  background-color: #1a1a1a !important;
+  border-color: #333333 !important;
+}
+
+/* Modal overlays */
+[data-ui="Dialog"] {
+  background-color: #1a1a1a !important;
+  border-color: #333333 !important;
+}
+
+/* WhatsApp bubble fix */
+[data-testid="whatsapp-bubble"],
+[data-testid="chat-widget"] {
+  display: none !important;
+}

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/navbar/Navbar';
-import Footer from '@/components/Footer';
+import { Footer } from '@/components/footer/Footer';
 import { client } from '@/sanity/lib/client';
 import { postBySlugQuery, relatedPostsQuery, allPostsQuery } from 'sanity/lib/queries';
 import PostCard from '@/components/blog/PostCard';

@@ -4,15 +4,13 @@ import ServiceTimesStrip from '../components/home/ServiceTimesStrip';
 import WhatToExpect from '../components/home/WhatToExpect';
 import UpcomingEventsCarousel from '../components/home/UpcomingEventsCarousel';
 import MinistriesSnapshot from '../components/home/MinistriesSnapshot';
-import PastorTeaser from '../components/home/PastorTeaser';
 import SermonsTeaser from '../components/home/SermonsTeaser';
 import TestimonySection from '../components/home/TestimonySection';
 import ClosingCTA from '../components/home/ClosingCTA';
 import { client } from '../../sanity/lib/client';
-import { homepageQuery, siteSettingsQuery, upcomingEventsQuery, recentSermonsQuery, activeTestimoniesQuery } from '../../sanity/lib/queries';
+import { homepageQuery, siteSettingsQuery, upcomingEventsQuery, recentSermonsQuery } from '../../sanity/lib/queries';
 import { urlFor } from '../../sanity/lib/image';
 import { SEO_FALLBACKS, SERVICE_TIMES_FALLBACK } from '../constants/fallbacks';
-import Script from 'next/script';
 import { Metadata } from 'next';
 
 export const revalidate = 300; // 5 minutes cache for homepage
@@ -97,23 +95,20 @@ export default async function Home() {
   let siteSettingsData = null;
   let upcomingEventsData = null;
   let recentSermonsData = null;
-  let activeTestimoniesData = null;
 
   try {
     // Fetch all data in parallel
-    const [homepage, siteSettings, upcomingEvents, recentSermons, activeTestimonies] = await Promise.all([
+    const [homepage, siteSettings, upcomingEvents, recentSermons] = await Promise.all([
       client.fetch(homepageQuery, {}, { next: { revalidate: 60 } }),
       client.fetch(siteSettingsQuery, {}, { next: { revalidate: 60 } }),
       client.fetch(upcomingEventsQuery, {}, { next: { revalidate: 60 } }),
       client.fetch(recentSermonsQuery, {}, { next: { revalidate: 60 } }),
-      client.fetch(activeTestimoniesQuery, {}, { next: { revalidate: 60 } }),
     ]);
 
     homepageData = homepage;
     siteSettingsData = siteSettings;
     upcomingEventsData = upcomingEvents;
     recentSermonsData = recentSermons;
-    activeTestimoniesData = activeTestimonies;
   } catch (error) {
     console.error('Error fetching data:', error);
     // Continue with null data - will use fallbacks
@@ -173,10 +168,9 @@ export default async function Home() {
         Skip to main content
       </a>
 
-      <Script
+      <script
         id="structured-data"
         type="application/ld+json"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(churchJsonLd) }}
       />
       
@@ -184,7 +178,23 @@ export default async function Home() {
         {/* 1. Hero Section - Only h1 on the page */}
         <HeroSection slides={homepageData?.heroSlides || []} />
 
-        {/* 2. What To Expect - Moved higher for mobile (2nd position) */}
+        {/* 2. Welcome & Pastor Section (Merged) */}
+        <WelcomeSection
+          welcomeHeading={homepageData?.welcomeSection?.title}
+          welcomeBody={homepageData?.welcomeSection?.message}
+          welcomeImage={homepageData?.welcomeSection?.image ? urlFor(homepageData.welcomeSection.image).url() : undefined}
+          pastorName={homepageData?.pastorSection?.pastorName}
+          pastorTitle={`Lead Pastor, ThaGospel Church`}
+          pastorBio={homepageData?.pastorSection?.pastorBio}
+          pastorImage={homepageData?.pastorSection?.pastorImage ? urlFor(homepageData.pastorSection.pastorImage).url() : undefined}
+          pastorCtaLabel={homepageData?.pastorSection?.primaryCtaText || "Meet Prophet Bekoe"}
+          pastorCtaLink={homepageData?.pastorSection?.primaryCtaLink || "/about/leadership"}
+        />
+
+        {/* 3. Service Times Strip */}
+        <ServiceTimesStrip serviceTimes={siteSettingsData?.serviceTimes} />
+
+        {/* 4. What To Expect */}
         <WhatToExpect 
           title={homepageData?.whatToExpectSection?.title}
           headline={homepageData?.whatToExpectSection?.headline}
@@ -192,18 +202,8 @@ export default async function Home() {
           expectations={homepageData?.whatToExpectSection?.expectations || []}
         />
 
-        {/* 3. Welcome Section */}
-        <WelcomeSection
-          welcomeTitle={homepageData?.welcomeSection?.title}
-          welcomeMessage={homepageData?.welcomeSection?.message}
-          pastorImage1={homepageData?.welcomeSection?.image ? urlFor(homepageData.welcomeSection.image).url() : '/placeholder-pastor1.jpg'}
-        />
-
-        {/* 4. Service Times Strip */}
-        <ServiceTimesStrip serviceTimes={siteSettingsData?.serviceTimes} />
-
-        {/* 5. Upcoming Events */}
-        <UpcomingEventsCarousel events={upcomingEventsData} />
+        {/* 5. Sermons Teaser */}
+        <SermonsTeaser sermons={recentSermonsData} />
 
         {/* 6. Ministries Snapshot */}
         <MinistriesSnapshot 
@@ -215,16 +215,13 @@ export default async function Home() {
           ctaLink={homepageData?.ministriesSection?.ctaLink}
         />
 
-        {/* 7. Pastor Teaser */}
-        <PastorTeaser
-          pastorImage1={homepageData?.pastorSection?.pastorImage ? urlFor(homepageData.pastorSection.pastorImage).url() : '/placeholder-pastor1.jpg'}
-          malePastorName={homepageData?.pastorSection?.pastorName}
+        {/* 7. Upcoming Events */}
+        <UpcomingEventsCarousel 
+          events={upcomingEventsData}
+          sectionTitle={homepageData?.upcomingEventsSection?.title || 'Upcoming Events'}
         />
 
-        {/* 8. Sermons Teaser */}
-        <SermonsTeaser sermons={recentSermonsData} />
-
-        {/* 9. Testimony Section */}
+        {/* 8. Testimony Section */}
         <TestimonySection 
           testimonies={homepageData?.testimonySection?.featuredTestimonies || []}
           sectionTitle={homepageData?.testimonySection?.title}
@@ -233,7 +230,7 @@ export default async function Home() {
           ctaLink={homepageData?.testimonySection?.ctaLink}
         />
 
-        {/* 10. Closing CTA */}
+        {/* 9. Closing CTA */}
         <ClosingCTA 
           title={homepageData?.closingCTASection?.title}
           description={homepageData?.closingCTASection?.description}

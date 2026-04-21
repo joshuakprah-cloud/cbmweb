@@ -1,0 +1,133 @@
+/* Service Schedule — Dark Cinematic Design */
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background-color: #112820;
+  border-radius: 14px;
+  padding: 28px 26px 26px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+}
+
+.service-card-teal {
+  border: 0.5px solid rgba(29, 158, 117, 0.22);
+}
+
+.service-card-teal:hover {
+  border-color: rgba(29, 158, 117, 1);
+}
+
+.service-card-amber {
+  border: 0.5px solid rgba(186, 117, 23, 0.22);
+}
+
+.service-card-amber:hover {
+  border-color: rgba(186, 117, 23, 1);
+}
+
+.service-card-purple {
+  border: 0.5px solid rgba(83, 74, 183, 0.22);
+}
+
+.service-card-purple:hover {
+  border-color: rgba(83, 74, 183, 1);
+}
+
+.service-glow {
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: background-color 0.2s ease;
+}
+
+.service-card-teal .service-glow {
+  background-color: rgba(29, 158, 117, 0.08);
+}
+
+.service-card-teal:hover .service-glow {
+  background-color: rgba(29, 158, 117, 0.18);
+}
+
+.service-card-amber .service-glow {
+  background-color: rgba(186, 117, 23, 0.08);
+}
+
+.service-card-amber:hover .service-glow {
+  background-color: rgba(186, 117, 23, 0.18);
+}
+
+.service-card-purple .service-glow {
+  background-color: rgba(83, 74, 183, 0.08);
+}
+
+.service-card-purple:hover .service-glow {
+  background-color: rgba(83, 74, 183, 0.18);
+}
+
+.service-cta {
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 14px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.service-card:hover .service-cta {
+  opacity: 1;
+}
+
+.service-card-teal .service-cta {
+  color: #5DCAA5;
+}
+
+.service-card-amber .service-cta {
+  color: #FAC775;
+}
+
+.service-card-purple .service-cta {
+  color: #AFA9EC;
+}
+
+/* Grid Layouts */
+.services-row-1 {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr 1fr;
+  gap: 12px;
+}
+
+.services-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .services-row-1 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  
+  .service-card-featured {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .services-row-1,
+  .services-row-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .service-card-featured {
+    grid-column: auto;
+  }
+}

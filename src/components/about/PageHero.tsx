@@ -1,45 +1,43 @@
-import Image from 'next/image';
-import { urlFor } from '../../sanity/lib/image';
+import Link from 'next/link';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface PageHeroProps {
   title: string;
   subtitle?: string;
-  image?: any;
 }
 
-const PageHero = ({ title, subtitle, image }: PageHeroProps) => {
+const PageHero = ({ title, subtitle }: PageHeroProps) => {
   return (
-    <section className="relative h-96 bg-gray-100">
-      {image ? (
-        <div className="absolute inset-0">
-          <Image
-            src={urlFor(image).url()}
-            alt={title}
-            fill
-            className="object-cover"
-            priority={true}
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/50" />
+    <>
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="bg-[#F8FAFC] py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
+            </li>
+            <li aria-hidden="true">
+              <ChevronRightIcon className="w-4 h-4" />
+            </li>
+            <li aria-current="page" className="text-gray-900 font-medium">About</li>
+          </ol>
         </div>
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-800" />
-      )}
-      
-      <div className="relative h-full flex items-center justify-center text-center px-4">
-        <div className="max-w-4xl">
-          <h1 className="text-white font-bold mb-4" style={{ fontSize: '48px', lineHeight: '1.1' }}>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="bg-white py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
             {title}
           </h1>
-          
           {subtitle && (
-            <p className="text-white text-lg" style={{ fontSize: '18px', lineHeight: '1.6' }}>
+            <p className="mt-6 text-xl text-gray-600 leading-relaxed max-w-3xl">
               {subtitle}
             </p>
           )}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

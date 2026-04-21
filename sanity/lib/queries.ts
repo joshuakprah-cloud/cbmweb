@@ -18,6 +18,8 @@ export const homepageQuery = groq`
         title,
         description,
         icon,
+        number,
+        image,
         order
       }
     },
@@ -27,7 +29,16 @@ export const homepageQuery = groq`
       message,
       image,
       ctaText,
-      ctaLink
+      ctaLink,
+      prophetImage,
+      firstLadyImage,
+      prophetName,
+      prophetTitle,
+      firstLadyName,
+      firstLadyTitle,
+      introText,
+      prophetBio,
+      firstLadyBio
     },
     serviceTimesOverride {
       enabled,
@@ -151,15 +162,34 @@ export const nextStepsQuery = groq`
 
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
+    logo { asset->{ url } },
     serviceTimes[] {
-      label,
-      time
+      name,
+      day,
+      time,
+      timeRange,
+      serviceType,
+      showOnHomepage,
+      location
+    },
+    address {
+      street,
+      city,
+      state,
+      zipCode,
+      country
     },
     location,
     contactInfo {
       phone,
       email,
       address
+    },
+    socialMedia {
+      facebook,
+      twitter,
+      instagram,
+      youtube
     }
   }
 `;
@@ -202,6 +232,20 @@ export const activeTestimoniesQuery = groq`
   }
 `;
 
+export const testimoniesQuery = groq`
+  *[_type == "testimony" && isActive == true] | order(order asc) {
+    _id,
+    name,
+    memberName,
+    role,
+    quote,
+    content,
+    location,
+    image,
+    photo
+  }
+`;
+
 // About page queries
 export const aboutPageQuery = groq`
   *[_type == "aboutPage"][0] {
@@ -210,6 +254,62 @@ export const aboutPageQuery = groq`
     heroBackgroundImage,
     aboutContent,
     aboutImage,
+    historyTitle,
+    historyBody,
+    missionStatement,
+    visionStatement,
+    founderImage,
+    coFounderImage,
+    founderName,
+    coFounderName,
+    missionVisionSection {
+      eyebrow,
+      headline,
+      beliefsCard {
+        title,
+        description,
+        ctaText,
+        ctaLink
+      },
+      valuesCard {
+        title,
+        description,
+        ctaText,
+        ctaLink
+      }
+    },
+    whatToExpectSection {
+      eyebrow,
+      headline,
+      description,
+      sermonImage,
+      latestSermonImage,
+      worshipImage,
+      communityImage,
+      sermonTitle,
+      sermonLeftText,
+      sermonRightText,
+      worshipTitle,
+      worshipLeftText,
+      worshipRightText,
+      communityTitle,
+      communityLeftText,
+      communityRightText
+    },
+    founderSection {
+      eyebrow,
+      bioParagraph1,
+      bioParagraph2,
+      bioParagraph3,
+      ctaPrimaryText,
+      ctaSecondaryText
+    },
+    ctaSection {
+      headline,
+      subtext,
+      primaryText,
+      primaryLink
+    },
     seo {
       metaTitle,
       metaDescription,
@@ -352,7 +452,36 @@ export const featuredSermonQuery = groq`
     scriptureReference,
     duration,
     publishedAt,
+    videoSource,
     videoUrl,
+    videoFile,
+    externalVideoUrl,
+    audioUrl,
+    thumbnail,
+    seriesTitle,
+    seriesSlug,
+    seriesCoverImage,
+    "speaker": preacher->{
+      name,
+      photo,
+      bio,
+      slug
+    }
+  }
+`;
+
+export const latestSermonQuery = groq`
+  *[_type == "sermon" && isPublished == true] | order(publishedAt desc) [0] {
+    title,
+    slug,
+    description,
+    scriptureReference,
+    duration,
+    publishedAt,
+    videoSource,
+    videoUrl,
+    videoFile,
+    externalVideoUrl,
     audioUrl,
     thumbnail,
     seriesTitle,
@@ -375,7 +504,10 @@ export const allSermonsQuery = groq`
     scriptureReference,
     duration,
     publishedAt,
+    videoSource,
     videoUrl,
+    videoFile,
+    externalVideoUrl,
     audioUrl,
     thumbnail,
     seriesTitle,
@@ -398,7 +530,10 @@ export const sermonsByPreacherQuery = groq`
     scriptureReference,
     duration,
     publishedAt,
+    videoSource,
     videoUrl,
+    videoFile,
+    externalVideoUrl,
     audioUrl,
     thumbnail,
     seriesTitle,
@@ -886,9 +1021,12 @@ export const contactPageQuery = groq`
 export const serviceTimesQuery = groq`
   *[_type == "siteSettings"][0] {
     serviceTimes[] {
-      day,
       name,
+      day,
+      time,
       timeRange,
+      serviceType,
+      showOnHomepage,
       location
     }
   }
@@ -951,6 +1089,36 @@ export const overviewPageQuery = groq`
       metaTitle,
       metaDescription,
       ogImage
+    }
+  }
+`;
+
+// Departments Page Query
+export const departmentsPageQuery = groq`
+  *[_type == "departmentsPage"][0] {
+    heroTitle,
+    heroSubtitle,
+    heroImage { asset->{ url } },
+    introText,
+    departments[] {
+      name,
+      description,
+      icon,
+      leader-> {
+        name,
+        role,
+        photo { asset->{ url } }
+      },
+      meetingTime,
+      meetingDay,
+      isActive
+    },
+    ctaText,
+    ctaLink,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage { asset->{ url } }
     }
   }
 `;

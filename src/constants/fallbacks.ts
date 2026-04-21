@@ -170,8 +170,8 @@ export const CONNECTED_FALLBACKS = {
 
 // Sermons section fallbacks
 export const SERMONS_FALLBACKS = {
-  heroTitle: 'Sermons',
-  heroSubtitle: 'Listen to our latest messages and grow in your faith',
+  heroTitle: 'Messages',
+  heroSubtitle: 'Watch, listen and grow in your faith',
   featuredSermon: {
     title: 'No featured sermon available',
     description: 'Check back soon for our latest featured sermon.',
@@ -202,15 +202,15 @@ export const SERMONS_FALLBACKS = {
 };
 
 export const PREACHERS_FALLBACKS = {
-  title: 'Our Preachers',
-  subtitle: 'Meet the people who share God\'s word with us',
+  title: 'Speakers',
+  subtitle: 'The voices that guide our congregation',
   viewSermons: 'View Sermons',
   noPreachers: 'No preachers available at this time.',
 };
 
 export const SERIES_FALLBACKS = {
-  title: 'Sermon Series',
-  subtitle: 'Explore our collection of sermon series',
+  title: 'Series',
+  subtitle: 'Teaching series to transform your life',
   viewSeries: 'View Series',
   noSeries: 'No series available at this time.',
   sermonCount: 'sermon',
@@ -218,8 +218,8 @@ export const SERIES_FALLBACKS = {
 };
 
 export const ARCHIVE_FALLBACKS = {
-  title: 'Sermon Archive',
-  description: 'Access our complete collection of past sermons and messages.',
+  title: 'Archive',
+  description: 'Every message, from day one until now.',
   contactEmail: 'info@thagospel.com',
   contactLabel: 'Contact us for access to older sermon archives.',
 };

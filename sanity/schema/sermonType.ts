@@ -51,17 +51,51 @@ export const sermonType = defineType({
       }
     }),
     defineField({
-      name: 'audioFile',
-      title: 'Audio File',
-      type: 'file',
+      name: 'videoSource',
+      title: 'Video Source',
+      type: 'string',
       options: {
-        accept: 'audio/*'
-      }
+        list: [
+          { title: 'YouTube', value: 'youtube' },
+          { title: 'Upload Video File', value: 'upload' },
+          { title: 'External URL', value: 'external' }
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'youtube'
     }),
     defineField({
       name: 'videoUrl',
-      title: 'Video URL',
-      type: 'url'
+      title: 'YouTube URL',
+      type: 'url',
+      description: 'Full YouTube video URL (e.g., https://youtube.com/watch?v=...)',
+      hidden: ({ document }) => document?.videoSource !== 'youtube'
+    }),
+    defineField({
+      name: 'videoFile',
+      title: 'Video File',
+      type: 'file',
+      description: 'Upload MP4, MOV, or WebM video file directly',
+      options: {
+        accept: 'video/*'
+      },
+      hidden: ({ document }) => document?.videoSource !== 'upload'
+    }),
+    defineField({
+      name: 'externalVideoUrl',
+      title: 'External Video URL',
+      type: 'url',
+      description: 'Vimeo, Facebook, or other video platform URL',
+      hidden: ({ document }) => document?.videoSource !== 'external'
+    }),
+    defineField({
+      name: 'audioFile',
+      title: 'Audio File (Optional)',
+      type: 'file',
+      description: 'Optional audio-only version for download/podcast',
+      options: {
+        accept: 'audio/*'
+      }
     }),
     defineField({
       name: 'duration',

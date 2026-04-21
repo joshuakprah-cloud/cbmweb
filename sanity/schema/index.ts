@@ -47,6 +47,7 @@ import { givePageType } from './givePageType'
 import { givingTypeType } from './givingTypeType'
 import { faqType } from './faqType'
 import { locationType } from './locationType'
+import { youtubeSettingsType } from './youtubeSettingsType'
 
 export const schemaTypes = [
   homepageType,
@@ -97,5 +98,6 @@ export const schemaTypes = [
   givePageType,
   givingTypeType,
   faqType,
-  locationType
+  locationType,
+  youtubeSettingsType
 ]

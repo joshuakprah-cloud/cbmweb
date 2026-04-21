@@ -48,8 +48,10 @@ export const homepageType = defineType({
               fields: [
                 defineField({ name: 'title', title: 'Title', type: 'string' }),
                 defineField({ name: 'description', title: 'Description', type: 'text' }),
-                defineField({ name: 'icon', title: 'Icon (Emoji)', type: 'string' }),
-                defineField({ name: 'order', title: 'Order', type: 'number' }),
+                defineField({ name: 'icon', title: 'Icon Name', type: 'string', description: 'Options: map-pin, heart, sparkles, users, calendar, music, book, photo' }),
+                defineField({ name: 'number', title: 'Card Number', type: 'string', description: 'Optional: Display number badge (e.g., 01, 02, 03). Auto-generated if empty.' }),
+                defineField({ name: 'image', title: 'Card Background Image', type: 'image', description: 'Image displayed as card background (380px height recommended)', options: { hotspot: true } }),
+                defineField({ name: 'order', title: 'Display Order', type: 'number' }),
               ],
             },
           ],
@@ -57,38 +59,100 @@ export const homepageType = defineType({
       ],
     }),
     
-    // Welcome Section
+    // Welcome Section (Meet Our Pastors)
     defineField({
       name: 'welcomeSection',
-      title: 'Welcome Section',
+      title: 'Welcome Section (Meet Our Pastors)',
       type: 'object',
       fields: [
         defineField({
           name: 'sectionLabel',
-          title: 'Section Label',
+          title: 'Section Label (Eyebrow)',
           type: 'string',
-          initialValue: 'Who We Are'
+          initialValue: 'MEET OUR PASTORS'
         }),
         defineField({
           name: 'title',
           title: 'Section Title',
           type: 'string',
-          initialValue: 'A Warm Welcome Awaits You'
+          initialValue: 'Meet our lead pastors'
         }),
         defineField({
           name: 'message',
-          title: 'Welcome Message',
+          title: 'Welcome Message (Legacy)',
           type: 'text',
-          description: 'The main welcome message text displayed in the left column'
+          description: 'Legacy field - use Intro Text instead'
         }),
         defineField({
-          name: 'image',
-          title: 'Welcome Image',
+          name: 'introText',
+          title: 'Intro Text',
+          type: 'text',
+          description: 'Opening paragraph about the pastors',
+          initialValue: 'We are honoured to welcome you to ThaGospel Church. Our lead pastors, Prophet John Prang and Mama Vida Prang are passionate about raising Christ-minded people who impact their world.'
+        }),
+        // Prophet Fields
+        defineField({
+          name: 'prophetImage',
+          title: 'Prophet Image',
           type: 'image',
-          description: 'Image displayed in the right column (600 x 640px recommended)',
+          description: 'Portrait of Prophet John (portrait orientation recommended)',
           options: { hotspot: true }
         }),
-        defineField({ name: 'ctaText', title: 'CTA Button Text', type: 'string', initialValue: 'OUR STORY' }),
+        defineField({
+          name: 'prophetName',
+          title: 'Prophet Name',
+          type: 'string',
+          initialValue: 'Prophet John Prang'
+        }),
+        defineField({
+          name: 'prophetTitle',
+          title: 'Prophet Title',
+          type: 'string',
+          initialValue: 'Lead Pastor'
+        }),
+        defineField({
+          name: 'prophetBio',
+          title: 'Prophet Bio',
+          type: 'text',
+          description: 'Short biography of Prophet John',
+          initialValue: 'Prophet John is a visionary leader dedicated to raising a nation of Christ-minded people. He founded ThaGospel Church with a mission to impact communities through the transformative power of God\'s Word.'
+        }),
+        // First Lady Fields
+        defineField({
+          name: 'firstLadyImage',
+          title: 'First Lady Image',
+          type: 'image',
+          description: 'Portrait of Mama Vida (portrait orientation recommended)',
+          options: { hotspot: true }
+        }),
+        defineField({
+          name: 'firstLadyName',
+          title: 'First Lady Name',
+          type: 'string',
+          initialValue: 'Mama Vida Prang'
+        }),
+        defineField({
+          name: 'firstLadyTitle',
+          title: 'First Lady Title',
+          type: 'string',
+          initialValue: 'Co-Lead Pastor'
+        }),
+        defineField({
+          name: 'firstLadyBio',
+          title: 'First Lady Bio',
+          type: 'text',
+          description: 'Short biography of Mama Vida',
+          initialValue: 'Mama Vida is a compassionate leader committed to nurturing faith and empowering believers. She co-leads with a heart for community and a passion for seeing lives transformed.'
+        }),
+        // Legacy image field (kept for backwards compatibility)
+        defineField({
+          name: 'image',
+          title: 'Legacy Welcome Image',
+          type: 'image',
+          description: 'Legacy field - use Prophet/FirstLady images instead',
+          options: { hotspot: true }
+        }),
+        defineField({ name: 'ctaText', title: 'CTA Button Text', type: 'string', initialValue: 'About Our Pastors' }),
         defineField({ name: 'ctaLink', title: 'CTA Link URL', type: 'string', initialValue: '/about' }),
       ],
     }),

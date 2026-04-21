@@ -19,10 +19,10 @@ interface SermonsTeaserProps {
     duration?: string;
     videoUrl?: string | null;
     audioUrl?: string | null;
-    speaker: {
-      name: string;
+    speaker?: {
+      name?: string;
       photo?: any;
-    };
+    } | null;
   }>;
   sectionTitle?: string;
   sectionDescription?: string;
@@ -139,11 +139,11 @@ const SermonsTeaser = ({
                     <div className="flex items-center gap-2.5 mb-3.5">
                       {showSpeakerPhoto && (
                         <>
-                          {sermon.speaker.photo ? (
+                          {sermon.speaker?.photo ? (
                             <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-[#e5e7eb] flex-shrink-0">
                               <Image
                                 src={urlFor(sermon.speaker.photo).width(72).height(72).url()}
-                                alt={sermon.speaker.name}
+                                alt={sermon.speaker?.name || 'Speaker'}
                                 fill
                                 className="object-cover"
                                 sizes="36px"
@@ -152,7 +152,7 @@ const SermonsTeaser = ({
                           ) : (
                             <div className="w-9 h-9 rounded-full bg-[#e6fffa] border-2 border-[#e5e7eb] flex items-center justify-center flex-shrink-0">
                               <span className="text-[13px] font-semibold text-[#0f766e]">
-                                {getInitials(sermon.speaker.name)}
+                                {getInitials(sermon.speaker?.name || 'U')}
                               </span>
                             </div>
                           )}
@@ -160,7 +160,7 @@ const SermonsTeaser = ({
                       )}
                       <div className="flex flex-col">
                         <span className="text-[13px] font-semibold text-[#111111]">
-                          {sermon.speaker.name}
+                          {sermon.speaker?.name || 'Unknown Speaker'}
                         </span>
                         <span className="text-[12px] text-[#999999]">
                           {formatDate(sermon.publishedAt)}

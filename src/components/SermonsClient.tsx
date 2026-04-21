@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { MagnifyingGlassIcon, PlayCircleIcon, Squares2X2Icon, ListBulletIcon, ClockIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import Navbar from './navbar/Navbar';
-import Footer from './Footer';
+import { Footer } from './footer/Footer';
 
 interface Sermon {
   _id: string;

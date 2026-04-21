@@ -9,6 +9,7 @@ import ConditionalLayout from '../components/ConditionalLayout'
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
+  preload: false,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
 })
 

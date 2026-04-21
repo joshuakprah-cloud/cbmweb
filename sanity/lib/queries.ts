@@ -501,6 +501,13 @@ export const featuredSermonQuery = groq`
   }
 `;
 
+export const latestSermonQuery = groq`
+  *[_type == "sermon" && isPublished == true] | order(publishedAt desc) [0] {
+    title,
+    "slug": slug.current
+  }
+`;
+
 export const allSermonsQuery = groq`
   *[_type == "sermon" && isPublished == true] | order(publishedAt desc) {
     title,

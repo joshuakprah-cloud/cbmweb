@@ -14,7 +14,7 @@ import {
   MagnifyingGlassPlusIcon
 } from '@heroicons/react/24/outline';
 import Navbar from '../navbar/Navbar';
-import Footer from '../Footer';
+import { Footer } from '../footer/Footer';
 
 interface Photo {
   _id: string;

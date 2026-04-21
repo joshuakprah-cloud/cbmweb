@@ -389,6 +389,12 @@ export const EVENTS_FALLBACKS = {
     eventNow: 'This event is happening now!',
     eventEnded: 'This event has ended',
   },
+  ctaSection: {
+    planYourVisit: 'Plan Your Visit',
+    watchOnline: 'Watch Online',
+    planVisitUrl: '/plan-your-visit',
+    watchUrl: '/livestream',
+  },
   registration: {
     fullName: 'Full Name',
     email: 'Email',
@@ -439,6 +445,15 @@ export const EVENTS_FALLBACKS = {
   quickView: {
     title: 'Event Quick View',
     close: 'Close quick view',
+  },
+  pastEventsArchive: 'Past Events Archive',
+  hideArchive: 'Hide Archive',
+  viewArchive: 'View Archive',
+  quickActions: {
+    thisWeek: 'This Week',
+    thisMonth: 'This Month',
+    youthEvents: 'Youth Events',
+    services: 'Sunday Services',
   },
   export: {
     googleCalendar: 'Add to Google Calendar',

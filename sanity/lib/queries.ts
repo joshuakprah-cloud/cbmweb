@@ -216,6 +216,15 @@ export const recentSermonsQuery = groq`
     publishedAt,
     seriesTitle,
     thumbnail,
+    videoSource,
+    youtubeUrl,
+    externalVideoUrl,
+    videoFile {
+      asset-> {
+        url,
+        _id
+      }
+    },
     "speaker": preacher->{
       name,
       photo

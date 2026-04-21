@@ -648,16 +648,21 @@ export const archivePageQuery = groq`
     title,
     slug,
     excerpt,
-    "speaker": preacher->{
-      name,
-      photo,
-      slug
-    },
+    "speaker": preacher->{ name, photo, slug },
     seriesTitle,
     seriesSlug,
     publishedAt,
     audioUrl,
     videoUrl,
+    videoSource,
+    youtubeUrl,
+    externalVideoUrl,
+    videoFile {
+      asset-> {
+        url,
+        _id
+      }
+    },
     thumbnail,
     duration
   }

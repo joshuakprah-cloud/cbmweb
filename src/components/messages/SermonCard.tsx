@@ -14,10 +14,10 @@ interface SermonCardProps {
     videoUrl?: string | null;
     audioUrl?: string | null;
     thumbnail?: any;
-    speaker: {
-      name: string;
+    speaker?: {
+      name?: string;
       photo?: any;
-    };
+    } | null;
   };
   variant?: 'grid' | 'list';
 }
@@ -101,7 +101,7 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
               <p className="text-sm text-teal-600 font-medium mb-1">{seriesTitle}</p>
             )}
             
-            <p className="text-sm text-gray-600 mb-2">{speaker.name}</p>
+            <p className="text-sm text-gray-600 mb-2">{speaker?.name || 'Unknown Speaker'}</p>
             
             {description && (
               <p className="text-sm text-gray-700 line-clamp-2 mb-2">{description}</p>
@@ -198,7 +198,7 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
         
         <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{title}</h3>
         
-        <p className="text-sm text-gray-600 mb-2">{speaker.name}</p>
+        <p className="text-sm text-gray-600 mb-2">{speaker?.name || 'Unknown Speaker'}</p>
         
         {description && (
           <p className="text-sm text-gray-700 line-clamp-3 mb-3">{description}</p>

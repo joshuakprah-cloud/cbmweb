@@ -21,7 +21,7 @@ const groupJoinSchema = z.object({
   phone: z.string().min(10, 'Phone number is required'),
   ageGroup: z.string().min(1, 'Please select an age group'),
   message: z.string().optional(),
-  preferredContact: z.enum(['email', 'phone', 'whatsapp']).default('email'),
+  preferredContact: z.enum(['email', 'phone', 'whatsapp']),
   availability: z.array(z.string()).min(1, 'Please select at least one day'),
 });
 

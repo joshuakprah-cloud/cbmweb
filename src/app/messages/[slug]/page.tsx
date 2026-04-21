@@ -24,8 +24,8 @@ export async function generateStaticParams() {
   try {
     const sermons = await client.fetch(sermonSlugsQuery, {}, { next: { revalidate: 3600 } });
     return sermons.map((sermon: any) => ({
-      slug: sermon.slug,
-    }));
+      slug: String(sermon.slug || ''),
+    })).filter((item: any) => item.slug);
   } catch (error) {
     console.error('Error generating static params:', error);
     return [];

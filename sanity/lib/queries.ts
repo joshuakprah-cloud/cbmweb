@@ -511,8 +511,9 @@ export const latestSermonQuery = groq`
 export const allSermonsQuery = groq`
   *[_type == "sermon" && isPublished == true] | order(publishedAt desc) {
     title,
-    slug,
+    "slug": slug.current,
     description,
+    excerpt,
     scriptureReference,
     duration,
     publishedAt,
@@ -542,15 +543,13 @@ export const allSermonsQuery = groq`
 export const sermonsByPreacherQuery = groq`
   *[_type == "sermon" && isPublished == true && preacher._ref == $preacherId] | order(publishedAt desc) {
     title,
-    slug,
+    "slug": slug.current,
     description,
+    excerpt,
     scriptureReference,
     duration,
     publishedAt,
-    videoSource,
     videoUrl,
-    videoFile,
-    externalVideoUrl,
     audioUrl,
     thumbnail {
       asset-> {
@@ -596,8 +595,9 @@ export const allPreachersQuery = groq`
 export const sermonsBySeriesQuery = groq`
   *[_type == "sermon" && isPublished == true && seriesSlug == $seriesSlug] | order(publishedAt desc) {
     title,
-    slug,
+    "slug": slug.current,
     description,
+    excerpt,
     scriptureReference,
     duration,
     publishedAt,
@@ -664,8 +664,11 @@ export const mediaPageQuery = groq`
 export const archivePageQuery = groq`
   *[_type == "sermon" && isPublished == true] | order(publishedAt desc) {
     title,
-    slug,
+    "slug": slug.current,
+    description,
     excerpt,
+    duration,
+    scriptureReference,
     "speaker": preacher->{ name, photo, slug },
     seriesTitle,
     seriesSlug,
@@ -1085,7 +1088,7 @@ export const livestreamQuery = groq`
     },
     "recentSermons": *[_type == "sermon" && isPublished == true] | order(publishedAt desc) [0..5] {
       title,
-      slug,
+      "slug": slug.current,
       publishedAt,
       thumbnail {
         asset-> {

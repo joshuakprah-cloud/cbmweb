@@ -4,16 +4,16 @@ import authorType from './author'
 import categoryType from './category'
 import photoType from './photo'
 import albumType from './album'
-import mediaPageType from './mediaPage'
+// import mediaPageType from './mediaPageType'
 import ministryType from './ministry'
-import ministriesPageType from './ministriesPage'
-import ministryFormType from './ministryForm'
+// import ministriesPageType from './ministriesPageType'
+// import ministryFormType from './ministryFormType'
 import leaderType from './leader'
 import eventType from './event'
-import eventsPageType from './eventsPage'
+// import eventsPageType from './eventsPageType'
 import newsletterSubscriberType from './newsletterSubscriber'
 import eventRegistrationType from './eventRegistration'
-import contactPageType from './contactPage'
+import { contactPageType } from './contactPageType'
 import contactSubmissionType from './contactSubmission'
 import prayerRequestType from './prayerRequest'
 import { siteSettingsType } from './siteSettingsType'
@@ -56,13 +56,13 @@ export const schemaTypes = [
   categoryType,
   photoType,
   albumType,
-  mediaPageType,
+  // mediaPageType,
   ministryType,
-  ministriesPageType,
-  ministryFormType,
+  // ministriesPageType,
+  // ministryFormType,
   leaderType,
   eventType,
-  eventsPageType,
+  // eventsPageType,
   newsletterSubscriberType,
   eventRegistrationType,
   contactPageType,

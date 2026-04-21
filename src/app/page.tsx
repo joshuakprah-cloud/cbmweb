@@ -203,7 +203,7 @@ export default async function Home() {
         />
 
         {/* 5. Sermons Teaser */}
-        <SermonsTeaser sermons={recentSermonsData} />
+        <SermonsTeaser messages={recentSermonsData} />
 
         {/* 6. Ministries Snapshot */}
         <MinistriesSnapshot 

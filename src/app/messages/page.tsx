@@ -7,7 +7,7 @@ import { featuredSermonQuery, allSermonsQuery, sermonsPageQuery } from 'sanity/l
 import { urlFor } from '@/sanity/lib/image';
 import { SERMONS_FALLBACKS, SEO_FALLBACKS } from '@/constants/fallbacks';
 
-export const revalidate = 3600;
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export async function generateMetadata(): Promise<Metadata> {
   let sermonsPageData = null;

@@ -95,7 +95,7 @@ const SermonsTeaser = ({
                   <div className="relative aspect-video overflow-hidden bg-[#111111]">
                     {sermon.thumbnail ? (
                       <Image
-                        src={urlFor(sermon.thumbnail).width(600).height(338).url()}
+                        src={urlFor(sermon.thumbnail).width(600).height(338).url() + (sermon.thumbnail?.asset?._id ? `?v=${sermon.thumbnail.asset._id.slice(-8)}` : '')}
                         alt={sermon.title}
                         fill
                         className="object-cover"

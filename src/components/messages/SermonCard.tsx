@@ -40,7 +40,10 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
   const hasVideo = !!videoUrl;
   const hasAudio = !!audioUrl;
   const sermonDate = new Date(publishedAt).toLocaleDateString();
-  const thumbnailUrl = thumbnail ? urlFor(thumbnail).url() : null;
+  // Add cache-busting using asset _id to force fresh image loads
+  const thumbnailUrl = thumbnail?.asset?._id 
+    ? urlFor(thumbnail).url() + `?v=${thumbnail.asset._id.slice(-8)}`
+    : null;
 
   if (variant === 'list') {
     return (

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { urlFor } from '../../sanity/lib/image';
+import { urlFor, urlForCacheBusted } from '../../../sanity/lib/image';
 import { 
   PlayIcon, 
   SpeakerWaveIcon, 
@@ -95,7 +95,7 @@ const SermonsTeaser = ({
                   <div className="relative aspect-video overflow-hidden bg-[#111111]">
                     {sermon.thumbnail ? (
                       <Image
-                        src={urlFor(sermon.thumbnail).width(600).height(338).url() + (sermon.thumbnail?.asset?._id ? `?v=${sermon.thumbnail.asset._id.slice(-8)}` : '')}
+                        src={urlForCacheBusted(sermon.thumbnail)}
                         alt={sermon.title}
                         fill
                         className="object-cover"
@@ -142,7 +142,7 @@ const SermonsTeaser = ({
                           {sermon.speaker?.photo ? (
                             <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-[#e5e7eb] flex-shrink-0">
                               <Image
-                                src={urlFor(sermon.speaker.photo).width(72).height(72).url()}
+                                src={urlForCacheBusted(sermon.speaker.photo)}
                                 alt={sermon.speaker?.name || 'Speaker'}
                                 fill
                                 className="object-cover"

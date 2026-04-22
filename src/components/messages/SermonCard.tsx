@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { urlFor } from '../../sanity/lib/image';
+import { urlForCacheBusted } from '../../../sanity/lib/image';
 
 interface SermonCardProps {
   sermon: {
@@ -41,9 +41,7 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
   const hasAudio = !!audioUrl;
   const sermonDate = new Date(publishedAt).toLocaleDateString();
   // Add cache-busting using asset _id to force fresh image loads
-  const thumbnailUrl = thumbnail?.asset?._id 
-    ? urlFor(thumbnail).url() + `?v=${thumbnail.asset._id.slice(-8)}`
-    : null;
+  const thumbnailUrl = thumbnail ? urlForCacheBusted(thumbnail) : null;
 
   if (variant === 'list') {
     return (

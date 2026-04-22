@@ -12,14 +12,14 @@ export const sermonType = defineType({
       validation: Rule => Rule.required()
     }),
     defineField({
-      name: 'speaker',
-      title: 'Speaker',
+      name: 'preacher',
+      title: 'Preacher/Speaker',
       type: 'reference',
       to: [{ type: 'preacher' }],
       validation: Rule => Rule.required()
     }),
     defineField({
-      name: 'date',
+      name: 'publishedAt',
       title: 'Sermon Date',
       type: 'date',
       validation: Rule => Rule.required()
@@ -43,8 +43,8 @@ export const sermonType = defineType({
       validation: Rule => Rule.required()
     }),
     defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
+      name: 'thumbnail',
+      title: 'Cover Image/Thumbnail',
       type: 'image',
       options: {
         hotspot: true
@@ -122,6 +122,13 @@ export const sermonType = defineType({
       initialValue: false
     }),
     defineField({
+      name: 'isPublished',
+      title: 'Published',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Make this sermon visible on the website'
+    }),
+    defineField({
       name: 'publishDate',
       title: 'Publish Date',
       type: 'datetime',
@@ -131,8 +138,8 @@ export const sermonType = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'speaker.name',
-      media: 'coverImage'
+      subtitle: 'preacher.name',
+      media: 'thumbnail'
     }
   }
 })

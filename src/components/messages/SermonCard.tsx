@@ -42,6 +42,8 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
   const sermonDate = new Date(publishedAt).toLocaleDateString();
   // Add cache-busting using asset _id to force fresh image loads
   const thumbnailUrl = thumbnail ? urlForCacheBusted(thumbnail) : null;
+  // Ensure slug is valid before creating links
+  const sermonLink = slug ? `/messages/${slug}` : '#';
 
   if (variant === 'list') {
     return (
@@ -69,9 +71,9 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
             
             {/* Play button overlay */}
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity">
-              {hasVideo && (
+              {slug && hasVideo && (
                 <Link
-                  href={`/messages/${slug}`}
+                  href={sermonLink}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center"
                   aria-label={`Watch: ${title}`}
                 >
@@ -80,9 +82,9 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
                   </svg>
                 </Link>
               )}
-              {hasAudio && !hasVideo && (
+              {slug && hasAudio && !hasVideo && (
                 <Link
-                  href={`/messages/${slug}`}
+                  href={sermonLink}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center"
                   aria-label={`Listen: ${title}`}
                 >
@@ -117,18 +119,18 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
 
           {/* Action buttons */}
           <div className="flex flex-col gap-2">
-            {hasVideo && (
+            {slug && hasVideo && (
               <Link
-                href={`/messages/${slug}`}
+                href={sermonLink}
                 className="px-3 py-1 bg-teal-600 text-white text-sm rounded hover:bg-teal-700 transition-colors"
                 aria-label={`Watch: ${title}`}
               >
                 Watch
               </Link>
             )}
-            {hasAudio && (
+            {slug && hasAudio && (
               <Link
-                href={`/messages/${slug}`}
+                href={sermonLink}
                 className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition-colors"
                 aria-label={`Listen: ${title}`}
               >
@@ -166,9 +168,9 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
         
         {/* Play button overlay */}
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
-          {hasVideo && (
+          {slug && hasVideo && (
             <Link
-              href={`/messages/${slug}`}
+              href={sermonLink}
               className="w-12 h-12 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
               aria-label={`Watch: ${title}`}
             >
@@ -177,9 +179,9 @@ const SermonCard: React.FC<SermonCardProps> = ({ sermon, variant = 'grid' }) => 
               </svg>
             </Link>
           )}
-          {hasAudio && !hasVideo && (
+          {slug && hasAudio && !hasVideo && (
             <Link
-              href={`/messages/${slug}`}
+              href={sermonLink}
               className="w-12 h-12 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
               aria-label={`Listen: ${title}`}
             >

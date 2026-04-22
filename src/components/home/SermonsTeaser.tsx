@@ -111,11 +111,13 @@ const SermonsTeaser = ({
                     )}
                     
                     {/* Series Badge */}
-                    <div className="absolute top-3 left-3" aria-hidden="true">
-                      <span className="bg-[#0d9488] text-white text-[11px] uppercase tracking-[0.08em] font-semibold px-2.5 py-1 rounded-md">
-                        {sermon.seriesTitle || 'Sunday Service'}
-                      </span>
-                    </div>
+                    {sermon.seriesTitle && (
+                      <div className="absolute top-3 left-3" aria-hidden="true">
+                        <span className="bg-[#0d9488] text-white text-[11px] uppercase tracking-[0.08em] font-semibold px-2.5 py-1 rounded-md">
+                          {sermon.seriesTitle}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Watch/Listen Badge */}
                     <div className="absolute top-3 right-3">
